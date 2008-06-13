@@ -19,10 +19,17 @@ package org.codehaus.plexus.interpolation;
 import org.codehaus.plexus.interpolation.util.ValueSourceUtils;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+/**
+ * {@link RecursionInterceptor} implementation that provides support for expressions
+ * with multiple synonyms, such as project.build.directory == pom.build.directory ==
+ * build.directory in Maven's POM.
+ *
+ * @author jdcasey
+ */
 public class PrefixAwareRecursionInterceptor
     implements RecursionInterceptor
 {
@@ -41,44 +48,36 @@ public class PrefixAwareRecursionInterceptor
 
     private boolean watchUnprefixedExpressions = true;
 
+    /**
+     * Use the specified expression prefixes to detect synonyms, and specify whether
+     * unprefixed expressions can be considered synonyms.
+     *
+     * @param possiblePrefixes The collection of expression prefixes supported
+     * @param watchUnprefixedExpressions Whether to consider unprefixed expressions as synonyms
+     */
     public PrefixAwareRecursionInterceptor( Collection possiblePrefixes, boolean watchUnprefixedExpressions )
     {
         this.possiblePrefixes = possiblePrefixes;
         this.watchUnprefixedExpressions = watchUnprefixedExpressions;
     }
 
+    /**
+     * Use the specified expression prefixes to detect synonyms. Consider
+     * unprefixed expressions synonyms as well.
+     *
+     * @param possiblePrefixes The collection of expression prefixes supported
+     */
     public PrefixAwareRecursionInterceptor( Collection possiblePrefixes )
     {
         this.possiblePrefixes = possiblePrefixes;
     }
 
-    public PrefixAwareRecursionInterceptor( String startToken, String endToken, Collection possiblePrefixes, boolean watchUnprefixedExpressions )
+    public boolean hasRecursiveExpression( String expression )
     {
-        this.startToken = startToken;
-        this.endToken = endToken;
-        this.possiblePrefixes = possiblePrefixes;
-        this.watchUnprefixedExpressions = watchUnprefixedExpressions;
-    }
-
-    public PrefixAwareRecursionInterceptor( String startToken, String endToken, Collection possiblePrefixes )
-    {
-        this.startToken = startToken;
-        this.endToken = endToken;
-        this.possiblePrefixes = possiblePrefixes;
-    }
-
-    public boolean hasRecursiveExpression( String value )
-    {
-        Pattern expressionPattern = Pattern.compile( startToken + "(.+?)" + endToken );
-        Matcher matcher = expressionPattern.matcher( value );
-        while( matcher.find() )
+        String realExpr = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, watchUnprefixedExpressions );
+        if ( realExpr != null )
         {
-            String realExpr = ValueSourceUtils.trimPrefix( matcher.group( 1 ), possiblePrefixes, watchUnprefixedExpressions );
-
-            if ( nakedExpressions.contains( realExpr ) )
-            {
-                return true;
-            }
+            return nakedExpressions.contains( realExpr );
         }
 
         return false;
@@ -93,6 +92,34 @@ public class PrefixAwareRecursionInterceptor
     {
         String realExpr = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, watchUnprefixedExpressions );
         nakedExpressions.push( realExpr );
+    }
+
+    /**
+     * When an expression is determined to be a recursive reference, this method
+     * returns the sublist of tracked expressions that participate in this cycle.
+     * Otherwise, if the expression isn't present in the in-process stack, return
+     * {@link Collections#EMPTY_LIST}. Also, if the expression doesn't have a matched
+     * prefix from this interceptor's list, and unprefixed expressions aren't allowed
+     * then return {@link Collections#EMPTY_LIST}.
+     */
+    public List getExpressionCycle( String expression )
+    {
+        String expr = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, watchUnprefixedExpressions );
+
+        if ( expr == null )
+        {
+            return Collections.EMPTY_LIST;
+        }
+
+        int idx = nakedExpressions.indexOf( expression );
+        if ( idx < 0 )
+        {
+            return Collections.EMPTY_LIST;
+        }
+        else
+        {
+            return nakedExpressions.subList( idx, nakedExpressions.size() );
+        }
     }
 
 }
