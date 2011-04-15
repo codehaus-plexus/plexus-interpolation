@@ -2,9 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.codehaus.plexus</groupId>
-    <artifactId>plexus-components</artifactId>
-    <version>1.1.18</version>
+    <groupId>org.sonatype.spice</groupId>
+    <artifactId>spice-parent</artifactId>
+    <version>16</version>
   </parent>
 
   <artifactId>plexus-interpolation</artifactId>
@@ -17,4 +17,14 @@
     <developerConnection>scm:svn:https://svn.codehaus.org/plexus/plexus-components/trunk/plexus-interpolation</developerConnection>
     <url>http://fisheye.codehaus.org/browse/plexus/plexus-components/trunk/plexus-interpolation</url>
   </scm>
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+      
 </project>
