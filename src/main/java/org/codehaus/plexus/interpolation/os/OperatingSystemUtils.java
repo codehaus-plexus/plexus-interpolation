@@ -68,7 +68,8 @@ public final class OperatingSystemUtils
             Properties envVars = new Properties();
     
             Runtime r = Runtime.getRuntime();
-    
+
+
             //If this is windows set the shell to command.com or cmd.exe with correct arguments.
             if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
             {
@@ -117,6 +118,11 @@ public final class OperatingSystemUtils
                     envVars.setProperty( lastKey, lastVal );
                 }
             }
+
+            br.close();
+            p.getInputStream().close();
+            p.getOutputStream().close();
+            p.getErrorStream().close();
 
             return envVars;
         }
