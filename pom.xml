@@ -9,7 +9,7 @@
 
   <groupId>org.codehaus.plexus</groupId>
   <artifactId>plexus-interpolation</artifactId>
-  <version>1.15-SNAPSHOT</version>
+  <version>1.15</version>
 
   <name>Plexus Interpolation API</name>
 
