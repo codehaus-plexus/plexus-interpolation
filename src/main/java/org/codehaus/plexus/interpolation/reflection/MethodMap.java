@@ -45,26 +45,26 @@ public class MethodMap
     /**
      * Keep track of all methods with the same name.
      */
-    Map methodByNameMap = new Hashtable();
+    Map<String, List<Method>> methodByNameMap = new Hashtable<String, List<Method>>();
 
     /**
      * Add a method to a list of methods by name.
      * For a particular class we are keeping track
      * of all the methods with the same name.
      */
-    public void add(Method method)
+    public void add( Method method )
     {
         String methodName = method.getName();
 
-        List l = get( methodName );
+        List<Method> l = get( methodName );
 
         if ( l == null)
         {
-            l = new ArrayList();
-            methodByNameMap.put(methodName, l);
+            l = new ArrayList<Method>();
+            methodByNameMap.put( methodName, l );
         }
 
-        l.add(method);
+        l.add( method );
 
         return;
     }
@@ -75,9 +75,9 @@ public class MethodMap
      * @param key
      * @return list of methods
      */
-    public List get(String key)
+    public List<Method> get(String key)
     {
-        return (List) methodByNameMap.get(key);
+        return methodByNameMap.get(key);
     }
 
     /**
@@ -108,20 +108,20 @@ public class MethodMap
      *  @throws AmbiguousException if there is more than one maximally
      *  specific applicable method
      */
-    public Method find(String methodName, Object[] args)
+    public Method find( String methodName, Object[] args )
         throws AmbiguousException
     {
-        List methodList = get(methodName);
+        List<Method> methodList = get( methodName );
 
-        if (methodList == null)
+        if ( methodList == null )
         {
             return null;
         }
 
         int l = args.length;
-        Class[] classes = new Class[l];
+        Class<?>[] classes = new Class[l];
 
-        for(int i = 0; i < l; ++i)
+        for ( int i = 0; i < l; ++i )
         {
             Object arg = args[i];
 
@@ -133,22 +133,23 @@ public class MethodMap
                     arg == null ? null : arg.getClass();
         }
 
-        return getMostSpecific(methodList, classes);
+        return getMostSpecific( methodList, classes );
     }
 
     /**
      *  simple distinguishable exception, used when
      *  we run across ambiguous overloading
      */
-    public static class AmbiguousException extends Exception
+    public static class AmbiguousException
+        extends Exception
     {
     }
 
 
-    private static Method getMostSpecific(List methods, Class[] classes)
+    private static Method getMostSpecific(List<Method> methods, Class<?>[] classes)
         throws AmbiguousException
     {
-        LinkedList applicables = getApplicables(methods, classes);
+        LinkedList<Method> applicables = getApplicables(methods, classes);
 
         if(applicables.isEmpty())
         {
@@ -157,7 +158,7 @@ public class MethodMap
 
         if(applicables.size() == 1)
         {
-            return (Method)applicables.getFirst();
+            return applicables.getFirst();
         }
 
         /*
@@ -166,19 +167,16 @@ public class MethodMap
          * (the most specific method) otherwise we have ambiguity.
          */
 
-        LinkedList maximals = new LinkedList();
+        LinkedList<Method> maximals = new LinkedList<Method>();
 
-        for (Iterator applicable = applicables.iterator();
-             applicable.hasNext();)
+        for ( Method app : applicables )
         {
-            Method app = (Method) applicable.next();
-            Class[] appArgs = app.getParameterTypes();
+            Class<?>[] appArgs = app.getParameterTypes();
             boolean lessSpecific = false;
 
-            for (Iterator maximal = maximals.iterator();
-                 !lessSpecific && maximal.hasNext();)
+            for ( Iterator<Method> maximal = maximals.iterator(); !lessSpecific && maximal.hasNext(); )
             {
-                Method max = (Method) maximal.next();
+                Method max = maximal.next();
 
                 switch(moreSpecific(appArgs, max.getParameterTypes()))
                 {
@@ -231,7 +229,7 @@ public class MethodMap
      * @return MORE_SPECIFIC if c1 is more specific than c2, LESS_SPECIFIC if
      * c1 is less specific than c2, INCOMPARABLE if they are incomparable.
      */
-    private static int moreSpecific(Class[] c1, Class[] c2)
+    private static int moreSpecific(Class<?>[] c1, Class<?>[] c2)
     {
         boolean c1MoreSpecific = false;
         boolean c2MoreSpecific = false;
@@ -285,14 +283,12 @@ public class MethodMap
      * formal and actual arguments matches, and argument types are assignable
      * to formal types through a method invocation conversion).
      */
-    private static LinkedList getApplicables(List methods, Class[] classes)
+    private static LinkedList<Method> getApplicables(List<Method> methods, Class<?>[] classes)
     {
-        LinkedList list = new LinkedList();
+        LinkedList<Method> list = new LinkedList<Method>();
 
-        for (Iterator imethod = methods.iterator(); imethod.hasNext();)
+        for ( Method method : methods )
         {
-            Method method = (Method) imethod.next();
-
             if(isApplicable(method, classes))
             {
                 list.add(method);
@@ -306,9 +302,9 @@ public class MethodMap
      * Returns true if the supplied method is applicable to actual
      * argument types.
      */
-    private static boolean isApplicable(Method method, Class[] classes)
+    private static boolean isApplicable(Method method, Class<?>[] classes)
     {
-        Class[] methodArgs = method.getParameterTypes();
+        Class<?>[] methodArgs = method.getParameterTypes();
 
         if(methodArgs.length != classes.length)
         {
@@ -344,8 +340,7 @@ public class MethodMap
      * type or an object type of a primitive type that can be converted to
      * the formal type.
      */
-    private static boolean isMethodInvocationConvertible(Class formal,
-                                                         Class actual)
+    private static boolean isMethodInvocationConvertible( Class<?> formal, Class<?> actual )
     {
         /*
          * if it's a null, it means the arg was null
@@ -433,8 +428,7 @@ public class MethodMap
      * or formal and actual are both primitive types and actual can be
      * subject to widening conversion to formal.
      */
-    private static boolean isStrictMethodInvocationConvertible(Class formal,
-                                                               Class actual)
+    private static boolean isStrictMethodInvocationConvertible( Class<?> formal, Class<?> actual )
     {
         /*
          * we shouldn't get a null into, but if so

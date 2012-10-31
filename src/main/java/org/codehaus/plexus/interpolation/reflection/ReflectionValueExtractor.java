@@ -36,7 +36,7 @@ import java.util.WeakHashMap;
  */
 public class ReflectionValueExtractor
 {
-    private static final Class[] CLASS_ARGS = new Class[ 0 ];
+    private static final Class<?>[] CLASS_ARGS = new Class[ 0 ];
 
     private static final Object[] OBJECT_ARGS = new Object[ 0 ];
 
@@ -45,7 +45,7 @@ public class ReflectionValueExtractor
      * This approach prevents permgen space overflows due to retention of discarded
      * classloaders.
      */
-    private static final Map classMaps = new WeakHashMap();
+    private static final Map<Class<?>, ClassMap> classMaps = new WeakHashMap<Class<?>, ClassMap>();
 
     private ReflectionValueExtractor()
     {
@@ -112,9 +112,9 @@ public class ReflectionValueExtractor
         return value;
     }
 
-    private static ClassMap getClassMap( Class clazz )
+    private static ClassMap getClassMap( Class<?> clazz )
     {
-        ClassMap classMap = (ClassMap) classMaps.get( clazz );
+        ClassMap classMap = classMaps.get( clazz );
 
         if ( classMap == null )
         {

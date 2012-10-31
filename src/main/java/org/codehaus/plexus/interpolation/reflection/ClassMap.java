@@ -49,21 +49,20 @@ public class ClassMap
      * Class passed into the constructor used to as
      * the basis for the Method map.
      */
-
-    private Class clazz;
+    private Class<?> clazz;
 
     /**
      * Cache of Methods, or CACHE_MISS, keyed by method
      * name and actual arguments used to find it.
      */
-    private Map methodCache = new Hashtable();
+    private Map<String, Object> methodCache = new Hashtable<String, Object>();
 
     private MethodMap methodMap = new MethodMap();
 
     /**
      * Standard constructor
      */
-    public ClassMap( Class clazz )
+    public ClassMap( Class<?> clazz )
     {
         this.clazz = clazz;
         populateMethodCache();
@@ -72,7 +71,7 @@ public class ClassMap
     /**
      * @return the class object whose methods are cached by this map.
      */
-    Class getCachedClass()
+    Class<?> getCachedClass()
     {
         return clazz;
     }
@@ -187,7 +186,7 @@ public class ClassMap
      */
     private String makeMethodKey( Method method )
     {
-        Class[] parameterTypes = method.getParameterTypes();
+        Class<?>[] parameterTypes = method.getParameterTypes();
 
         StringBuffer methodKey = new StringBuffer( method.getName() );
 
@@ -268,7 +267,7 @@ public class ClassMap
      * from public superclasses and interfaces (if they exist). Basically
      * upcasts every method to the nearest acccessible method.
      */
-    private static Method[] getAccessibleMethods( Class clazz )
+    private static Method[] getAccessibleMethods( Class<?> clazz )
     {
         Method[] methods = clazz.getMethods();
 
@@ -325,7 +324,7 @@ public class ClassMap
      * @param upcastCount current number of methods we have matched
      * @return count of matched methods
      */
-    private static int getAccessibleMethods( Class clazz, MethodInfo[] methodInfos, int upcastCount )
+    private static int getAccessibleMethods( Class<?> clazz, MethodInfo[] methodInfos, int upcastCount )
     {
         int l = methodInfos.length;
 
@@ -371,7 +370,7 @@ public class ClassMap
          *   Examine superclass
          */
 
-        Class superclazz = clazz.getSuperclass();
+        Class<?> superclazz = clazz.getSuperclass();
 
         if ( superclazz != null )
         {
@@ -393,7 +392,7 @@ public class ClassMap
          *  any interfaces, however nothing guarantees it will not in future.
          */
 
-        Class[] interfaces = clazz.getInterfaces();
+        Class<?>[] interfaces = clazz.getInterfaces();
 
         for ( int i = interfaces.length; i-- > 0; )
         {
@@ -425,7 +424,7 @@ public class ClassMap
      */
     public static Method getPublicMethod( Method method )
     {
-        Class clazz = method.getDeclaringClass();
+        Class<?> clazz = method.getDeclaringClass();
 
         /*
          *   Short circuit for (hopefully the majority of) cases where the declaring
@@ -448,7 +447,7 @@ public class ClassMap
      * @param name       the name of the method
      * @param paramTypes the classes of method parameters
      */
-    private static Method getPublicMethod( Class clazz, String name, Class[] paramTypes )
+    private static Method getPublicMethod( Class<?> clazz, String name, Class<?>[] paramTypes )
     {
         /*
          *  if this class is public, then try to get it
@@ -476,7 +475,7 @@ public class ClassMap
          */
 
 
-        Class superclazz = clazz.getSuperclass();
+        Class<?> superclazz = clazz.getSuperclass();
 
         if ( superclazz != null )
         {
@@ -492,7 +491,7 @@ public class ClassMap
          *  and interfaces
          */
 
-        Class[] interfaces = clazz.getInterfaces();
+        Class<?>[] interfaces = clazz.getInterfaces();
 
         for ( int i = 0; i < interfaces.length; ++i )
         {
@@ -514,7 +513,7 @@ public class ClassMap
     {
         Method method;
         String name;
-        Class[] parameterTypes;
+        Class<?>[] parameterTypes;
         boolean upcast;
 
         MethodInfo( Method method )
@@ -525,7 +524,7 @@ public class ClassMap
             upcast = false;
         }
 
-        void tryUpcasting( Class clazz )
+        void tryUpcasting( Class<?> clazz )
             throws NoSuchMethodException
         {
             method = clazz.getMethod( name, parameterTypes );
