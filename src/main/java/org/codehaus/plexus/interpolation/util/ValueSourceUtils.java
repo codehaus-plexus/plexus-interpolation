@@ -19,7 +19,6 @@ package org.codehaus.plexus.interpolation.util;
 import org.codehaus.plexus.interpolation.ValueSource;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Utility methods shared by multiple {@link ValueSource} implementations.
@@ -50,7 +49,8 @@ public final class ValueSourceUtils
      * @return The trimmed expression, or null. See the behavior of
      * allowUnprefixedExpressions in this method for more detail.
      */
-    public static String trimPrefix( String expression, Collection possiblePrefixes, boolean allowUnprefixedExpressions )
+    public static String trimPrefix( String expression, Collection<String> possiblePrefixes,
+                                     boolean allowUnprefixedExpressions )
     {
         if ( expression == null )
         {
@@ -58,9 +58,8 @@ public final class ValueSourceUtils
         }
 
         String realExpr = null;
-        for ( Iterator it = possiblePrefixes.iterator(); it.hasNext(); )
+        for ( String prefix : possiblePrefixes )
         {
-            String prefix = (String) it.next();
             if ( expression.startsWith( prefix ) )
             {
                 realExpr = expression.substring( prefix.length() );
