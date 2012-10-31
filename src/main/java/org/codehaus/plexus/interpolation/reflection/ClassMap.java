@@ -103,8 +103,7 @@ public class ClassMap
         {
             try
             {
-                cacheEntry = methodMap.find( name,
-                                             params );
+                cacheEntry = methodMap.find( name, params );
             }
             catch ( MethodMap.AmbiguousException ae )
             {
@@ -112,21 +111,18 @@ public class ClassMap
                  *  that's a miss :)
                  */
 
-                methodCache.put( methodKey,
-                                 CACHE_MISS );
+                methodCache.put( methodKey, CACHE_MISS );
 
                 throw ae;
             }
 
             if ( cacheEntry == null )
             {
-                methodCache.put( methodKey,
-                                 CACHE_MISS );
+                methodCache.put( methodKey, CACHE_MISS );
             }
             else
             {
-                methodCache.put( methodKey,
-                                 cacheEntry );
+                methodCache.put( methodKey, cacheEntry );
             }
         }
 
@@ -246,10 +242,8 @@ public class ClassMap
     {
         StringBuffer methodKey = new StringBuffer().append( method );
 
-        for ( int j = 0; j < params.length; j++ )
+        for ( Object arg : params )
         {
-            Object arg = params[j];
-
             if ( arg == null )
             {
                 arg = OBJECT;
@@ -304,9 +298,8 @@ public class ClassMap
         }
 
         int j = 0;
-        for ( int i = 0; i < methodInfos.length; ++i )
+        for ( MethodInfo methodInfo : methodInfos )
         {
-            MethodInfo methodInfo = methodInfos[i];
             if ( methodInfo.upcast )
             {
                 methods[j++] = methodInfo.method;
@@ -491,11 +484,9 @@ public class ClassMap
          *  and interfaces
          */
 
-        Class<?>[] interfaces = clazz.getInterfaces();
-
-        for ( int i = 0; i < interfaces.length; ++i )
+        for ( Class<?> interface_ : clazz.getInterfaces() )
         {
-            Method interfaceMethod = getPublicMethod( interfaces[i], name, paramTypes );
+            Method interfaceMethod = getPublicMethod( interface_, name, paramTypes );
 
             if ( interfaceMethod != null )
             {
