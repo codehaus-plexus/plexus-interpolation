@@ -36,9 +36,9 @@ import java.util.WeakHashMap;
  */
 public class ReflectionValueExtractor
 {
-    private static final Class<?>[] CLASS_ARGS = new Class[ 0 ];
+    private static final Class<?>[] CLASS_ARGS = new Class[0];
 
-    private static final Object[] OBJECT_ARGS = new Object[ 0 ];
+    private static final Object[] OBJECT_ARGS = new Object[0];
 
     /**
      * Use a WeakHashMap here, so the keys (Class objects) can be garbage collected.
