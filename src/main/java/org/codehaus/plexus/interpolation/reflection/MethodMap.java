@@ -360,43 +360,39 @@ public class MethodMap
 
         if ( formal.isPrimitive() )
         {
-            if ( formal == Boolean.TYPE && actual == Boolean.class )
+            if ( formal == Boolean.TYPE )
             {
-                return true;
+                return actual == Boolean.class;
             }
-            if ( formal == Character.TYPE && actual == Character.class )
+            if ( formal == Character.TYPE )
             {
-                return true;
+                return actual == Character.class;
             }
-            if ( formal == Byte.TYPE && actual == Byte.class )
+            if ( formal == Byte.TYPE )
             {
-                return true;
+                return actual == Byte.class;
             }
-            if ( formal == Short.TYPE && ( actual == Short.class || actual == Byte.class ) )
+            if ( formal == Short.TYPE )
             {
-                return true;
+                return actual == Short.class || actual == Byte.class;
             }
-            if ( formal == Integer.TYPE
-                && ( actual == Integer.class || actual == Short.class || actual == Byte.class ) )
+            if ( formal == Integer.TYPE )
             {
-                return true;
+                return actual == Integer.class || actual == Short.class || actual == Byte.class;
             }
-            if ( formal == Long.TYPE
-                && ( actual == Long.class || actual == Integer.class || actual == Short.class || actual == Byte.class ) )
+            if ( formal == Long.TYPE )
             {
-                return true;
+                return actual == Long.class || actual == Integer.class || actual == Short.class || actual == Byte.class;
             }
-            if ( formal == Float.TYPE
-                && ( actual == Float.class || actual == Long.class || actual == Integer.class || actual == Short.class
-                    || actual == Byte.class ) )
+            if ( formal == Float.TYPE )
             {
-                return true;
+                return actual == Float.class || actual == Long.class || actual == Integer.class
+                    || actual == Short.class || actual == Byte.class;
             }
-            if ( formal == Double.TYPE
-                && ( actual == Double.class || actual == Float.class || actual == Long.class || actual == Integer.class
-                    || actual == Short.class || actual == Byte.class ) )
+            if ( formal == Double.TYPE )
             {
-                return true;
+                return actual == Double.class || actual == Float.class || actual == Long.class
+                    || actual == Integer.class || actual == Short.class || actual == Byte.class;
             }
         }
 
@@ -442,28 +438,26 @@ public class MethodMap
 
         if ( formal.isPrimitive() )
         {
-            if ( formal == Short.TYPE && ( actual == Byte.TYPE ) )
+            if ( formal == Short.TYPE )
             {
-                return true;
+                return actual == Byte.TYPE;
             }
-            if ( formal == Integer.TYPE && ( actual == Short.TYPE || actual == Byte.TYPE ) )
+            if ( formal == Integer.TYPE )
             {
-                return true;
+                return actual == Short.TYPE || actual == Byte.TYPE;
             }
-            if ( formal == Long.TYPE && ( actual == Integer.TYPE || actual == Short.TYPE || actual == Byte.TYPE ) )
+            if ( formal == Long.TYPE )
             {
-                return true;
+                return actual == Integer.TYPE || actual == Short.TYPE || actual == Byte.TYPE;
             }
-            if ( formal == Float.TYPE
-                && ( actual == Long.TYPE || actual == Integer.TYPE || actual == Short.TYPE || actual == Byte.TYPE ) )
+            if ( formal == Float.TYPE )
             {
-                return true;
+                return actual == Long.TYPE || actual == Integer.TYPE || actual == Short.TYPE || actual == Byte.TYPE;
             }
-            if ( formal == Double.TYPE
-                && ( actual == Float.TYPE || actual == Long.TYPE || actual == Integer.TYPE || actual == Short.TYPE
-                    || actual == Byte.TYPE ) )
+            if ( formal == Double.TYPE )
             {
-                return true;
+                return actual == Float.TYPE || actual == Long.TYPE || actual == Integer.TYPE || actual == Short.TYPE
+                    || actual == Byte.TYPE;
             }
         }
         return false;
