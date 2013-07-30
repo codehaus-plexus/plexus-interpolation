@@ -40,17 +40,45 @@ public final class ValueSourceUtils
      * expression unchanged; if the flag is false, return null. Finally, if the
      * original expression is null, return null without attempting to process it.
      *
-     * @param expression The expression to trim
-     * @param possiblePrefixes The list of possible expression prefixes to trim
+     * @param expression                 The expression to trim
+     * @param possiblePrefixes           The list of possible expression prefixes to trim
      * @param allowUnprefixedExpressions Whether to return the expression if it
-     * doesn't start with one of the prefixes. If true, simply return the
-     * original expression; if false, return null.
-     *
+     *                                   doesn't start with one of the prefixes. If true, simply return the
+     *                                   original expression; if false, return null.
      * @return The trimmed expression, or null. See the behavior of
-     * allowUnprefixedExpressions in this method for more detail.
+     *         allowUnprefixedExpressions in this method for more detail.
      */
     public static String trimPrefix( String expression, Collection<String> possiblePrefixes,
                                      boolean allowUnprefixedExpressions )
+    {
+        if ( expression == null )
+        {
+            return null;
+        }
+
+        String realExpr = null;
+        for ( String prefix : possiblePrefixes )
+        {
+            if ( expression.startsWith( prefix ) )
+            {
+                realExpr = expression.substring( prefix.length() );
+                if ( realExpr.startsWith( "." ) )
+                {
+                    realExpr = realExpr.substring( 1 );
+                }
+                break;
+            }
+        }
+
+        if ( realExpr == null && allowUnprefixedExpressions )
+        {
+            realExpr = expression;
+        }
+
+        return realExpr;
+    }
+
+    public static String trimPrefix( String expression, String[] possiblePrefixes, boolean allowUnprefixedExpressions )
     {
         if ( expression == null )
         {

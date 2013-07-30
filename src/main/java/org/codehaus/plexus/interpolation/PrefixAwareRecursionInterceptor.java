@@ -39,9 +39,9 @@ public class PrefixAwareRecursionInterceptor
 
     public static final String DEFAULT_END_TOKEN = "\\}";
 
-    private Stack nakedExpressions = new Stack();
+    private Stack<String> nakedExpressions = new Stack<String>();
 
-    private final Collection possiblePrefixes;
+    private final Collection<String> possiblePrefixes;
 
     private boolean watchUnprefixedExpressions = true;
 
@@ -49,10 +49,10 @@ public class PrefixAwareRecursionInterceptor
      * Use the specified expression prefixes to detect synonyms, and specify whether
      * unprefixed expressions can be considered synonyms.
      *
-     * @param possiblePrefixes The collection of expression prefixes supported
+     * @param possiblePrefixes           The collection of expression prefixes supported
      * @param watchUnprefixedExpressions Whether to consider unprefixed expressions as synonyms
      */
-    public PrefixAwareRecursionInterceptor( Collection possiblePrefixes, boolean watchUnprefixedExpressions )
+    public PrefixAwareRecursionInterceptor( Collection<String> possiblePrefixes, boolean watchUnprefixedExpressions )
     {
         this.possiblePrefixes = possiblePrefixes;
         this.watchUnprefixedExpressions = watchUnprefixedExpressions;
@@ -64,7 +64,7 @@ public class PrefixAwareRecursionInterceptor
      *
      * @param possiblePrefixes The collection of expression prefixes supported
      */
-    public PrefixAwareRecursionInterceptor( Collection possiblePrefixes )
+    public PrefixAwareRecursionInterceptor( Collection<String> possiblePrefixes )
     {
         this.possiblePrefixes = possiblePrefixes;
     }
@@ -72,12 +72,8 @@ public class PrefixAwareRecursionInterceptor
     public boolean hasRecursiveExpression( String expression )
     {
         String realExpr = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, watchUnprefixedExpressions );
-        if ( realExpr != null )
-        {
-            return nakedExpressions.contains( realExpr );
-        }
+        return realExpr != null && nakedExpressions.contains( realExpr );
 
-        return false;
     }
 
     public void expressionResolutionFinished( String expression )

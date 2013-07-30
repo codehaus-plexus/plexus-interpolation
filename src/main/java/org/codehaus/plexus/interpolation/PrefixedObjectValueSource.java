@@ -36,6 +36,7 @@ public class PrefixedObjectValueSource
     /**
      * Wrap the specified root object, allowing the specified expression prefix.
      */
+    @SuppressWarnings( "UnusedDeclaration" )
     public PrefixedObjectValueSource( String prefix, Object root )
     {
         super( new PrefixedValueSourceWrapper( new ObjectBasedValueSource( root ), prefix ) );
@@ -46,9 +47,10 @@ public class PrefixedObjectValueSource
      * prefixes and setting whether the {@link PrefixedValueSourceWrapper} allows
      * unprefixed expressions.
      */
-    public PrefixedObjectValueSource( List possiblePrefixes, Object root, boolean allowUnprefixedExpressions )
+    public PrefixedObjectValueSource( List<String> possiblePrefixes, Object root, boolean allowUnprefixedExpressions )
     {
-        super( new PrefixedValueSourceWrapper( new ObjectBasedValueSource( root ), possiblePrefixes, allowUnprefixedExpressions ) );
+        super( new PrefixedValueSourceWrapper( new ObjectBasedValueSource( root ), possiblePrefixes,
+                                               allowUnprefixedExpressions ) );
     }
 
     /**
@@ -56,6 +58,6 @@ public class PrefixedObjectValueSource
      */
     public String getLastExpression()
     {
-        return ((QueryEnabledValueSource) getDelegate()).getLastExpression();
+        return ( (QueryEnabledValueSource) getDelegate() ).getLastExpression();
     }
 }

@@ -35,7 +35,7 @@ public class PrefixedValueSourceWrapper
 
     private final ValueSource valueSource;
 
-    private final List possiblePrefixes;
+    private final String[] possiblePrefixes;
 
     private boolean allowUnprefixedExpressions;
 
@@ -47,13 +47,12 @@ public class PrefixedValueSourceWrapper
      * doesn't start with the given prefix, do not resolve it.
      *
      * @param valueSource The {@link ValueSource} to wrap.
-     * @param prefix The expression prefix to trim.
+     * @param prefix      The expression prefix to trim.
      */
-    public PrefixedValueSourceWrapper( ValueSource valueSource,
-                                       String prefix )
+    public PrefixedValueSourceWrapper( ValueSource valueSource, String prefix )
     {
         this.valueSource = valueSource;
-        possiblePrefixes = Collections.singletonList( prefix );
+        possiblePrefixes = new String[]{ prefix };
     }
 
     /**
@@ -64,17 +63,15 @@ public class PrefixedValueSourceWrapper
      * unchanged. If this flag is false, only allow resolution of those expressions
      * that start with the specified prefix.
      *
-     * @param valueSource The {@link ValueSource} to wrap.
-     * @param prefix The expression prefix to trim.
+     * @param valueSource                The {@link ValueSource} to wrap.
+     * @param prefix                     The expression prefix to trim.
      * @param allowUnprefixedExpressions Flag telling the wrapper whether to
-     * continue resolving expressions that don't start with the prefix it tracks.
+     *                                   continue resolving expressions that don't start with the prefix it tracks.
      */
-    public PrefixedValueSourceWrapper( ValueSource valueSource,
-                                       String prefix,
-                                       boolean allowUnprefixedExpressions )
+    public PrefixedValueSourceWrapper( ValueSource valueSource, String prefix, boolean allowUnprefixedExpressions )
     {
         this.valueSource = valueSource;
-        possiblePrefixes = Collections.singletonList( prefix );
+        possiblePrefixes = new String[]{ prefix };
         this.allowUnprefixedExpressions = allowUnprefixedExpressions;
     }
 
@@ -83,14 +80,13 @@ public class PrefixedValueSourceWrapper
      * expressions before they are passed along for resolution. If an expression
      * doesn't start with one of the given prefixes, do not resolve it.
      *
-     * @param valueSource The {@link ValueSource} to wrap.
+     * @param valueSource      The {@link ValueSource} to wrap.
      * @param possiblePrefixes The List of expression prefixes to trim.
      */
-    public PrefixedValueSourceWrapper( ValueSource valueSource,
-                                       List possiblePrefixes )
+    public PrefixedValueSourceWrapper( ValueSource valueSource, List<String> possiblePrefixes )
     {
         this.valueSource = valueSource;
-        this.possiblePrefixes = possiblePrefixes;
+        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()] );
     }
 
     /**
@@ -101,17 +97,16 @@ public class PrefixedValueSourceWrapper
      * unchanged. If this flag is false, only allow resolution of those expressions
      * that start with the specified prefix.
      *
-     * @param valueSource The {@link ValueSource} to wrap.
-     * @param possiblePrefixes The List of expression prefixes to trim.
+     * @param valueSource                The {@link ValueSource} to wrap.
+     * @param possiblePrefixes           The List of expression prefixes to trim.
      * @param allowUnprefixedExpressions Flag telling the wrapper whether to
-     * continue resolving expressions that don't start with one of the prefixes it tracks.
+     *                                   continue resolving expressions that don't start with one of the prefixes it tracks.
      */
-    public PrefixedValueSourceWrapper( ValueSource valueSource,
-                                       List possiblePrefixes,
+    public PrefixedValueSourceWrapper( ValueSource valueSource, List<String> possiblePrefixes,
                                        boolean allowUnprefixedExpressions )
     {
         this.valueSource = valueSource;
-        this.possiblePrefixes = possiblePrefixes;
+        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()] );
         this.allowUnprefixedExpressions = allowUnprefixedExpressions;
     }
 
@@ -141,8 +136,8 @@ public class PrefixedValueSourceWrapper
     public List getFeedback()
     {
         return ( valueSource instanceof FeedbackEnabledValueSource )
-                        ? ( (FeedbackEnabledValueSource) valueSource ).getFeedback()
-                        : Collections.EMPTY_LIST;
+            ? valueSource.getFeedback()
+            : Collections.EMPTY_LIST;
     }
 
     /**
@@ -153,8 +148,8 @@ public class PrefixedValueSourceWrapper
     public String getLastExpression()
     {
         return ( valueSource instanceof QueryEnabledValueSource )
-                        ? ( (QueryEnabledValueSource) valueSource ).getLastExpression()
-                        : lastExpression;
+            ? ( (QueryEnabledValueSource) valueSource ).getLastExpression()
+            : lastExpression;
     }
 
     /**

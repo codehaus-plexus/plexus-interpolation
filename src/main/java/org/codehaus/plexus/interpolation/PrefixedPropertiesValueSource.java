@@ -28,6 +28,7 @@ import java.util.Properties;
  * <br/>
  * This is just a convenience implementation to provide a shorthand for constructing
  * the properties value source and then wrapping it with a prefixed value-source wrapper.
+ *
  * @version $Id$
  */
 public class PrefixedPropertiesValueSource
@@ -41,7 +42,7 @@ public class PrefixedPropertiesValueSource
      * expression prefix. Finally, set this wrapper source as a delegate for this
      * instance to use.
      *
-     * @param prefix The expression prefix to trim
+     * @param prefix     The expression prefix to trim
      * @param properties The properties instance to wrap
      */
     public PrefixedPropertiesValueSource( String prefix, Properties properties )
@@ -56,11 +57,13 @@ public class PrefixedPropertiesValueSource
      * instance to use.
      *
      * @param possiblePrefixes The expression-prefix list to trim
-     * @param properties The properties instance to wrap
+     * @param properties       The properties instance to wrap
      */
-    public PrefixedPropertiesValueSource( List possiblePrefixes, Properties properties, boolean allowUnprefixedExpressions )
+    public PrefixedPropertiesValueSource( List<String> possiblePrefixes, Properties properties,
+                                          boolean allowUnprefixedExpressions )
     {
-        super( new PrefixedValueSourceWrapper( new PropertiesBasedValueSource( properties ), possiblePrefixes, allowUnprefixedExpressions ) );
+        super( new PrefixedValueSourceWrapper( new PropertiesBasedValueSource( properties ), possiblePrefixes,
+                                               allowUnprefixedExpressions ) );
     }
 
     /**
@@ -68,7 +71,7 @@ public class PrefixedPropertiesValueSource
      */
     public String getLastExpression()
     {
-        return ((QueryEnabledValueSource) getDelegate()).getLastExpression();
+        return ( (QueryEnabledValueSource) getDelegate() ).getLastExpression();
     }
 
 }

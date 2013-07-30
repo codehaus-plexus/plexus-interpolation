@@ -19,7 +19,6 @@ package org.codehaus.plexus.interpolation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,22 +29,22 @@ public class StringSearchInterpolator
 
     private Map existingAnswers = new HashMap();
 
-    private List valueSources = new ArrayList();
-    
-    private List postProcessors = new ArrayList();
-   
+    private List<ValueSource> valueSources = new ArrayList<ValueSource>();
+
+    private List<InterpolationPostProcessor> postProcessors = new ArrayList<InterpolationPostProcessor>();
+
     private boolean cacheAnswers = false;
-    
+
     public static final String DEFAULT_START_EXPR = "${";
-    
+
     public static final String DEFAULT_END_EXPR = "}";
-    
+
     private String startExpr;
-    
+
     private String endExpr;
-    
+
     private String escapeString;
-    
+
     public StringSearchInterpolator()
     {
         this.startExpr = DEFAULT_START_EXPR;
@@ -56,9 +55,9 @@ public class StringSearchInterpolator
     {
         this.startExpr = startExpr;
         this.endExpr = endExpr;
-    }    
-    
-    
+    }
+
+
     /**
      * {@inheritDoc}
      */
@@ -88,9 +87,9 @@ public class StringSearchInterpolator
      */
     public void removePostProcessor( InterpolationPostProcessor postProcessor )
     {
-        postProcessors.remove( postProcessor  );
+        postProcessors.remove( postProcessor );
     }
-    
+
     public String interpolate( String input, String thisPrefixPattern )
         throws InterpolationException
     {
@@ -115,13 +114,12 @@ public class StringSearchInterpolator
      *
      * @todo Ensure unresolvable expressions don't trigger infinite recursion.
      */
-    public String interpolate( String input,
-                                RecursionInterceptor recursionInterceptor )
+    public String interpolate( String input, RecursionInterceptor recursionInterceptor )
         throws InterpolationException
     {
         try
         {
-            return interpolate( input, recursionInterceptor, new HashSet() );
+            return interpolate( input, recursionInterceptor, new HashSet<String>() );
         }
         finally
         {
@@ -131,29 +129,29 @@ public class StringSearchInterpolator
             }
         }
     }
-    
-    private String interpolate( String input, RecursionInterceptor recursionInterceptor, Set unresolvable )
+
+    private String interpolate( String input, RecursionInterceptor recursionInterceptor, Set<String> unresolvable )
         throws InterpolationException
     {
-        if (input == null )
+        if ( input == null )
         {
             // return empty String to prevent NPE too
             return "";
         }
-        StringBuffer result = new StringBuffer( input.length() * 2 );
-        
-        int startIdx = -1;
+        StringBuilder result = new StringBuilder( input.length() * 2 );
+
+        int startIdx;
         int endIdx = -1;
         while ( ( startIdx = input.indexOf( startExpr, endIdx + 1 ) ) > -1 )
         {
             result.append( input.substring( endIdx + 1, startIdx ) );
-            
+
             endIdx = input.indexOf( endExpr, startIdx + 1 );
             if ( endIdx < 0 )
             {
                 break;
             }
-            
+
             String wholeExpr = input.substring( startIdx, endIdx + endExpr.length() );
             String realExpr = wholeExpr.substring( startExpr.length(), wholeExpr.length() - endExpr.length() );
 
@@ -170,8 +168,8 @@ public class StringSearchInterpolator
                         continue;
                     }
                 }
-            }            
-            
+            }
+
             boolean resolved = false;
             if ( !unresolvable.contains( wholeExpr ) )
             {
@@ -190,13 +188,16 @@ public class StringSearchInterpolator
                 {
                     Object value = existingAnswers.get( realExpr );
                     Object bestAnswer = null;
-                    for ( Iterator it = valueSources.iterator(); it.hasNext() && value == null; )
+
+                    for ( ValueSource valueSource : valueSources )
                     {
-                        ValueSource vs = (ValueSource) it.next();
+                        if ( value != null )
+                        {
+                            break;
+                        }
+                        value = valueSource.getValue( realExpr );
 
-                        value = vs.getValue( realExpr );
-
-                        if ( value != null && value.toString().indexOf( wholeExpr ) > -1 )
+                        if ( value != null && value.toString().contains( wholeExpr ) )
                         {
                             bestAnswer = value;
                             value = null;
@@ -217,9 +218,8 @@ public class StringSearchInterpolator
 
                         if ( postProcessors != null && !postProcessors.isEmpty() )
                         {
-                            for ( Iterator it = postProcessors.iterator(); it.hasNext(); )
+                            for ( InterpolationPostProcessor postProcessor : postProcessors )
                             {
-                                InterpolationPostProcessor postProcessor = (InterpolationPostProcessor) it.next();
                                 Object newVal = postProcessor.execute( realExpr, value );
                                 if ( newVal != null )
                                 {
@@ -251,13 +251,13 @@ public class StringSearchInterpolator
             {
                 result.append( wholeExpr );
             }
-            
+
             if ( endIdx > -1 )
             {
                 endIdx += endExpr.length() - 1;
             }
         }
-        
+
         if ( endIdx == -1 && startIdx > -1 )
         {
             result.append( input.substring( startIdx, input.length() ) );
@@ -266,7 +266,7 @@ public class StringSearchInterpolator
         {
             result.append( input.substring( endIdx + 1, input.length() ) );
         }
-        
+
         return result.toString();
     }
 
@@ -277,14 +277,13 @@ public class StringSearchInterpolator
      * optional, and will only be useful for debugging interpolation problems.
      *
      * @return a {@link List} that may be interspersed with {@link String} and
-     * {@link Throwable} instances.
+     *         {@link Throwable} instances.
      */
     public List getFeedback()
     {
-        List messages = new ArrayList();
-        for ( Iterator it = valueSources.iterator(); it.hasNext(); )
+        List<?> messages = new ArrayList();
+        for ( ValueSource vs : valueSources )
         {
-            ValueSource vs = (ValueSource) it.next();
             List feedback = vs.getFeedback();
             if ( feedback != null && !feedback.isEmpty() )
             {
@@ -300,9 +299,8 @@ public class StringSearchInterpolator
      */
     public void clearFeedback()
     {
-        for ( Iterator it = valueSources.iterator(); it.hasNext(); )
+        for ( ValueSource vs : valueSources )
         {
-            ValueSource vs = (ValueSource) it.next();
             vs.clearFeedback();
         }
     }
@@ -316,7 +314,7 @@ public class StringSearchInterpolator
     {
         this.cacheAnswers = cacheAnswers;
     }
-    
+
     public void clearAnswers()
     {
         existingAnswers.clear();
