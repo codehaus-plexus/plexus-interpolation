@@ -66,13 +66,12 @@ public class MethodMap
 
         l.add( method );
 
-        return;
     }
 
     /**
      * Return a list of methods with the same name.
      *
-     * @param key
+     * @param key  the key
      * @return list of methods
      */
     public List<Method> get( String key )

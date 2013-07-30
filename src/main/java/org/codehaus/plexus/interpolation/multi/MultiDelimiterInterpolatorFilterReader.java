@@ -62,7 +62,6 @@ import org.codehaus.plexus.interpolation.SimpleRecursionInterceptor;
 import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 /**
@@ -109,7 +108,7 @@ public class MultiDelimiterInterpolatorFilterReader
     /** if true escapeString will be preserved \{foo} -> \{foo} */
     private boolean preserveEscapeString = false;
     
-    private LinkedHashSet delimiters = new LinkedHashSet();
+    private LinkedHashSet<DelimiterSpecification> delimiters = new LinkedHashSet<DelimiterSpecification>();
     
     private DelimiterSpecification currentSpec;
 
@@ -168,13 +167,12 @@ public class MultiDelimiterInterpolatorFilterReader
         return delimiters.remove( DelimiterSpecification.parse( delimiterSpec ) );
     }
     
-    public MultiDelimiterInterpolatorFilterReader setDelimiterSpecs( LinkedHashSet specs )
+    public MultiDelimiterInterpolatorFilterReader setDelimiterSpecs( LinkedHashSet<String> specs )
     {
         delimiters.clear();
-        for ( Iterator it = specs.iterator(); it.hasNext(); )
+        for ( String spec : specs )
         {
-            String spec = (String) it.next();
-            if (spec == null)
+            if ( spec == null )
             {
                 continue;
             }
@@ -457,16 +455,15 @@ public class MultiDelimiterInterpolatorFilterReader
 
     private boolean reselectDelimiterSpec( int ch )
     {
-        for ( Iterator it = delimiters.iterator(); it.hasNext(); )
+        for ( DelimiterSpecification spec : delimiters )
         {
-            DelimiterSpecification spec = (DelimiterSpecification) it.next();
             if ( ch == spec.getBegin().charAt( 0 ) )
             {
                 currentSpec = spec;
                 originalBeginToken = currentSpec.getBegin();
                 beginToken = useEscape ? escapeString + originalBeginToken : originalBeginToken;
                 endToken = currentSpec.getEnd();
-                
+
                 return true;
             }
         }

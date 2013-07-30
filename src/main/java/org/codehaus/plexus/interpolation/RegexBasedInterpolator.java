@@ -18,7 +18,6 @@ package org.codehaus.plexus.interpolation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -45,9 +44,9 @@ public class RegexBasedInterpolator
     
     private Map existingAnswers = new HashMap();
 
-    private List valueSources = new ArrayList();
+    private List<ValueSource> valueSources = new ArrayList<ValueSource>();
     
-    private List postProcessors = new ArrayList();
+    private List<InterpolationPostProcessor> postProcessors = new ArrayList<InterpolationPostProcessor>();
     
     private boolean reusePatterns = false;
     
@@ -298,9 +297,9 @@ public class RegexBasedInterpolator
             try
             {
                 Object value = existingAnswers.get( realExpr );
-                for ( Iterator it = valueSources.iterator(); it.hasNext() && value == null; )
+                for ( ValueSource vs : valueSources )
                 {
-                    ValueSource vs = (ValueSource) it.next();
+                   if (value != null) break;
 
                     value = vs.getValue( realExpr );
                 }
@@ -312,9 +311,8 @@ public class RegexBasedInterpolator
 
                     if ( postProcessors != null && !postProcessors.isEmpty() )
                     {
-                        for ( Iterator it = postProcessors.iterator(); it.hasNext(); )
+                        for ( InterpolationPostProcessor postProcessor : postProcessors )
                         {
-                            InterpolationPostProcessor postProcessor = (InterpolationPostProcessor) it.next();
                             Object newVal = postProcessor.execute( realExpr, value );
                             if ( newVal != null )
                             {
@@ -353,9 +351,9 @@ public class RegexBasedInterpolator
     public List getFeedback()
     {
         List messages = new ArrayList();
-        for ( Iterator it = valueSources.iterator(); it.hasNext(); )
+        for ( Object valueSource : valueSources )
         {
-            ValueSource vs = (ValueSource) it.next();
+            ValueSource vs = (ValueSource) valueSource;
             List feedback = vs.getFeedback();
             if ( feedback != null && !feedback.isEmpty() )
             {
@@ -371,9 +369,9 @@ public class RegexBasedInterpolator
      */
     public void clearFeedback()
     {
-        for ( Iterator it = valueSources.iterator(); it.hasNext(); )
+        for ( Object valueSource : valueSources )
         {
-            ValueSource vs = (ValueSource) it.next();
+            ValueSource vs = (ValueSource) valueSource;
             vs.clearFeedback();
         }
     }

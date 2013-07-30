@@ -299,9 +299,8 @@ public class FieldBasedObjectInterpolator
                                             continue;
                                         }
 
-                                        for ( Iterator it = originalValues.iterator(); it.hasNext(); )
+                                        for ( Object value : originalValues )
                                         {
-                                            Object value = it.next();
                                             if ( value != null )
                                             {
                                                 if ( String.class == value.getClass() )

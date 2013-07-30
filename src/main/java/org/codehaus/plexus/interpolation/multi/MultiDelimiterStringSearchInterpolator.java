@@ -27,7 +27,6 @@ import org.codehaus.plexus.interpolation.ValueSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -41,13 +40,13 @@ public class MultiDelimiterStringSearchInterpolator
     
     private Map existingAnswers = new HashMap();
 
-    private List valueSources = new ArrayList();
+    private List<ValueSource> valueSources = new ArrayList<ValueSource>();
 
     private List postProcessors = new ArrayList();
 
     private boolean cacheAnswers = false;
 
-    private LinkedHashSet delimiters = new LinkedHashSet();
+    private LinkedHashSet<DelimiterSpecification> delimiters = new LinkedHashSet<DelimiterSpecification>();
 
     private String escapeString;
 
@@ -158,7 +157,7 @@ public class MultiDelimiterStringSearchInterpolator
         }
     }
 
-    private String interpolate( String input, RecursionInterceptor recursionInterceptor, Set unresolvable )
+    private String interpolate( String input, RecursionInterceptor recursionInterceptor, Set<String> unresolvable )
         throws InterpolationException
     {
         if ( input == null )
@@ -166,7 +165,7 @@ public class MultiDelimiterStringSearchInterpolator
             // return empty String to prevent NPE too
             return "";
         }
-        StringBuffer result = new StringBuffer( input.length() * 2 );
+        StringBuilder result = new StringBuilder( input.length() * 2 );
 
         String lastResult = input;
         int tries = 0;
@@ -232,13 +231,13 @@ public class MultiDelimiterStringSearchInterpolator
 
                     Object value = existingAnswers.get( realExpr );
                     Object bestAnswer = null;
-                    for ( Iterator it = valueSources.iterator(); it.hasNext() && value == null; )
+                    for ( ValueSource vs : valueSources )
                     {
-                        ValueSource vs = (ValueSource) it.next();
+                        if (value != null ) break;
 
                         value = vs.getValue( realExpr );
 
-                        if ( value != null && value.toString().indexOf( wholeExpr ) > -1 )
+                        if ( value != null && value.toString().contains( wholeExpr ) )
                         {
                             bestAnswer = value;
                             value = null;
@@ -259,9 +258,9 @@ public class MultiDelimiterStringSearchInterpolator
 
                         if ( postProcessors != null && !postProcessors.isEmpty() )
                         {
-                            for ( Iterator it = postProcessors.iterator(); it.hasNext(); )
+                            for ( Object postProcessor1 : postProcessors )
                             {
-                                InterpolationPostProcessor postProcessor = (InterpolationPostProcessor) it.next();
+                                InterpolationPostProcessor postProcessor = (InterpolationPostProcessor) postProcessor1;
                                 Object newVal = postProcessor.execute( realExpr, value );
                                 if ( newVal != null )
                                 {
@@ -313,12 +312,11 @@ public class MultiDelimiterStringSearchInterpolator
     private DelimiterSpecification select( String input, int lastEndIdx )
     {
         DelimiterSpecification selected = null;
-        
-        for ( Iterator it = delimiters.iterator(); it.hasNext(); )
+
+        for ( DelimiterSpecification spec : delimiters )
         {
-            DelimiterSpecification spec = (DelimiterSpecification) it.next();
             spec.clearNextStart();
-            
+
             if ( selected == null )
             {
                 int idx = input.indexOf( spec.getBegin(), lastEndIdx + 1 );
@@ -343,9 +341,8 @@ public class MultiDelimiterStringSearchInterpolator
     public List getFeedback()
     {
         List messages = new ArrayList();
-        for ( Iterator it = valueSources.iterator(); it.hasNext(); )
+        for ( ValueSource vs : valueSources )
         {
-            ValueSource vs = (ValueSource) it.next();
             List feedback = vs.getFeedback();
             if ( feedback != null && !feedback.isEmpty() )
             {
@@ -361,9 +358,8 @@ public class MultiDelimiterStringSearchInterpolator
      */
     public void clearFeedback()
     {
-        for ( Iterator it = valueSources.iterator(); it.hasNext(); )
+        for ( ValueSource vs : valueSources )
         {
-            ValueSource vs = (ValueSource) it.next();
             vs.clearFeedback();
         }
     }
@@ -393,16 +389,15 @@ public class MultiDelimiterStringSearchInterpolator
         this.escapeString = escapeString;
     }
     
-    public MultiDelimiterStringSearchInterpolator setDelimiterSpecs( LinkedHashSet specs )
+    public MultiDelimiterStringSearchInterpolator setDelimiterSpecs( LinkedHashSet<String> specs )
     {
         delimiters.clear();
-        for ( Iterator it = specs.iterator(); it.hasNext(); )
+        for ( String spec : specs )
         {
-            String spec = (String) it.next();
             if ( spec == null )
             {
                 continue;
-            }            
+            }
             delimiters.add( DelimiterSpecification.parse( spec ) );
         }
         
