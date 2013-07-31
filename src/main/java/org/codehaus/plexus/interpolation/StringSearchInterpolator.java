@@ -144,7 +144,7 @@ public class StringSearchInterpolator
         int endIdx = -1;
         while ( ( startIdx = input.indexOf( startExpr, endIdx + 1 ) ) > -1 )
         {
-            result.append( input.substring( endIdx + 1, startIdx ) );
+            result.append( input, endIdx + 1, startIdx );
 
             endIdx = input.indexOf( endExpr, startIdx + 1 );
             if ( endIdx < 0 )
@@ -260,11 +260,11 @@ public class StringSearchInterpolator
 
         if ( endIdx == -1 && startIdx > -1 )
         {
-            result.append( input.substring( startIdx, input.length() ) );
+            result.append( input, startIdx, input.length());
         }
         else if ( endIdx < input.length() )
         {
-            result.append( input.substring( endIdx + 1, input.length() ) );
+            result.append( input, endIdx + 1, input.length() );
         }
 
         return result.toString();

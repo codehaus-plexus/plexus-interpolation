@@ -98,11 +98,11 @@ public class StringUtils
             return text;
         }
 
-        StringBuffer buf = new StringBuffer( text.length() );
-        int start = 0, end = 0;
+        StringBuilder buf = new StringBuilder( text.length() );
+        int start = 0, end;
         while ( ( end = text.indexOf( repl, start ) ) != -1 )
         {
-            buf.append( text.substring( start, end ) ).append( with );
+            buf.append( text, start, end ).append( with );
             start = end + repl.length();
 
             if ( --max == 0 )
@@ -110,7 +110,7 @@ public class StringUtils
                 break;
             }
         }
-        buf.append( text.substring( start ) );
+        buf.append( text, start, text.length());
         return buf.toString();
     }
 
