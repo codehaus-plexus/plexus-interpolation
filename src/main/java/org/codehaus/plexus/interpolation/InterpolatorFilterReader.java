@@ -254,7 +254,7 @@ public class InterpolatorFilterReader
         
         if ( ch == this.beginToken.charAt( 0 ) || ( useEscape && ch == this.orginalBeginToken.charAt( 0 ) ) )
         {
-            StringBuffer key = new StringBuffer( );
+            StringBuilder key = new StringBuilder( );
 
             key.append( (char) ch );
 

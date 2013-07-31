@@ -220,7 +220,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest
                                                                                                interpolator, ri );
         r.setInterpolateWithPrefixPattern( false );
         r.setEscapeString( "\\" );
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )
@@ -253,7 +253,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest
                                                                                                interpolator, ri );
         r.setInterpolateWithPrefixPattern( false );
         r.setEscapeString( "\\" );
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )
@@ -311,7 +311,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest
         {
             r.setEscapeString( escapeStr );
         }
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )
@@ -334,7 +334,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest
 
         r.setInterpolateWithPrefixPattern( false );
         r.setEscapeString( "\\" );
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )
@@ -361,7 +361,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest
 
         r.setInterpolateWithPrefixPattern( false );
         r.setEscapeString( "\\" );
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )

@@ -213,7 +213,7 @@ public class InterpolatorFilterReaderTest
         InterpolatorFilterReader r = new InterpolatorFilterReader( new StringReader( input ), interpolator, ri );
         r.setInterpolateWithPrefixPattern( false );
         r.setEscapeString( "\\" );
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )
@@ -245,7 +245,7 @@ public class InterpolatorFilterReaderTest
         InterpolatorFilterReader r = new InterpolatorFilterReader( new StringReader( input ), interpolator, ri );
         r.setInterpolateWithPrefixPattern( false );
         r.setEscapeString( "\\" );
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )
@@ -279,7 +279,7 @@ public class InterpolatorFilterReaderTest
         {
             r.setEscapeString( escapeStr );
         }
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )
@@ -300,7 +300,7 @@ public class InterpolatorFilterReaderTest
         InterpolatorFilterReader r = new InterpolatorFilterReader( new StringReader( input ), interpolator, beginToken, endToken );
         r.setInterpolateWithPrefixPattern( false );
         r.setEscapeString( "\\" );
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
         while ( ( read = r.read( cbuf ) ) > -1 )

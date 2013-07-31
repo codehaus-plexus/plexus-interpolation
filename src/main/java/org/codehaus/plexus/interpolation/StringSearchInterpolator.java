@@ -152,7 +152,7 @@ public class StringSearchInterpolator
                 break;
             }
 
-            String wholeExpr = input.substring( startIdx, endIdx + endExpr.length() );
+            final String wholeExpr = input.substring( startIdx, endIdx + endExpr.length() );
             String realExpr = wholeExpr.substring( startExpr.length(), wholeExpr.length() - endExpr.length() );
 
             if ( startIdx >= 0 && escapeString != null && escapeString.length() > 0 )

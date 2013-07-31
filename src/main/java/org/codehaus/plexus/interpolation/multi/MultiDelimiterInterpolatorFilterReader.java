@@ -274,7 +274,7 @@ public class MultiDelimiterInterpolatorFilterReader
         
         if ( ( inEscape = ( useEscape && ch == escapeString.charAt( 0 ) ) ) || reselectDelimiterSpec( ch ) )
         {
-            StringBuffer key = new StringBuffer( );
+            StringBuilder key = new StringBuilder( );
 
             key.append( (char) ch );
             
