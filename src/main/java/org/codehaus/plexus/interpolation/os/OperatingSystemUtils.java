@@ -24,10 +24,9 @@ package org.codehaus.plexus.interpolation.os;
  * SOFTWARE.
  */
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -58,81 +57,21 @@ public final class OperatingSystemUtils
      * @return Properties object of (possibly modified) envar keys mapped to their values.
      * @throws IOException
      */
+
     public static Properties getSystemEnvVars( boolean caseSensitive )
         throws IOException
     {
-        Process p = null;
-
-        try
+        Properties envVars = new Properties();
+        Map<String, String> envs = System.getenv();
+        for ( String key : envs.keySet() )
         {
-            Properties envVars = new Properties();
-    
-            Runtime r = Runtime.getRuntime();
-
-
-            //If this is windows set the shell to command.com or cmd.exe with correct arguments.
-            if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
+            String value = envs.get( key );
+            if ( !caseSensitive)
             {
-                if ( Os.isFamily( Os.FAMILY_WIN9X ) )
-                {
-                    p = r.exec( "command.com /c set" );
-                }
-                else
-                {
-                    p = r.exec( "cmd.exe /c set" );
-                }
+                key = key.toUpperCase( Locale.ENGLISH );
             }
-            else
-            {
-                p = r.exec( "env" );
-            }
-    
-            BufferedReader br = new BufferedReader( new InputStreamReader( p.getInputStream() ) );
-    
-            String line;
-    
-            String lastKey = null;
-            String lastVal = null;
-    
-            while ( ( line = br.readLine() ) != null )
-            {
-                int idx = line.indexOf( '=' );
-    
-                if ( idx > 0 )
-                {
-                    lastKey = line.substring( 0, idx );
-    
-                    if ( !caseSensitive )
-                    {
-                        lastKey = lastKey.toUpperCase( Locale.ENGLISH );
-                    }
-    
-                    lastVal = line.substring( idx + 1 );
-    
-                    envVars.setProperty( lastKey, lastVal );
-                }
-                else if ( lastKey != null )
-                {
-                    lastVal += "\n" + line;
-    
-                    envVars.setProperty( lastKey, lastVal );
-                }
-            }
-
-            br.close();
-            p.getInputStream().close();
-            p.getOutputStream().close();
-            p.getErrorStream().close();
-
-            return envVars;
+            envVars.put( key, value );
         }
-        finally
-        {
-            if ( p != null )
-            {
-                p.destroy();
-            }
-        }
+        return envVars;
     }
-
 }
