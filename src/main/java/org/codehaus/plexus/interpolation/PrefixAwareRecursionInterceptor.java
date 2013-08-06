@@ -41,7 +41,7 @@ public class PrefixAwareRecursionInterceptor
 
     private Stack<String> nakedExpressions = new Stack<String>();
 
-    private final Collection<String> possiblePrefixes;
+    private final String[] possiblePrefixes;
 
     private boolean watchUnprefixedExpressions = true;
 
@@ -54,7 +54,7 @@ public class PrefixAwareRecursionInterceptor
      */
     public PrefixAwareRecursionInterceptor( Collection<String> possiblePrefixes, boolean watchUnprefixedExpressions )
     {
-        this.possiblePrefixes = possiblePrefixes;
+        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()]) ;
         this.watchUnprefixedExpressions = watchUnprefixedExpressions;
     }
 
@@ -66,7 +66,7 @@ public class PrefixAwareRecursionInterceptor
      */
     public PrefixAwareRecursionInterceptor( Collection<String> possiblePrefixes )
     {
-        this.possiblePrefixes = possiblePrefixes;
+        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()]) ;
     }
 
     public boolean hasRecursiveExpression( String expression )

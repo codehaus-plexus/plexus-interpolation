@@ -240,6 +240,11 @@ public class ClassMap
 
     private static String makeMethodKey( String method, Object[] params )
     {
+        if (params.length == 0)
+        {
+            return method;
+        }
+
         StringBuilder methodKey = new StringBuilder().append( method );
 
         for ( Object arg : params )

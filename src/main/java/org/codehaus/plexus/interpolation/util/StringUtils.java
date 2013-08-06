@@ -116,11 +116,16 @@ public class StringUtils
 
     public static String capitalizeFirstLetter( String data )
     {
-        char firstLetter = Character.toTitleCase( data.substring( 0, 1 ).charAt( 0 ) );
-
-        String restLetters = data.substring( 1 );
-
-        return firstLetter + restLetters;
+        char firstChar = data.charAt( 0 );
+        char titleCase = Character.toTitleCase( firstChar );
+        if (firstChar == titleCase)
+        {
+            return data;
+        }
+        StringBuilder result = new StringBuilder( data.length() );
+        result.append( titleCase );
+        result.append(  data, 1, data.length() );
+        return result.toString();
     }
 
 }
