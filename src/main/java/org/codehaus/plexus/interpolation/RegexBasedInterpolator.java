@@ -58,7 +58,7 @@ public class RegexBasedInterpolator
      * the key is the regex the value is the Pattern 
      * At the class construction time the Map will contains the default Pattern
      */
-    private Map compiledPatterns = new WeakHashMap();
+    private Map<String,Pattern> compiledPatterns = new WeakHashMap<String,Pattern>();
     
     /**
      * Setup a basic interpolator.
@@ -196,7 +196,7 @@ public class RegexBasedInterpolator
         }
 
         int realExprGroup = 2;
-        Pattern expressionPattern = null;
+        Pattern expressionPattern;
         if ( startRegex != null || endRegex != null )
         {
             if ( thisPrefixPattern == null )
@@ -240,10 +240,10 @@ public class RegexBasedInterpolator
             return Pattern.compile( regExp );
         }
            
-        Pattern pattern = null;
+        Pattern pattern;
         synchronized( this )
         {
-            pattern = (Pattern) compiledPatterns.get( regExp );
+            pattern = compiledPatterns.get( regExp );
             
             if ( pattern != null )
             {
