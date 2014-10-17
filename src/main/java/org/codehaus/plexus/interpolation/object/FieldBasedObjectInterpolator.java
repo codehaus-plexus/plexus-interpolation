@@ -260,7 +260,7 @@ public class FieldBasedObjectInterpolator
                     if ( isQualifiedForInterpolation( field, type ) )
                     {
                         boolean isAccessible = field.isAccessible();
-                        synchronized ( type )
+                        synchronized ( cls )
                         {
                             field.setAccessible( true );
                             try
