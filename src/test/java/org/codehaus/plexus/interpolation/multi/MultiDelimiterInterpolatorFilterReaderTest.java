@@ -353,10 +353,10 @@ public class MultiDelimiterInterpolatorFilterReaderTest
 
         MultiDelimiterInterpolatorFilterReader r = new MultiDelimiterInterpolatorFilterReader( new StringReader( input ), interp );
 
-        for ( int i = 0; i < specs.length; i++ )
+        for ( String spec : specs )
         {
-            interp.addDelimiterSpec( specs[i] );
-            r.addDelimiterSpec( specs[i] );
+            interp.addDelimiterSpec( spec );
+            r.addDelimiterSpec( spec );
         }
 
         r.setInterpolateWithPrefixPattern( false );

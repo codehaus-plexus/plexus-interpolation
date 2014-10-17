@@ -148,10 +148,8 @@ public class ClassMap
          * map and cache them
          */
 
-        for ( int i = 0; i < methods.length; i++ )
+        for ( Method method : methods )
         {
-            Method method = methods[i];
-
             /*
              *  now get the 'public method', the method declared by a
              *  public interface or class. (because the actual implementing

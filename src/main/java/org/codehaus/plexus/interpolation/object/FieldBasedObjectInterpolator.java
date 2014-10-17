@@ -254,33 +254,33 @@ public class FieldBasedObjectInterpolator
                     fieldsByClass.put( cls, fields );
                 }
 
-                for ( int i = 0; i < fields.length; i++ )
+                for ( Field field : fields )
                 {
-                    Class type = fields[i].getType();
-                    if ( isQualifiedForInterpolation( fields[i], type ) )
+                    Class type = field.getType();
+                    if ( isQualifiedForInterpolation( field, type ) )
                     {
-                        boolean isAccessible = fields[i].isAccessible();
-                        fields[i].setAccessible( true );
+                        boolean isAccessible = field.isAccessible();
+                        field.setAccessible( true );
                         try
                         {
                             try
                             {
                                 if ( String.class == type )
                                 {
-                                    String value = (String) fields[i].get( obj );
+                                    String value = (String) field.get( obj );
                                     if ( value != null )
                                     {
                                         String interpolated = interpolator.interpolate( value, recursionInterceptor );
 
                                         if ( !interpolated.equals( value ) )
                                         {
-                                            fields[i].set( obj, interpolated );
+                                            field.set( obj, interpolated );
                                         }
                                     }
                                 }
                                 else if ( Collection.class.isAssignableFrom( type ) )
                                 {
-                                    Collection c = (Collection) fields[i].get( obj );
+                                    Collection c = (Collection) field.get( obj );
                                     if ( c != null && !c.isEmpty() )
                                     {
                                         List originalValues = new ArrayList( c );
@@ -291,11 +291,8 @@ public class FieldBasedObjectInterpolator
                                         catch ( UnsupportedOperationException e )
                                         {
                                             warningCollector.add( new ObjectInterpolationWarning(
-                                                                                                  "Field is an unmodifiable collection. Skipping interpolation.",
-                                                                                                  basePath
-                                                                                                      + "."
-                                                                                                      + fields[i].getName(),
-                                                                                                  e ) );
+                                                "Field is an unmodifiable collection. Skipping interpolation.",
+                                                basePath + "." + field.getName(), e ) );
                                             continue;
                                         }
 
@@ -305,7 +302,8 @@ public class FieldBasedObjectInterpolator
                                             {
                                                 if ( String.class == value.getClass() )
                                                 {
-                                                    String interpolated = interpolator.interpolate( (String) value, recursionInterceptor );
+                                                    String interpolated = interpolator.interpolate( (String) value,
+                                                                                                    recursionInterceptor );
 
                                                     if ( !interpolated.equals( value ) )
                                                     {
@@ -321,15 +319,14 @@ public class FieldBasedObjectInterpolator
                                                     c.add( value );
                                                     if ( value.getClass().isArray() )
                                                     {
-                                                        evaluateArray( value, basePath + "." + fields[i].getName() );
+                                                        evaluateArray( value, basePath + "." + field.getName() );
                                                     }
                                                     else
                                                     {
-                                                        interpolationTargets.add( new InterpolationTarget(
-                                                                                                           value,
+                                                        interpolationTargets.add( new InterpolationTarget( value,
                                                                                                            basePath
                                                                                                                + "."
-                                                                                                               + fields[i].getName() ) );
+                                                                                                               + field.getName() ) );
                                                     }
                                                 }
                                             }
@@ -343,12 +340,12 @@ public class FieldBasedObjectInterpolator
                                 }
                                 else if ( Map.class.isAssignableFrom( type ) )
                                 {
-                                    Map m = (Map) fields[i].get( obj );
+                                    Map m = (Map) field.get( obj );
                                     if ( m != null && !m.isEmpty() )
                                     {
-                                        for ( Iterator it = m.entrySet().iterator(); it.hasNext(); )
+                                        for ( Object o : m.entrySet() )
                                         {
-                                            Map.Entry entry = (Map.Entry) it.next();
+                                            Map.Entry entry = (Map.Entry) o;
 
                                             Object value = entry.getValue();
 
@@ -356,7 +353,8 @@ public class FieldBasedObjectInterpolator
                                             {
                                                 if ( String.class == value.getClass() )
                                                 {
-                                                    String interpolated = interpolator.interpolate( (String) value, recursionInterceptor );
+                                                    String interpolated = interpolator.interpolate( (String) value,
+                                                                                                    recursionInterceptor );
 
                                                     if ( !interpolated.equals( value ) )
                                                     {
@@ -367,11 +365,8 @@ public class FieldBasedObjectInterpolator
                                                         catch ( UnsupportedOperationException e )
                                                         {
                                                             warningCollector.add( new ObjectInterpolationWarning(
-                                                                                                                  "Field is an unmodifiable collection. Skipping interpolation.",
-                                                                                                                  basePath
-                                                                                                                      + "."
-                                                                                                                      + fields[i].getName(),
-                                                                                                                  e ) );
+                                                                "Field is an unmodifiable collection. Skipping interpolation.",
+                                                                basePath + "." + field.getName(), e ) );
                                                             continue;
                                                         }
                                                     }
@@ -380,15 +375,14 @@ public class FieldBasedObjectInterpolator
                                                 {
                                                     if ( value.getClass().isArray() )
                                                     {
-                                                        evaluateArray( value, basePath + "." + fields[i].getName() );
+                                                        evaluateArray( value, basePath + "." + field.getName() );
                                                     }
                                                     else
                                                     {
-                                                        interpolationTargets.add( new InterpolationTarget(
-                                                                                                           value,
+                                                        interpolationTargets.add( new InterpolationTarget( value,
                                                                                                            basePath
                                                                                                                + "."
-                                                                                                               + fields[i].getName() ) );
+                                                                                                               + field.getName() ) );
                                                     }
                                                 }
                                             }
@@ -397,39 +391,37 @@ public class FieldBasedObjectInterpolator
                                 }
                                 else
                                 {
-                                    Object value = fields[i].get( obj );
+                                    Object value = field.get( obj );
                                     if ( value != null )
                                     {
-                                        if ( fields[i].getType().isArray() )
+                                        if ( field.getType().isArray() )
                                         {
-                                            evaluateArray( value, basePath + "." + fields[i].getName() );
+                                            evaluateArray( value, basePath + "." + field.getName() );
                                         }
                                         else
                                         {
-                                            interpolationTargets.add( new InterpolationTarget( value, basePath + "."
-                                                + fields[i].getName() ) );
+                                            interpolationTargets.add(
+                                                new InterpolationTarget( value, basePath + "." + field.getName() ) );
                                         }
                                     }
                                 }
                             }
                             catch ( IllegalArgumentException e )
                             {
-                                warningCollector.add( new ObjectInterpolationWarning(
-                                                                                      "Failed to interpolate field. Skipping.",
-                                                                                      basePath + "."
-                                                                                          + fields[i].getName(), e ) );
+                                warningCollector.add(
+                                    new ObjectInterpolationWarning( "Failed to interpolate field. Skipping.",
+                                                                    basePath + "." + field.getName(), e ) );
                             }
                             catch ( IllegalAccessException e )
                             {
-                                warningCollector.add( new ObjectInterpolationWarning(
-                                                                                      "Failed to interpolate field. Skipping.",
-                                                                                      basePath + "."
-                                                                                          + fields[i].getName(), e ) );
+                                warningCollector.add(
+                                    new ObjectInterpolationWarning( "Failed to interpolate field. Skipping.",
+                                                                    basePath + "." + field.getName(), e ) );
                             }
                         }
                         finally
                         {
-                            fields[i].setAccessible( isAccessible );
+                            field.setAccessible( isAccessible );
                         }
                     }
                 }
@@ -445,9 +437,8 @@ public class FieldBasedObjectInterpolator
         private boolean isQualifiedForInterpolation( Class cls )
         {
             String pkgName = cls.getPackage().getName();
-            for ( int i = 0; i < blacklistedPackagePrefixes.length; i++ )
+            for ( String prefix : blacklistedPackagePrefixes )
             {
-                String prefix = blacklistedPackagePrefixes[i];
                 if ( pkgName.startsWith( prefix ) )
                 {
                     return false;
@@ -467,10 +458,11 @@ public class FieldBasedObjectInterpolator
         {
             if ( !fieldIsPrimitiveByClass.containsKey( fieldType ) )
             {
-                fieldIsPrimitiveByClass.put( fieldType, Boolean.valueOf( fieldType.isPrimitive() ) );
+                fieldIsPrimitiveByClass.put( fieldType, fieldType.isPrimitive() );
             }
 
-            if ( ( (Boolean) fieldIsPrimitiveByClass.get( fieldType ) ).booleanValue() )
+            //noinspection UnnecessaryUnboxing
+            if ( (Boolean) fieldIsPrimitiveByClass.get( fieldType ) )
             {
                 return false;
             }
