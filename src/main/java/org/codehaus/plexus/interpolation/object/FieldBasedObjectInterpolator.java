@@ -50,22 +50,22 @@ import org.codehaus.plexus.interpolation.SimpleRecursionInterceptor;
 public class FieldBasedObjectInterpolator
     implements ObjectInterpolator
 {
-    public static final Set DEFAULT_BLACKLISTED_FIELD_NAMES;
+    public static final Set<String> DEFAULT_BLACKLISTED_FIELD_NAMES;
 
-    public static final Set DEFAULT_BLACKLISTED_PACKAGE_PREFIXES;
+    public static final Set<String> DEFAULT_BLACKLISTED_PACKAGE_PREFIXES;
 
-    private static final Map fieldsByClass = new WeakHashMap();
+    private static final Map<Class, Field[]> fieldsByClass = new WeakHashMap<Class, Field[]>();
 
-    private static final Map fieldIsPrimitiveByClass = new WeakHashMap();
+    private static final Map<Class, Boolean> fieldIsPrimitiveByClass = new WeakHashMap<Class, Boolean>();
 
     static
     {
-        Set blacklistedFields = new HashSet();
+        Set<String> blacklistedFields = new HashSet<String>();
         blacklistedFields.add( "parent" );
 
         DEFAULT_BLACKLISTED_FIELD_NAMES = Collections.unmodifiableSet( blacklistedFields );
 
-        Set blacklistedPackages = new HashSet();
+        Set<String> blacklistedPackages = new HashSet<String>();
         blacklistedPackages.add( "java" );
 
         DEFAULT_BLACKLISTED_PACKAGE_PREFIXES = Collections.unmodifiableSet( blacklistedPackages );
@@ -81,11 +81,11 @@ public class FieldBasedObjectInterpolator
         fieldIsPrimitiveByClass.clear();
     }
 
-    private Set blacklistedFieldNames;
+    private Set<String> blacklistedFieldNames;
 
-    private Set blacklistedPackagePrefixes;
+    private Set<String> blacklistedPackagePrefixes;
 
-    private List warnings = new ArrayList();
+    private List<ObjectInterpolationWarning> warnings = new ArrayList<ObjectInterpolationWarning>();
 
     /**
      * Use the default settings for blacklisted fields and packages, where fields named 'parent' and classes in packages
@@ -103,7 +103,7 @@ public class FieldBasedObjectInterpolator
      * @param blacklistedFieldNames The list of field names to ignore
      * @param blacklistedPackagePrefixes The list of package prefixes whose classes should be ignored
      */
-    public FieldBasedObjectInterpolator( Set blacklistedFieldNames, Set blacklistedPackagePrefixes )
+    public FieldBasedObjectInterpolator( Set<String> blacklistedFieldNames, Set<String> blacklistedPackagePrefixes )
     {
         this.blacklistedFieldNames = blacklistedFieldNames;
         this.blacklistedPackagePrefixes = blacklistedPackagePrefixes;
@@ -121,9 +121,9 @@ public class FieldBasedObjectInterpolator
      * Retrieve the {@link List} of warnings ({@link ObjectInterpolationWarning}
      * instances) generated during the last interpolation execution.
      */
-    public List getWarnings()
+    public List<ObjectInterpolationWarning> getWarnings()
     {
-        return new ArrayList( warnings );
+        return new ArrayList<ObjectInterpolationWarning>( warnings );
     }
 
     /**
@@ -172,7 +172,7 @@ public class FieldBasedObjectInterpolator
         implements PrivilegedAction
     {
 
-        private final LinkedList interpolationTargets;
+        private final LinkedList<InterpolationTarget> interpolationTargets;
 
         private final Interpolator interpolator;
 
@@ -180,7 +180,7 @@ public class FieldBasedObjectInterpolator
 
         private final String[] blacklistedPackagePrefixes;
 
-        private final List warningCollector;
+        private final List<ObjectInterpolationWarning> warningCollector;
 
         private final RecursionInterceptor recursionInterceptor;
 
@@ -190,14 +190,14 @@ public class FieldBasedObjectInterpolator
          */
         public InterpolateObjectAction( Object target, Interpolator interpolator,
                                         RecursionInterceptor recursionInterceptor, Set blacklistedFieldNames,
-                                        Set blacklistedPackagePrefixes, List warningCollector )
+                                        Set blacklistedPackagePrefixes, List<ObjectInterpolationWarning> warningCollector )
         {
             this.recursionInterceptor = recursionInterceptor;
             this.blacklistedFieldNames = blacklistedFieldNames;
             this.warningCollector = warningCollector;
             this.blacklistedPackagePrefixes = (String[]) blacklistedPackagePrefixes.toArray( new String[0] );
 
-            this.interpolationTargets = new LinkedList();
+            this.interpolationTargets = new LinkedList<InterpolationTarget>();
             interpolationTargets.add( new InterpolationTarget( target, "" ) );
 
             this.interpolator = interpolator;
@@ -211,7 +211,7 @@ public class FieldBasedObjectInterpolator
         {
             while ( !interpolationTargets.isEmpty() )
             {
-                InterpolationTarget target = (InterpolationTarget) interpolationTargets.removeFirst();
+                InterpolationTarget target = interpolationTargets.removeFirst();
 
                 try
                 {
@@ -247,7 +247,7 @@ public class FieldBasedObjectInterpolator
             }
             else if ( isQualifiedForInterpolation( cls ) )
             {
-                Field[] fields = (Field[]) fieldsByClass.get( cls );
+                Field[] fields = fieldsByClass.get( cls );
                 if ( fields == null )
                 {
                     fields = cls.getDeclaredFields();
@@ -462,17 +462,13 @@ public class FieldBasedObjectInterpolator
             }
 
             //noinspection UnnecessaryUnboxing
-            if ( (Boolean) fieldIsPrimitiveByClass.get( fieldType ) )
+            if ( fieldIsPrimitiveByClass.get( fieldType ) )
             {
                 return false;
             }
 
-            if ( blacklistedFieldNames.contains( field.getName() ) )
-            {
-                return false;
-            }
+            return !blacklistedFieldNames.contains( field.getName() );
 
-            return true;
         }
 
         /**
