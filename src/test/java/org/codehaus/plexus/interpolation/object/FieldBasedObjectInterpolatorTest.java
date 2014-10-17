@@ -77,7 +77,7 @@ public class FieldBasedObjectInterpolatorTest
         p.setProperty( "key", "value" );
         p.setProperty( "key2", "value2" );
 
-        List values = new ArrayList();
+        List<String> values = new ArrayList<String>();
         values.add( "${key}" );
         values.add( "${key2}" );
 
@@ -99,7 +99,7 @@ public class FieldBasedObjectInterpolatorTest
         p.setProperty( "key", "value" );
         p.setProperty( "key2", "value2" );
 
-        List values = new ArrayList();
+        List<String> values = new ArrayList<String>();
         values.add( "key" );
         values.add( "${key2}" );
 
@@ -142,7 +142,7 @@ public class FieldBasedObjectInterpolatorTest
         p.setProperty( "key3", "value3" );
         p.setProperty( "key4", "value4" );
 
-        List values = new ArrayList();
+        List<String[]> values = new ArrayList<String[]>();
         values.add( new String[] { "${key}", "${key2}" } );
         values.add( new String[] { "${key3}", "${key4}" } );
 
@@ -166,7 +166,7 @@ public class FieldBasedObjectInterpolatorTest
         p.setProperty( "key", "value" );
         p.setProperty( "key2", "value2" );
 
-        Map values = new HashMap();
+        Map<String,String> values = new HashMap<String,String>();
         values.put( "key", "${key}" );
         values.put( "key2", "${key2}" );
 
@@ -188,7 +188,7 @@ public class FieldBasedObjectInterpolatorTest
         p.setProperty( "key", "value" );
         p.setProperty( "key2", "value2" );
 
-        Map values = new HashMap();
+        Map<String,String> values = new HashMap<String,String>();
         values.put( "key", "val" );
         values.put( "key2", "${key2}" );
 
@@ -231,7 +231,7 @@ public class FieldBasedObjectInterpolatorTest
         p.setProperty( "key3", "value3" );
         p.setProperty( "key4", "value4" );
 
-        Map values = new HashMap();
+        Map<String,String[]> values = new HashMap<String,String[]>();
         values.put( "key", new String[] { "${key}", "${key2}" } );
         values.put( "key2", new String[] { "${key3}", "${key4}" } );
 

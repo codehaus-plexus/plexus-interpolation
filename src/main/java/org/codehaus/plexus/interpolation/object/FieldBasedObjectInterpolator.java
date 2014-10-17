@@ -195,7 +195,7 @@ public class FieldBasedObjectInterpolator
             this.recursionInterceptor = recursionInterceptor;
             this.blacklistedFieldNames = blacklistedFieldNames;
             this.warningCollector = warningCollector;
-            this.blacklistedPackagePrefixes = (String[]) blacklistedPackagePrefixes.toArray( new String[0] );
+            this.blacklistedPackagePrefixes = (String[]) blacklistedPackagePrefixes.toArray( new String[blacklistedPackagePrefixes.size()] );
 
             this.interpolationTargets = new LinkedList<InterpolationTarget>();
             interpolationTargets.add( new InterpolationTarget( target, "" ) );
