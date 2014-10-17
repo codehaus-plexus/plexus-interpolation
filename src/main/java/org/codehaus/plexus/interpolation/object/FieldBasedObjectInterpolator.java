@@ -16,6 +16,11 @@ package org.codehaus.plexus.interpolation.object;
  * limitations under the License.
  */
 
+import org.codehaus.plexus.interpolation.InterpolationException;
+import org.codehaus.plexus.interpolation.Interpolator;
+import org.codehaus.plexus.interpolation.RecursionInterceptor;
+import org.codehaus.plexus.interpolation.SimpleRecursionInterceptor;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.security.AccessController;
@@ -24,27 +29,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.codehaus.plexus.interpolation.InterpolationException;
-import org.codehaus.plexus.interpolation.Interpolator;
-import org.codehaus.plexus.interpolation.RecursionInterceptor;
-import org.codehaus.plexus.interpolation.SimpleRecursionInterceptor;
-
 /**
  * Reflectively traverses an object graph and uses an {@link Interpolator} instance to resolve any String fields in the
- * graph. 
+ * graph.
  * <br/>
  * <br/>
- * NOTE: This code is based on a reimplementation of ModelInterpolator in 
- * maven-project 2.1.0-M1, which became a performance bottleneck when the 
+ * NOTE: This code is based on a reimplementation of ModelInterpolator in
+ * maven-project 2.1.0-M1, which became a performance bottleneck when the
  * interpolation process became a hotspot.
- * 
+ *
  * @author jdcasey
  */
 public class FieldBasedObjectInterpolator
@@ -99,8 +98,8 @@ public class FieldBasedObjectInterpolator
 
     /**
      * Use the given black-lists to limit the interpolation of fields and classes (by package).
-     * 
-     * @param blacklistedFieldNames The list of field names to ignore
+     *
+     * @param blacklistedFieldNames      The list of field names to ignore
      * @param blacklistedPackagePrefixes The list of package prefixes whose classes should be ignored
      */
     public FieldBasedObjectInterpolator( Set<String> blacklistedFieldNames, Set<String> blacklistedPackagePrefixes )
@@ -130,25 +129,25 @@ public class FieldBasedObjectInterpolator
      * Using reflective field access and mutation, traverse the object graph from the given starting point and
      * interpolate any Strings found in that graph using the given {@link Interpolator}. Limits to this process can be
      * managed using the black lists configured in the constructor.
-     * 
-     * @param target The starting point of the object graph to traverse
+     *
+     * @param target       The starting point of the object graph to traverse
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
-     * 
-     * NOTE: Uses {@link SimpleRecursionInterceptor}.
+     *                     <p/>
+     *                     NOTE: Uses {@link SimpleRecursionInterceptor}.
      */
     public void interpolate( Object target, Interpolator interpolator )
         throws InterpolationException
     {
         interpolate( target, interpolator, new SimpleRecursionInterceptor() );
     }
-    
+
     /**
      * Using reflective field access and mutation, traverse the object graph from the given starting point and
      * interpolate any Strings found in that graph using the given {@link Interpolator}. Limits to this process can be
      * managed using the black lists configured in the constructor.
-     * 
-     * @param target The starting point of the object graph to traverse
-     * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
+     *
+     * @param target               The starting point of the object graph to traverse
+     * @param interpolator         The {@link Interpolator} used to resolve any Strings encountered during traversal.
      * @param recursionInterceptor The {@link RecursionInterceptor} used to detect cyclical expressions in the graph
      */
     public void interpolate( Object target, Interpolator interpolator, RecursionInterceptor recursionInterceptor )
@@ -157,8 +156,8 @@ public class FieldBasedObjectInterpolator
         warnings.clear();
 
         InterpolateObjectAction action =
-            new InterpolateObjectAction( target, interpolator, recursionInterceptor, blacklistedFieldNames, blacklistedPackagePrefixes,
-                                         warnings );
+            new InterpolateObjectAction( target, interpolator, recursionInterceptor, blacklistedFieldNames,
+                                         blacklistedPackagePrefixes, warnings );
 
         InterpolationException error = (InterpolationException) AccessController.doPrivileged( action );
 
@@ -190,7 +189,8 @@ public class FieldBasedObjectInterpolator
          */
         public InterpolateObjectAction( Object target, Interpolator interpolator,
                                         RecursionInterceptor recursionInterceptor, Set blacklistedFieldNames,
-                                        Set blacklistedPackagePrefixes, List<ObjectInterpolationWarning> warningCollector )
+                                        Set blacklistedPackagePrefixes,
+                                        List<ObjectInterpolationWarning> warningCollector )
         {
             this.recursionInterceptor = recursionInterceptor;
             this.blacklistedFieldNames = blacklistedFieldNames;
@@ -260,173 +260,197 @@ public class FieldBasedObjectInterpolator
                     if ( isQualifiedForInterpolation( field, type ) )
                     {
                         boolean isAccessible = field.isAccessible();
-                        field.setAccessible( true );
-                        try
+                        synchronized ( type )
                         {
+                            field.setAccessible( true );
                             try
                             {
-                                if ( String.class == type )
+                                try
                                 {
-                                    String value = (String) field.get( obj );
-                                    if ( value != null )
+                                    if ( String.class == type )
                                     {
-                                        String interpolated = interpolator.interpolate( value, recursionInterceptor );
-
-                                        if ( !interpolated.equals( value ) )
-                                        {
-                                            field.set( obj, interpolated );
-                                        }
+                                        interpolateString( obj, field );
                                     }
-                                }
-                                else if ( Collection.class.isAssignableFrom( type ) )
-                                {
-                                    Collection c = (Collection) field.get( obj );
-                                    if ( c != null && !c.isEmpty() )
+                                    else if ( Collection.class.isAssignableFrom( type ) )
                                     {
-                                        List originalValues = new ArrayList( c );
-                                        try
+                                        if ( interpolateCollection( obj, basePath, field ) )
                                         {
-                                            c.clear();
-                                        }
-                                        catch ( UnsupportedOperationException e )
-                                        {
-                                            warningCollector.add( new ObjectInterpolationWarning(
-                                                "Field is an unmodifiable collection. Skipping interpolation.",
-                                                basePath + "." + field.getName(), e ) );
                                             continue;
                                         }
-
-                                        for ( Object value : originalValues )
-                                        {
-                                            if ( value != null )
-                                            {
-                                                if ( String.class == value.getClass() )
-                                                {
-                                                    String interpolated = interpolator.interpolate( (String) value,
-                                                                                                    recursionInterceptor );
-
-                                                    if ( !interpolated.equals( value ) )
-                                                    {
-                                                        c.add( interpolated );
-                                                    }
-                                                    else
-                                                    {
-                                                        c.add( value );
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    c.add( value );
-                                                    if ( value.getClass().isArray() )
-                                                    {
-                                                        evaluateArray( value, basePath + "." + field.getName() );
-                                                    }
-                                                    else
-                                                    {
-                                                        interpolationTargets.add( new InterpolationTarget( value,
-                                                                                                           basePath
-                                                                                                               + "."
-                                                                                                               + field.getName() ) );
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                // add the null back in...not sure what else to do...
-                                                c.add( value );
-                                            }
-                                        }
                                     }
-                                }
-                                else if ( Map.class.isAssignableFrom( type ) )
-                                {
-                                    Map m = (Map) field.get( obj );
-                                    if ( m != null && !m.isEmpty() )
+                                    else if ( Map.class.isAssignableFrom( type ) )
                                     {
-                                        for ( Object o : m.entrySet() )
-                                        {
-                                            Map.Entry entry = (Map.Entry) o;
-
-                                            Object value = entry.getValue();
-
-                                            if ( value != null )
-                                            {
-                                                if ( String.class == value.getClass() )
-                                                {
-                                                    String interpolated = interpolator.interpolate( (String) value,
-                                                                                                    recursionInterceptor );
-
-                                                    if ( !interpolated.equals( value ) )
-                                                    {
-                                                        try
-                                                        {
-                                                            entry.setValue( interpolated );
-                                                        }
-                                                        catch ( UnsupportedOperationException e )
-                                                        {
-                                                            warningCollector.add( new ObjectInterpolationWarning(
-                                                                "Field is an unmodifiable collection. Skipping interpolation.",
-                                                                basePath + "." + field.getName(), e ) );
-                                                            continue;
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if ( value.getClass().isArray() )
-                                                    {
-                                                        evaluateArray( value, basePath + "." + field.getName() );
-                                                    }
-                                                    else
-                                                    {
-                                                        interpolationTargets.add( new InterpolationTarget( value,
-                                                                                                           basePath
-                                                                                                               + "."
-                                                                                                               + field.getName() ) );
-                                                    }
-                                                }
-                                            }
-                                        }
+                                        interpolateMap( obj, basePath, field );
                                     }
-                                }
-                                else
-                                {
-                                    Object value = field.get( obj );
-                                    if ( value != null )
+                                    else
                                     {
-                                        if ( field.getType().isArray() )
-                                        {
-                                            evaluateArray( value, basePath + "." + field.getName() );
-                                        }
-                                        else
-                                        {
-                                            interpolationTargets.add(
-                                                new InterpolationTarget( value, basePath + "." + field.getName() ) );
-                                        }
+                                        interpolateObject( obj, basePath, field );
                                     }
                                 }
+                                catch ( IllegalArgumentException e )
+                                {
+                                    warningCollector.add(
+                                        new ObjectInterpolationWarning( "Failed to interpolate field. Skipping.",
+                                                                        basePath + "." + field.getName(), e ) );
+                                }
+                                catch ( IllegalAccessException e )
+                                {
+                                    warningCollector.add(
+                                        new ObjectInterpolationWarning( "Failed to interpolate field. Skipping.",
+                                                                        basePath + "." + field.getName(), e ) );
+                                }
                             }
-                            catch ( IllegalArgumentException e )
+                            finally
                             {
-                                warningCollector.add(
-                                    new ObjectInterpolationWarning( "Failed to interpolate field. Skipping.",
-                                                                    basePath + "." + field.getName(), e ) );
+                                field.setAccessible( isAccessible );
                             }
-                            catch ( IllegalAccessException e )
-                            {
-                                warningCollector.add(
-                                    new ObjectInterpolationWarning( "Failed to interpolate field. Skipping.",
-                                                                    basePath + "." + field.getName(), e ) );
-                            }
-                        }
-                        finally
-                        {
-                            field.setAccessible( isAccessible );
                         }
                     }
                 }
 
                 traverseObjectWithParents( cls.getSuperclass(), target );
+            }
+        }
+
+        private void interpolateObject( Object obj, String basePath, Field field )
+            throws IllegalAccessException, InterpolationException
+        {
+            Object value = field.get( obj );
+            if ( value != null )
+            {
+                if ( field.getType().isArray() )
+                {
+                    evaluateArray( value, basePath + "." + field.getName() );
+                }
+                else
+                {
+                    interpolationTargets.add( new InterpolationTarget( value, basePath + "." + field.getName() ) );
+                }
+            }
+        }
+
+        private void interpolateMap( Object obj, String basePath, Field field )
+            throws IllegalAccessException, InterpolationException
+        {
+            Map m = (Map) field.get( obj );
+            if ( m != null && !m.isEmpty() )
+            {
+                for ( Object o : m.entrySet() )
+                {
+                    Map.Entry entry = (Map.Entry) o;
+
+                    Object value = entry.getValue();
+
+                    if ( value != null )
+                    {
+                        if ( String.class == value.getClass() )
+                        {
+                            String interpolated = interpolator.interpolate( (String) value, recursionInterceptor );
+
+                            if ( !interpolated.equals( value ) )
+                            {
+                                try
+                                {
+                                    entry.setValue( interpolated );
+                                }
+                                catch ( UnsupportedOperationException e )
+                                {
+                                    warningCollector.add( new ObjectInterpolationWarning(
+                                        "Field is an unmodifiable collection. Skipping interpolation.",
+                                        basePath + "." + field.getName(), e ) );
+                                    continue;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ( value.getClass().isArray() )
+                            {
+                                evaluateArray( value, basePath + "." + field.getName() );
+                            }
+                            else
+                            {
+                                interpolationTargets.add(
+                                    new InterpolationTarget( value, basePath + "." + field.getName() ) );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private boolean interpolateCollection( Object obj, String basePath, Field field )
+            throws IllegalAccessException, InterpolationException
+        {
+            Collection c = (Collection) field.get( obj );
+            if ( c != null && !c.isEmpty() )
+            {
+                List originalValues = new ArrayList( c );
+                try
+                {
+                    c.clear();
+                }
+                catch ( UnsupportedOperationException e )
+                {
+                    warningCollector.add(
+                        new ObjectInterpolationWarning( "Field is an unmodifiable collection. Skipping interpolation.",
+                                                        basePath + "." + field.getName(), e ) );
+                    return true;
+                }
+
+                for ( Object value : originalValues )
+                {
+                    if ( value != null )
+                    {
+                        if ( String.class == value.getClass() )
+                        {
+                            String interpolated = interpolator.interpolate( (String) value, recursionInterceptor );
+
+                            if ( !interpolated.equals( value ) )
+                            {
+                                c.add( interpolated );
+                            }
+                            else
+                            {
+                                c.add( value );
+                            }
+                        }
+                        else
+                        {
+                            c.add( value );
+                            if ( value.getClass().isArray() )
+                            {
+                                evaluateArray( value, basePath + "." + field.getName() );
+                            }
+                            else
+                            {
+                                interpolationTargets.add(
+                                    new InterpolationTarget( value, basePath + "." + field.getName() ) );
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // add the null back in...not sure what else to do...
+                        c.add( value );
+                    }
+                }
+            }
+            return false;
+        }
+
+        private void interpolateString( Object obj, Field field )
+            throws IllegalAccessException, InterpolationException
+        {
+            String value = (String) field.get( obj );
+            if ( value != null )
+            {
+                String interpolated = interpolator.interpolate( value, recursionInterceptor );
+
+                if ( !interpolated.equals( value ) )
+                {
+                    field.set( obj, interpolated );
+                }
             }
         }
 
