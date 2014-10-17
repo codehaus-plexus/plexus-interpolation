@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>plexus-interpolation</artifactId>
-  <version>1.20-SNAPSHOT</version>
+  <version>1.21-SNAPSHOT</version>
 
   <name>Plexus Interpolation API</name>
 
@@ -18,7 +18,23 @@
     <url>http://github.com/sonatype/plexus-interpolation</url>
     <tag>HEAD</tag>
   </scm>
-  
+
+<build>
+<plugins>  
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <!-- olamy: exclude files with strange names as failed here on osx -->
+          <checkModificationExcludes>
+            <checkModificationExclude>**/src/test/resources/utf8/**</checkModificationExclude>
+          </checkModificationExcludes>
+        </configuration>
+      </plugin>
+</plugins>
+</build>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
