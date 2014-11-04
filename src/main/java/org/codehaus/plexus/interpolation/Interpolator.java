@@ -25,6 +25,7 @@ import java.util.List;
  * @version $Id$
  */
 public interface Interpolator
+    extends BasicInterpolator
 {
 
     /**
@@ -83,36 +84,6 @@ public interface Interpolator
      */
     String interpolate( String input,
                         String thisPrefixPattern,
-                        RecursionInterceptor recursionInterceptor )
-        throws InterpolationException;
-
-    /**
-     * See {@link Interpolator#interpolate(String, String, RecursionInterceptor)}.
-     * <br/>
-     * This method triggers the use of a {@link SimpleRecursionInterceptor}
-     * instance for protection against expression cycles. It also leaves empty the
-     * expression prefix which would otherwise be trimmed from expressions. The
-     * result is that any detected expression will be resolved as-is.
-     *
-     * @param input The input string to interpolate
-     */
-    String interpolate( String input )
-        throws InterpolationException;
-
-    /**
-     * See {@link Interpolator#interpolate(String, String, RecursionInterceptor)}.
-     * <br/>
-     * This method leaves empty the expression prefix which would otherwise be
-     * trimmed from expressions. The result is that any detected expression will
-     * be resolved as-is.
-     *
-     * @param input The input string to interpolate
-     *
-     * @param recursionInterceptor Used to protect the interpolation process
-     *                             from expression cycles, and throw an
-     *                             exception if one is detected.
-     */
-    String interpolate( String input,
                         RecursionInterceptor recursionInterceptor )
         throws InterpolationException;
 

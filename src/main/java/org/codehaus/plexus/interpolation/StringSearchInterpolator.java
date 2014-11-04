@@ -27,7 +27,7 @@ public class StringSearchInterpolator
     implements Interpolator
 {
 
-    private Map existingAnswers = new HashMap();
+    private Map<String,Object> existingAnswers = new HashMap<String,Object>();
 
     private List<ValueSource> valueSources = new ArrayList<ValueSource>();
 
@@ -161,7 +161,7 @@ public class StringSearchInterpolator
                 if ( startEscapeIdx >= 0 )
                 {
                     String escape = input.substring( startEscapeIdx, startIdx );
-                    if ( escape != null && escapeString.equals( escape ) )
+                    if ( escapeString.equals( escape ) )
                     {
                         result.append( wholeExpr );
                         result.replace( startEscapeIdx, startEscapeIdx + escapeString.length(), "" );

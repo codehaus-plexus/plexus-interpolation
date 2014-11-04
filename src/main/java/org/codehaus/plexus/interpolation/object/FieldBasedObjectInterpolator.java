@@ -16,6 +16,7 @@ package org.codehaus.plexus.interpolation.object;
  * limitations under the License.
  */
 
+import org.codehaus.plexus.interpolation.BasicInterpolator;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.RecursionInterceptor;
@@ -135,7 +136,7 @@ public class FieldBasedObjectInterpolator
      *                     <p/>
      *                     NOTE: Uses {@link SimpleRecursionInterceptor}.
      */
-    public void interpolate( Object target, Interpolator interpolator )
+    public void interpolate( Object target, BasicInterpolator interpolator )
         throws InterpolationException
     {
         interpolate( target, interpolator, new SimpleRecursionInterceptor() );
@@ -150,7 +151,7 @@ public class FieldBasedObjectInterpolator
      * @param interpolator         The {@link Interpolator} used to resolve any Strings encountered during traversal.
      * @param recursionInterceptor The {@link RecursionInterceptor} used to detect cyclical expressions in the graph
      */
-    public void interpolate( Object target, Interpolator interpolator, RecursionInterceptor recursionInterceptor )
+    public void interpolate( Object target, BasicInterpolator interpolator, RecursionInterceptor recursionInterceptor )
         throws InterpolationException
     {
         warnings.clear();
@@ -173,7 +174,7 @@ public class FieldBasedObjectInterpolator
 
         private final LinkedList<InterpolationTarget> interpolationTargets;
 
-        private final Interpolator interpolator;
+        private final BasicInterpolator interpolator;
 
         private final Set blacklistedFieldNames;
 
@@ -187,7 +188,7 @@ public class FieldBasedObjectInterpolator
          * Setup an object graph traversal for the given target starting point. This will initialize a queue of objects
          * to traverse and interpolate by adding the target object.
          */
-        public InterpolateObjectAction( Object target, Interpolator interpolator,
+        public InterpolateObjectAction( Object target, BasicInterpolator interpolator,
                                         RecursionInterceptor recursionInterceptor, Set blacklistedFieldNames,
                                         Set blacklistedPackagePrefixes,
                                         List<ObjectInterpolationWarning> warningCollector )

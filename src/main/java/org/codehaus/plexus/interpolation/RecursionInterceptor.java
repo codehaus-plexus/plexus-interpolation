@@ -64,4 +64,9 @@ public interface RecursionInterceptor
      */
     List getExpressionCycle( String expression );
 
+    /**
+     * Reset the interceptor
+     */
+    public void clear();
+
 }

@@ -80,4 +80,7 @@ public class SimpleRecursionInterceptor
         }
     }
 
+    public void clear(){
+        expressions.clear();
+    }
 }

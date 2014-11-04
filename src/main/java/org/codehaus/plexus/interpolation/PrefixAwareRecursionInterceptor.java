@@ -115,4 +115,8 @@ public class PrefixAwareRecursionInterceptor
         }
     }
 
+    public void clear()
+    {
+        nakedExpressions.clear();
+    }
 }

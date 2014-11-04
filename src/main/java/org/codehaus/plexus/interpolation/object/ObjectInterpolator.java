@@ -18,6 +18,7 @@ package org.codehaus.plexus.interpolation.object;
 
 import java.util.List;
 
+import org.codehaus.plexus.interpolation.BasicInterpolator;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.RecursionInterceptor;
@@ -38,7 +39,7 @@ public interface ObjectInterpolator
      * @param target The starting point of the object graph to traverse
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
      */
-    void interpolate( Object target, Interpolator interpolator )
+    void interpolate( Object target, BasicInterpolator interpolator )
         throws InterpolationException;
     
     /**
@@ -49,7 +50,7 @@ public interface ObjectInterpolator
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
      * @param recursionInterceptor The {@link RecursionInterceptor} used to detect cyclical expressions in the graph
      */
-    void interpolate( Object target, Interpolator interpolator, RecursionInterceptor recursionInterceptor )
+    void interpolate( Object target, BasicInterpolator interpolator, RecursionInterceptor recursionInterceptor )
         throws InterpolationException;
 
     /**
