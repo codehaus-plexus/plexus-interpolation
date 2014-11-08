@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>plexus-interpolation</artifactId>
-  <version>1.22</version>
+  <version>1.23-SNAPSHOT</version>
 
   <name>Plexus Interpolation API</name>
 
@@ -16,7 +16,7 @@
     <connection>scm:git:git@github.com:sonatype/plexus-interpolation.git</connection>
     <developerConnection>scm:git:git@github.com:sonatype/plexus-interpolation.git</developerConnection>
     <url>http://github.com/sonatype/plexus-interpolation</url>
-    <tag>plexus-interpolation-1.22</tag>
+    <tag>HEAD</tag>
   </scm>
 
 <build>
