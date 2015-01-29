@@ -20,6 +20,12 @@
     <tag>HEAD</tag>
   </scm>
 
+  <issueManagement>
+    <system>JIRA</system>
+    <url>https://github.com/codehaus-plexus/plexus-interpolation/issues</url>
+  </issueManagement>
+
+
   <build>
     <plugins>
       <plugin>
