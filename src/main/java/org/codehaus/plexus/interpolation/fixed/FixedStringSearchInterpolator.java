@@ -29,14 +29,14 @@ import java.util.List;
  * A fixed string search interpolator is permanently bound to a given set of value sources,
  * an is totally fixed and stateless over these value sources.
  * <p/>
- * The fixed interpolator is also a #StatelessValueSource and can be used as a source
+ * The fixed interpolator is also a {@link FixedValueSource} and can be used as a source
  * for a different fixed interpolator, creating a scope chain.
  * <p/>
  * Once constructed, this interpolator will always point to the same set of objects (value sources),
  * in such a way that if the underlying object is fixed, expressions will always
  * evaluate to the same result.
  * <p/>
- * Th fixed interpolator can be shared among different clients and is thread safe to
+ * The fixed interpolator can be shared among different clients and is thread safe to
  * the extent the underlying value sources can be accessed safely.
  * Since interpolation expressions cannot modify the objects, thread safety concerns
  * this will normally be limited to safe publication and memory model visibility of
@@ -63,12 +63,17 @@ public class FixedStringSearchInterpolator
 
     private final String escapeString;
 
+    private final InterpolationContextCache cache;
+
     private FixedStringSearchInterpolator( String startExpr, String endExpr, String escapeString,
-                                          InterpolationPostProcessor postProcessor, FixedValueSource... valueSources  )
+                                          InterpolationPostProcessor postProcessor,
+                                          InterpolationContextCache cache,
+                                          FixedValueSource... valueSources  )
     {
         this.startExpr = startExpr;
         this.endExpr = endExpr;
         this.escapeString = escapeString;
+        this.cache = cache;
         if ( valueSources == null )
         {
             throw new IllegalArgumentException( "valueSources cannot be null" );
@@ -88,13 +93,18 @@ public class FixedStringSearchInterpolator
     public static FixedStringSearchInterpolator create( String startExpr, String endExpr,
                                                         FixedValueSource... valueSources )
     {
-        return new FixedStringSearchInterpolator( startExpr, endExpr, null, null, valueSources );
+        return new FixedStringSearchInterpolator( startExpr, endExpr, null, null, null, valueSources );
     }
 
 
     public static FixedStringSearchInterpolator create( FixedValueSource... valueSources )
     {
-        return new FixedStringSearchInterpolator( DEFAULT_START_EXPR, DEFAULT_END_EXPR, null, null, valueSources );
+        return new FixedStringSearchInterpolator( DEFAULT_START_EXPR, DEFAULT_END_EXPR, null, null, null, valueSources );
+    }
+
+    public static FixedStringSearchInterpolator create( InterpolationContextCache cache, FixedValueSource... valueSources )
+    {
+        return new FixedStringSearchInterpolator( DEFAULT_START_EXPR, DEFAULT_END_EXPR, null, null, cache, valueSources );
     }
 
     public static FixedStringSearchInterpolator createWithPermittedNulls( FixedValueSource... valueSources )
@@ -104,23 +114,23 @@ public class FixedStringSearchInterpolator
         {
             if (item != null) nonnulls.add( item);
         }
-        return new FixedStringSearchInterpolator( DEFAULT_START_EXPR, DEFAULT_END_EXPR, null, null, nonnulls.toArray(new FixedValueSource[nonnulls.size()]) );
+        return new FixedStringSearchInterpolator( DEFAULT_START_EXPR, DEFAULT_END_EXPR, null, null, null, nonnulls.toArray(new FixedValueSource[nonnulls.size()]) );
     }
 
     public FixedStringSearchInterpolator withExpressionMarkers( String startExpr, String endExpr )
     {
-        return new FixedStringSearchInterpolator( startExpr, endExpr, escapeString, postProcessor, valueSources );
+        return new FixedStringSearchInterpolator( startExpr, endExpr, escapeString, postProcessor, null, valueSources );
     }
 
     public FixedStringSearchInterpolator withPostProcessor( InterpolationPostProcessor postProcessor )
     {
-        return new FixedStringSearchInterpolator( startExpr, endExpr, escapeString, postProcessor, valueSources );
+        return new FixedStringSearchInterpolator( startExpr, endExpr, escapeString, postProcessor, null, valueSources );
     }
 
 
     public FixedStringSearchInterpolator withEscapeString( String escapeString )
     {
-        return new FixedStringSearchInterpolator( startExpr, endExpr, escapeString, postProcessor, valueSources );
+        return new FixedStringSearchInterpolator( startExpr, endExpr, escapeString, postProcessor, null, valueSources );
     }
 
     public String interpolate( String input )
@@ -256,6 +266,10 @@ public class FixedStringSearchInterpolator
                 if ( value != null )
                 {
                     value = interpolate( String.valueOf( value ), interpolationState );
+
+                    if (cache != null) {
+                        cache.putValue( realExpr, value );
+                    }
 
                     if ( postProcessor != null )
                     {
