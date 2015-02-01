@@ -46,7 +46,7 @@ import java.util.List;
  * The fixed interpolator can be a valuesource
  */
 public class FixedStringSearchInterpolator
-    implements FixedValueSource
+    implements FixedValueSource, FixedInterpolator
 {
 
     private final FixedValueSource[] valueSources;
