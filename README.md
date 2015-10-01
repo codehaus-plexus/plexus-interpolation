@@ -1,4 +1,5 @@
-Plexus-archiver
+Plexus-Interpolation
 ===============
 
-The current master is now at https://github.com/codehaus-plexus/plexus-interpolation
+Components for interpolating `${}` strings and the like.
+
