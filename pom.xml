@@ -10,6 +10,7 @@
 
   <artifactId>plexus-interpolation</artifactId>
   <version>1.23-SNAPSHOT</version>
+  <packaging>bundle</packaging>
 
   <name>Plexus Interpolation API</name>
 
@@ -34,6 +35,16 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Export-Package>org.codehaus.plexus.*;version="${project.version}"</Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-publish-plugin</artifactId>
