@@ -201,13 +201,16 @@ public class MultiDelimiterStringSearchInterpolator
 
                 if ( startIdx >= 0 && escapeString != null && escapeString.length() > 0 )
                 {
-                    int startEscapeIdx = startIdx == 0 ? 0 : startIdx - escapeString.length();
+                    int startEscapeIdx = (startIdx == 0) ? 0 : startIdx - escapeString.length();
                     if ( startEscapeIdx >= 0 )
                     {
                         String escape = input.substring( startEscapeIdx, startIdx );
                         if ( escape != null && escapeString.equals( escape ) )
                         {
                             result.append( wholeExpr );
+                            if (startEscapeIdx > 0) {
+                            	--startEscapeIdx;
+                            }
                             result.replace( startEscapeIdx, startEscapeIdx + escapeString.length(), "" );
                             continue;
                         }
