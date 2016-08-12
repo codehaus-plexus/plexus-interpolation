@@ -22,9 +22,7 @@ import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -150,15 +148,15 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testShouldResolveByUsingObject_List_Map()
-            throws InterpolationException
-        {
-	        FixedStringSearchInterpolator rbi = create( new ObjectBasedValueSource( this ) );
-            String result = rbi.interpolate( "this is a ${var} ${list[1].name} ${anArray[2].name} ${map(Key with spaces).name}" );
+    public void testShouldResolveByMy_getVar_Method()
+        throws InterpolationException
+    {
+        FixedStringSearchInterpolator rbi = create( new ObjectBasedValueSource( this ) );
+        String result = rbi.interpolate( "this is a ${var}" );
 
-            assertEquals( "this is a testVar testIndexedWithList testIndexedWithArray testMap", result );
-        }
-    
+        assertEquals( "this is a testVar", result );
+    }
+
     @Test
     public void testShouldResolveByContextValue()
         throws InterpolationException
@@ -424,38 +422,6 @@ public class FixedStringSearchInterpolatorTest
     public String getVar()
     {
         return "testVar";
-    }
-
-    public Person[] getAnArray() {
-    	Person[] array = new Person[3];
-    	array[0] = new Person("Gabriel");
-    	array[1] = new Person("Daniela");
-    	array[2] = new Person("testIndexedWithArray");
-    	return array;
-    }
-
-    public List<Person> getList() {
-    	List<Person> list = new ArrayList<Person>();
-    	list.add(new Person("Gabriel"));
-    	list.add(new Person("testIndexedWithList"));
-    	list.add(new Person("Daniela"));
-    	return list;
-    }
-    
-    public Map<String, Person> getMap() {
-    	Map<String, Person> map = new HashMap<String, Person>();
-    	map.put("Key with spaces", new Person("testMap"));
-    	return map;
-    }
-    
-    public static class Person {
-    	private String name;
-    	public Person(String name) {
-    		this.name = name;
-    	}
-    	public String getName() {
-    		return name;
-    	}
     }
 
     @Test
