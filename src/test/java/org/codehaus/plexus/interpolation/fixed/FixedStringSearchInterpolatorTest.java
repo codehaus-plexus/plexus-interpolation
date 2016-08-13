@@ -15,19 +15,23 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
+import static org.codehaus.plexus.interpolation.fixed.FixedStringSearchInterpolator.create;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.codehaus.plexus.interpolation.FixedInterpolatorValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.InterpolationPostProcessor;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import static org.codehaus.plexus.interpolation.fixed.FixedStringSearchInterpolator.create;
-import static org.junit.Assert.*;
 
 public class FixedStringSearchInterpolatorTest
 {
@@ -148,13 +152,14 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testShouldResolveByMy_getVar_Method()
+    public void testShouldResolveByUsingObject_List_Map()
         throws InterpolationException
     {
         FixedStringSearchInterpolator rbi = create( new ObjectBasedValueSource( this ) );
-        String result = rbi.interpolate( "this is a ${var}" );
+        String result =
+            rbi.interpolate( "this is a ${var} ${list[1].name} ${anArray[2].name} ${map(Key with spaces).name}" );
 
-        assertEquals( "this is a testVar", result );
+        assertEquals( "this is a testVar testIndexedWithList testIndexedWithArray testMap", result );
     }
 
     @Test
@@ -422,6 +427,46 @@ public class FixedStringSearchInterpolatorTest
     public String getVar()
     {
         return "testVar";
+    }
+
+    public Person[] getAnArray()
+    {
+        Person[] array = new Person[3];
+        array[0] = new Person( "Gabriel" );
+        array[1] = new Person( "Daniela" );
+        array[2] = new Person( "testIndexedWithArray" );
+        return array;
+    }
+
+    public List<Person> getList()
+    {
+        List<Person> list = new ArrayList<Person>();
+        list.add( new Person( "Gabriel" ) );
+        list.add( new Person( "testIndexedWithList" ) );
+        list.add( new Person( "Daniela" ) );
+        return list;
+    }
+
+    public Map<String, Person> getMap()
+    {
+        Map<String, Person> map = new HashMap<String, Person>();
+        map.put( "Key with spaces", new Person( "testMap" ) );
+        return map;
+    }
+
+    public static class Person
+    {
+        private String name;
+
+        public Person( String name )
+        {
+            this.name = name;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
     }
 
     @Test
