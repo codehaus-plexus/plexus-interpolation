@@ -138,7 +138,7 @@ public class InterpolatorFilterReader
      */
     public InterpolatorFilterReader( Reader in, Interpolator interpolator, RecursionInterceptor ri )
     {
-        this( in, interpolator, DEFAULT_BEGIN_TOKEN, DEFAULT_END_TOKEN, new SimpleRecursionInterceptor() );
+        this( in, interpolator, DEFAULT_BEGIN_TOKEN, DEFAULT_END_TOKEN, ri );
     }
     
     /**
