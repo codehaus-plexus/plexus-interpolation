@@ -110,4 +110,13 @@ public class EnvarBasedValueSource
         return envars.getProperty( expr );
     }
 
+    /**
+     * reset static variables acting as a cache for testing purposes only
+     */
+    static void resetStatics()
+    {
+        envarsCaseSensitive = null;
+        envarsCaseInsensitive = null;
+    }
+
 }
