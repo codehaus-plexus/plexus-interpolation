@@ -23,11 +23,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
+import org.junit.Before;
+
 import junit.framework.TestCase;
 
 public class StringSearchInterpolatorTest
     extends TestCase
 {
+
+    @Before
+    public void setUp()
+    {
+        EnvarBasedValueSource.resetStatics();
+    }
 
     public void testLongDelimitersInContext()
         throws InterpolationException
@@ -175,14 +184,24 @@ public class StringSearchInterpolatorTest
     public void testShouldResolveByEnvar()
         throws IOException, InterpolationException
     {
+        OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
+        {
+            public Map<String, String> getEnvMap()
+            {
+                HashMap<String,String> map = new HashMap<String,String>();
+                map.put( "SOME_ENV", "variable" );
+                map.put( "OTHER_ENV", "other variable" );
+                return map;
+            }
+        } );
+
         StringSearchInterpolator rbi = new StringSearchInterpolator();
 
         rbi.addValueSource( new EnvarBasedValueSource( false ) );
 
-        String result = rbi.interpolate( "this is a ${env.HOME} ${env.PATH}" );
+        String result = rbi.interpolate( "this is a ${env.SOME_ENV} ${env.OTHER_ENV}" );
 
-        assertFalse( "this is a ${HOME} ${PATH}".equals( result ) );
-        assertFalse( "this is a ${env.HOME} ${env.PATH}".equals( result ) );
+        assertEquals( "this is a variable other variable", result );
     }
 
     public void testUsePostProcessor_DoesNotChangeValue()
