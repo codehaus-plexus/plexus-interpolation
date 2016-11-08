@@ -392,6 +392,12 @@ public class MultiDelimiterStringSearchInterpolator
     {
         this.escapeString = escapeString;
     }
+
+    public MultiDelimiterStringSearchInterpolator escapeString( String escapeString )
+    {
+        this.escapeString = escapeString;
+        return this;
+    }
     
     public MultiDelimiterStringSearchInterpolator setDelimiterSpecs( LinkedHashSet<String> specs )
     {
