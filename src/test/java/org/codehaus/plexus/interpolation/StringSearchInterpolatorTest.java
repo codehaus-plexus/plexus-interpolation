@@ -17,6 +17,7 @@ package org.codehaus.plexus.interpolation;
  */
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -156,14 +157,15 @@ public class StringSearchInterpolatorTest
         }
     }
 
-    public void testShouldResolveByMy_getVar_Method()
+    public void testShouldResolveByUsingObject_List_Map()
         throws InterpolationException
     {
         StringSearchInterpolator rbi = new StringSearchInterpolator();
         rbi.addValueSource( new ObjectBasedValueSource( this ) );
-        String result = rbi.interpolate( "this is a ${var}" );
+        String result =
+            rbi.interpolate( "this is a ${var} ${list[1].name} ${anArray[2].name} ${map(Key with spaces).name}" );
 
-        assertEquals( "this is a testVar", result );
+        assertEquals( "this is a testVar testIndexedWithList testIndexedWithArray testMap", result );
     }
 
     public void testShouldResolveByContextValue()
@@ -446,6 +448,46 @@ public class StringSearchInterpolatorTest
     public String getVar()
     {
         return "testVar";
+    }
+
+    public Person[] getAnArray()
+    {
+        Person[] array = new Person[3];
+        array[0] = new Person( "Gabriel" );
+        array[1] = new Person( "Daniela" );
+        array[2] = new Person( "testIndexedWithArray" );
+        return array;
+    }
+
+    public List<Person> getList()
+    {
+        List<Person> list = new ArrayList<Person>();
+        list.add( new Person( "Gabriel" ) );
+        list.add( new Person( "testIndexedWithList" ) );
+        list.add( new Person( "Daniela" ) );
+        return list;
+    }
+
+    public Map<String, Person> getMap()
+    {
+        Map<String, Person> map = new HashMap<String, StringSearchInterpolatorTest.Person>();
+        map.put( "Key with spaces", new Person( "testMap" ) );
+        return map;
+    }
+
+    public static class Person
+    {
+        private String name;
+
+        public Person( String name )
+        {
+            this.name = name;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
     }
 
 }

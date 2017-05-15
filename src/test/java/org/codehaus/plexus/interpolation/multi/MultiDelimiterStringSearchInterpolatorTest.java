@@ -85,4 +85,42 @@ public class MultiDelimiterStringSearchInterpolatorTest
             assertEquals( "#${first} and ${last}", result );
         }
 
+    public void testInterpolationWithMultipleEscapes2()
+        throws InterpolationException
+    {
+        Map ctx = new HashMap();
+        ctx.put( "name", "User" );
+        ctx.put( "otherName", "#${first} and ##${last}" );
+
+        String input = "${otherName}";
+
+        ValueSource vs = new MapBasedValueSource( ctx );
+        MultiDelimiterStringSearchInterpolator interpolator =
+            new MultiDelimiterStringSearchInterpolator().withValueSource( vs );
+        interpolator.setEscapeString( "#" );
+
+        String result = interpolator.interpolate( input );
+
+        assertEquals( "${first} and #${last}", result );
+    }
+
+    public void testInterpolationWithMultipleEscapes3()
+        throws InterpolationException
+    {
+        Map ctx = new HashMap();
+        ctx.put( "name", "User" );
+        ctx.put( "last", "beer" );
+        ctx.put( "otherName", "###${first} and ##${second} and ${last}" );
+
+        String input = "${otherName}";
+
+        ValueSource vs = new MapBasedValueSource( ctx );
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator() //
+            .withValueSource( vs ) //
+            .escapeString( "#" );
+
+        String result = interpolator.interpolate( input );
+
+        assertEquals( "##${first} and #${second} and beer", result );
+    }
 }
