@@ -39,6 +39,8 @@ import java.util.Properties;
 public final class OperatingSystemUtils
 {
 
+    private static EnvVarSource envVarSource = new DefaultEnvVarSource();
+
     private OperatingSystemUtils()
     {
     }
@@ -62,16 +64,54 @@ public final class OperatingSystemUtils
         throws IOException
     {
         Properties envVars = new Properties();
-        Map<String, String> envs = System.getenv();
+        Map<String, String> envs = envVarSource.getEnvMap();
         for ( String key : envs.keySet() )
         {
             String value = envs.get( key );
-            if ( !caseSensitive)
+            if ( !caseSensitive )
             {
                 key = key.toUpperCase( Locale.ENGLISH );
             }
             envVars.put( key, value );
         }
         return envVars;
+    }
+
+    /**
+     * Set the source object to load the environment variables from.
+     * Default implementation should suffice. This is mostly for testing. 
+     * @param source the EnvVarSource instance that loads the environment variables.
+     * 
+     * @since 3.1.2
+     */
+    public static void setEnvVarSource( EnvVarSource source )
+    {
+        envVarSource = source;
+    }
+
+    /**
+     * Defines the functionality to load a Map of environment variables.
+     * 
+     * @since 3.1.2
+     */
+    public interface EnvVarSource
+    {
+        public Map<String, String> getEnvMap();
+    }
+
+    /**
+     * Default implementation to load environment variables.
+     *
+     * @since 3.1.2
+     */
+    public static class DefaultEnvVarSource
+        implements EnvVarSource
+    {
+
+        public Map<String, String> getEnvMap()
+        {
+            return System.getenv();
+        }
+
     }
 }

@@ -21,11 +21,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
+import org.junit.Before;
+
 import junit.framework.TestCase;
 
 public class RegexBasedInterpolatorTest
     extends TestCase
 {
+
+    @Before
+    public void setUp()
+    {
+        EnvarBasedValueSource.resetStatics();
+    }
 
     public String getVar()
     {
@@ -81,14 +90,23 @@ public class RegexBasedInterpolatorTest
     public void testShouldResolveByEnvar()
         throws IOException, InterpolationException
     {
+        OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
+        {
+            public Map<String, String> getEnvMap()
+            {
+                HashMap<String,String> map = new HashMap<String,String>();
+                map.put( "SOME_ENV", "variable" );
+                return map;
+            }
+        } );
+
         RegexBasedInterpolator rbi = new RegexBasedInterpolator();
 
         rbi.addValueSource( new EnvarBasedValueSource() );
 
-        String result = rbi.interpolate( "this is a ${env.HOME}", "this" );
+        String result = rbi.interpolate( "this is a ${env.SOME_ENV}", "this" );
 
-        assertFalse( "this is a ${HOME}".equals( result ) );
-        assertFalse( "this is a ${env.HOME}".equals( result ) );
+        assertEquals( "this is a variable", result );
     }
 
     public void testUseAlternateRegex()

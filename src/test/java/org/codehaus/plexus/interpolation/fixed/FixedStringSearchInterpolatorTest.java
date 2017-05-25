@@ -17,7 +17,6 @@ package org.codehaus.plexus.interpolation.fixed;
 
 import static org.codehaus.plexus.interpolation.fixed.FixedStringSearchInterpolator.create;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -31,10 +30,18 @@ import org.codehaus.plexus.interpolation.FixedInterpolatorValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.InterpolationPostProcessor;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
+import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
+import org.junit.Before;
 import org.junit.Test;
 
 public class FixedStringSearchInterpolatorTest
 {
+
+    @Before
+    public void setUp()
+    {
+        EnvarBasedValueSource.resetStatics();
+    }
 
     @Test
     public void testLongDelimitersInContext()
@@ -181,12 +188,22 @@ public class FixedStringSearchInterpolatorTest
     public void testShouldResolveByEnvar()
         throws IOException, InterpolationException
     {
+        OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
+        {
+            public Map<String, String> getEnvMap()
+            {
+                HashMap<String,String> map = new HashMap<String,String>();
+                map.put( "SOME_ENV", "variable" );
+                map.put( "OTHER_ENV", "other variable" );
+                return map;
+            }
+        } );
+
         FixedStringSearchInterpolator rbi = create( new EnvarBasedValueSource( false ) );
 
-        String result = rbi.interpolate( "this is a ${env.HOME} ${env.PATH}" );
+        String result = rbi.interpolate( "this is a ${env.SOME_ENV} ${env.OTHER_ENV}" );
 
-        assertFalse( "this is a ${HOME} ${PATH}".equals( result ) );
-        assertFalse( "this is a ${env.HOME} ${env.PATH}".equals( result ) );
+        assertEquals( "this is a variable other variable", result );
     }
 
     @Test
