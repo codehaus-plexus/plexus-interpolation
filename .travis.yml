@@ -14,3 +14,4 @@ branches:
 notifications:
     email:
         - olamy@apache.org
+        - kama@soebes.de
