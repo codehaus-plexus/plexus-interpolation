@@ -23,11 +23,11 @@ under the License.
     <link>http://codehaus-plexus.github.io/plexus-interpolation/</link>
     <description>Plexus Interpolation API - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2001 - 2015 Codehaus Plexus</copyright>
+    <copyright>&#169;2001 - 2018 Codehaus Plexus</copyright>
     <item>
       <title>File: 51,
-             Errors: 174,
-             Warnings: 222,
+             Errors: 168,
+             Warnings: 223,
              Infos: 25
       </title>
             <link>http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html</link>
@@ -116,20 +116,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.multi.MultiDelimiterStringSearchInterpolator.java">org/codehaus/plexus/interpolation/multi/MultiDelimiterStringSearchInterpolator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  18
-                </td>
-                <td>
-                  6
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolationPostProcessor.java">org/codehaus/plexus/interpolation/InterpolationPostProcessor.java</a>
                 </td>
                 <td>
@@ -140,6 +126,20 @@ under the License.
                 </td>
                 <td>
                   1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.multi.MultiDelimiterStringSearchInterpolator.java">org/codehaus/plexus/interpolation/multi/MultiDelimiterStringSearchInterpolator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  20
+                </td>
+                <td>
+                  8
                 </td>
               </tr>
                           <tr>
@@ -234,7 +234,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  13
+                  12
                 </td>
                 <td>
                   4
@@ -270,20 +270,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.util.StringUtils.java">org/codehaus/plexus/interpolation/util/StringUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  4
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.InterpolationState.java">org/codehaus/plexus/interpolation/fixed/InterpolationState.java</a>
                 </td>
                 <td>
@@ -298,7 +284,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolationCycleException.java">org/codehaus/plexus/interpolation/InterpolationCycleException.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.util.StringUtils.java">org/codehaus/plexus/interpolation/util/StringUtils.java</a>
                 </td>
                 <td>
                   0
@@ -307,7 +293,7 @@ under the License.
                   1
                 </td>
                 <td>
-                  2
+                  4
                 </td>
               </tr>
                           <tr>
@@ -318,10 +304,24 @@ under the License.
                   0
                 </td>
                 <td>
-                  10
+                  9
                 </td>
                 <td>
                   5
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolationCycleException.java">org/codehaus/plexus/interpolation/InterpolationCycleException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  2
                 </td>
               </tr>
                           <tr>
@@ -354,20 +354,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.FeedbackEnabledValueSource.java">org/codehaus/plexus/interpolation/FeedbackEnabledValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.ValueSource.java">org/codehaus/plexus/interpolation/ValueSource.java</a>
                 </td>
                 <td>
@@ -378,6 +364,20 @@ under the License.
                 </td>
                 <td>
                   2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.FeedbackEnabledValueSource.java">org/codehaus/plexus/interpolation/FeedbackEnabledValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
               </tr>
                           <tr>
@@ -559,7 +559,7 @@ under the License.
                   15
                 </td>
                 <td>
-                  12
+                  10
                 </td>
               </tr>
                           <tr>
@@ -584,10 +584,10 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  1
                 </td>
                 <td>
-                  10
+                  6
                 </td>
               </tr>
                           <tr>
@@ -626,7 +626,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  4
                 </td>
                 <td>
                   2
@@ -657,7 +657,7 @@ under the License.
                   1
                 </td>
                 <td>
-                  2
+                  1
                 </td>
               </tr>
                           <tr>
@@ -741,7 +741,7 @@ under the License.
                   4
                 </td>
                 <td>
-                  2
+                  1
                 </td>
               </tr>
                           <tr>
