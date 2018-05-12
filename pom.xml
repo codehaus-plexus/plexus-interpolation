@@ -16,8 +16,8 @@
   <scm>
     <connection>scm:git:git@github.com:codehaus-plexus/plexus-interpolation.git</connection>
     <developerConnection>scm:git:git@github.com:codehaus-plexus/plexus-interpolation.git</developerConnection>
-    <url>http://github.com/codehaus-plexus/plexus-interpolation</url>
-    <tag>plexus-interpolation-1.24</tag>
+    <url>http://github.com/codehaus-plexus/plexus-interpolation/tree/${project.scm.tag}/</url>
+    <tag>master</tag>
   </scm>
 
   <issueManagement>
