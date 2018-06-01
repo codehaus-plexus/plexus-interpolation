@@ -28,13 +28,11 @@ import java.util.Map;
 /**
  * <b>NOTE:</b> This class was copied from plexus-utils, to allow this library
  * to stand completely self-contained.
- * <br/>
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
  * @author <a href="mailto:bob@werken.com">Bob McWhirter</a>
  * @author <a href="mailto:Christoph.Reck@dlr.de">Christoph Reck</a>
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
  * @author <a href="mailto:szegedia@freemail.hu">Attila Szegedi</a>
- * @version $Id$
  */
 public class MethodMap
 {
@@ -51,6 +49,7 @@ public class MethodMap
      * Add a method to a list of methods by name.
      * For a particular class we are keeping track
      * of all the methods with the same name.
+     * @param method {@link Method}
      */
     public void add( Method method )
     {

@@ -26,8 +26,6 @@ import java.util.Properties;
  * available from the underlying operating system (and possibly, the shell environment
  * that created the present Java process). If the expression starts with 'env.',
  * this prefix is trimmed before resolving the rest as an environment variable name.
- *
- * @version $Id$
  */
 public class EnvarBasedValueSource
     extends AbstractValueSource
@@ -43,7 +41,7 @@ public class EnvarBasedValueSource
      * Create a new value source for interpolation based on shell environment variables. In this
      * case, envar keys ARE CASE SENSITIVE.
      *
-     * @throws IOException
+     * @throws IOException in case of an error.
      */
     public EnvarBasedValueSource() throws IOException
     {
@@ -55,7 +53,7 @@ public class EnvarBasedValueSource
      *
      * @param caseSensitive Whether the environment variable key should be treated in a
      *                      case-sensitive manner for lookups
-     * @throws IOException
+     * @throws IOException in case of an error.
      */
     public EnvarBasedValueSource( boolean caseSensitive ) throws IOException
     {

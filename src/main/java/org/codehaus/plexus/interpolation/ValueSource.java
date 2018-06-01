@@ -21,12 +21,12 @@ import java.util.List;
 /**
  * Supplies one strategy for resolving a value for an interpolation expression.
  * ValueSources may be stacked.
- * @version $Id$
  */
 public interface ValueSource
 {
 
     /**
+     * @param expression The string expression.
      * @return the value related to the expression, or null if not found.
      */
     public Object getValue( String expression );

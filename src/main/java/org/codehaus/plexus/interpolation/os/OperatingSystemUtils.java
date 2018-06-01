@@ -32,9 +32,8 @@ import java.util.Properties;
 /**
  * <b>NOTE:</b> This class was copied from plexus-utils, to allow this library
  * to stand completely self-contained.
- * <br/>
+ * 
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l </a>
- * @version $Id$
  */
 public final class OperatingSystemUtils
 {
@@ -57,7 +56,7 @@ public final class OperatingSystemUtils
      *
      * @param caseSensitive Whether environment variable keys should be treated case-sensitively.
      * @return Properties object of (possibly modified) envar keys mapped to their values.
-     * @throws IOException
+     * @throws IOException in case of an error.
      */
 
     public static Properties getSystemEnvVars( boolean caseSensitive )

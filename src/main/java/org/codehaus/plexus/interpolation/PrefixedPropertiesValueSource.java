@@ -25,11 +25,9 @@ import java.util.Properties;
 /**
  * Legacy support. Allow trimming one of a set of expression prefixes, the lookup
  * the remaining expression as a literal key from the wrapped properties instance.
- * <br/>
- * This is just a convenience implementation to provide a shorthand for constructing
- * the properties value source and then wrapping it with a prefixed value-source wrapper.
+ * <p>This is just a convenience implementation to provide a shorthand for constructing
+ * the properties value source and then wrapping it with a prefixed value-source wrapper.</p>
  *
- * @version $Id$
  */
 public class PrefixedPropertiesValueSource
     extends AbstractDelegatingValueSource
@@ -58,6 +56,7 @@ public class PrefixedPropertiesValueSource
      *
      * @param possiblePrefixes The expression-prefix list to trim
      * @param properties       The properties instance to wrap
+     * @param allowUnprefixedExpressions allow unprefixed expressions or not.
      */
     public PrefixedPropertiesValueSource( List<String> possiblePrefixes, Properties properties,
                                           boolean allowUnprefixedExpressions )

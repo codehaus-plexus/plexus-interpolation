@@ -39,11 +39,10 @@ import java.util.WeakHashMap;
 /**
  * Reflectively traverses an object graph and uses an {@link Interpolator} instance to resolve any String fields in the
  * graph.
- * <br/>
- * <br/>
+ * <p>
  * NOTE: This code is based on a reimplementation of ModelInterpolator in
  * maven-project 2.1.0-M1, which became a performance bottleneck when the
- * interpolation process became a hotspot.
+ * interpolation process became a hotspot.</p>
  *
  * @author jdcasey
  */
@@ -133,7 +132,6 @@ public class FieldBasedObjectInterpolator
      *
      * @param target       The starting point of the object graph to traverse
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
-     *                     <p/>
      *                     NOTE: Uses {@link SimpleRecursionInterceptor}.
      */
     public void interpolate( Object target, BasicInterpolator interpolator )

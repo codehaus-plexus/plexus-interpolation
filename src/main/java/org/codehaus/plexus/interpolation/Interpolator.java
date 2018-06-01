@@ -22,7 +22,6 @@ import java.util.List;
  * Interpolator interface. Based on existing RegexBasedInterpolator interface.
  *
  * @author cstamas
- * @version $Id$
  */
 public interface Interpolator
     extends BasicInterpolator
@@ -31,36 +30,42 @@ public interface Interpolator
     /**
      * Add a new {@link ValueSource} to the stack used to resolve expressions
      * in this interpolator instance.
+     * @param valueSource {@link ValueSource}.
      */
     void addValueSource( ValueSource valueSource );
 
     /**
      * Remove the specified {@link ValueSource} from the stack used to resolve
      * expressions in this interpolator instance.
+     * @param valueSource {@link ValueSource}.
      */
     void removeValuesSource( ValueSource valueSource );
     
     /**
      * Add a new post-processor to handle final processing after 
      * recursively-interpolated value is determined.
+     * @param postProcessor {@link InterpolationPostProcessor}.
      */
     void addPostProcessor( InterpolationPostProcessor postProcessor );
 
     /**
      * Remove the given post-processor.
+     * @param postProcessor {@link InterpolationPostProcessor}.
      */
     void removePostProcessor( InterpolationPostProcessor postProcessor );
 
     /**
      * See {@link Interpolator#interpolate(String, String, RecursionInterceptor)}.
-     * <br/>
+     * <p>
      * This method triggers the use of a {@link SimpleRecursionInterceptor}
-     * instance for protection against expression cycles.
+     * instance for protection against expression cycles.</p>
      *
      * @param input The input string to interpolate
      *
      * @param thisPrefixPattern An optional pattern that should be trimmed from
      *                          the start of any expressions found in the input.
+     * @return interpolated string.
+     * @throws InterpolationException in case of an error.
      */
     String interpolate( String input,
                         String thisPrefixPattern )
@@ -81,6 +86,8 @@ public interface Interpolator
      * @param recursionInterceptor Used to protect the interpolation process
      *                             from expression cycles, and throw an
      *                             exception if one is detected.
+     * @return interpolated string.
+     * @throws InterpolationException in case of an error.
      */
     String interpolate( String input,
                         String thisPrefixPattern,
@@ -103,8 +110,14 @@ public interface Interpolator
      */
     void clearFeedback();
     
+    /**
+     * @return state of the cacheAnswers
+     */
     boolean isCacheAnswers();
 
+    /**
+     * @param cacheAnswers true/false.
+     */
     void setCacheAnswers( boolean cacheAnswers );
     
     void clearAnswers();

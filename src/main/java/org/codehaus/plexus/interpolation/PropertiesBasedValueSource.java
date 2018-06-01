@@ -25,7 +25,6 @@ import java.util.Properties;
  * value.
  *
  * @author jdcasey
- * @version $Id$
  */
 public class PropertiesBasedValueSource
     extends AbstractValueSource

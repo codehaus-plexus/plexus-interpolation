@@ -24,11 +24,9 @@ package org.codehaus.plexus.interpolation;
  * {@link AbstractFunctionValueSourceWrapper#executeFunction(String, Object)}
  * together. The result of this is returned as the resolved value for the second
  * expression.
- * <br/>
- * This allows the first expression to be a function name that modifies the
+ * <p>This allows the first expression to be a function name that modifies the
  * value of the second expression, which is resolved from the wrapped value
- * source.
- * @version $Id$
+ * source.</p>
  */
 public abstract class AbstractFunctionValueSourceWrapper
     implements ValueSource
@@ -74,6 +72,7 @@ public abstract class AbstractFunctionValueSourceWrapper
 
     /**
      * Retrieve the embedded value source.
+     * @return {@link ValueSource}
      */
     protected ValueSource getValueSource()
     {

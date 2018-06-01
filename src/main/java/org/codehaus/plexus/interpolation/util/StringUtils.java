@@ -58,7 +58,6 @@ package org.codehaus.plexus.interpolation.util;
  * plexus-interpolation could be completely self-contained.
  *
  * @author jdcasey
- * @version $Id$
  */
 public class StringUtils
 {

@@ -38,6 +38,7 @@ public interface ObjectInterpolator
      * 
      * @param target The starting point of the object graph to traverse
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
+     * @throws InterpolationException in case of an error.
      */
     void interpolate( Object target, BasicInterpolator interpolator )
         throws InterpolationException;
@@ -49,18 +50,21 @@ public interface ObjectInterpolator
      * @param target The starting point of the object graph to traverse
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
      * @param recursionInterceptor The {@link RecursionInterceptor} used to detect cyclical expressions in the graph
+     * @throws InterpolationException in case of an error.
      */
     void interpolate( Object target, BasicInterpolator interpolator, RecursionInterceptor recursionInterceptor )
         throws InterpolationException;
 
     /**
      * Returns true if the last interpolation execution generated warnings.
+     * @return true/false.
      */
     boolean hasWarnings();
     
     /**
      * Retrieve the {@link List} of warnings ({@link ObjectInterpolationWarning}
      * instances) generated during the last interpolation execution.
+     * @return The list of warnings.
      */
     List getWarnings();
 

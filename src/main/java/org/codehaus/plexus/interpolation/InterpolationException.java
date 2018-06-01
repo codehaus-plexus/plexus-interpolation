@@ -25,7 +25,6 @@ package org.codehaus.plexus.interpolation;
  * being thrown. Instead, they should be reported in the feedback from the {@link ValueSource},
  * which is propagated out through {@link Interpolator#getFeedback()}.
  * 
- * @version $Id$
  */
 public class InterpolationException
     extends Exception

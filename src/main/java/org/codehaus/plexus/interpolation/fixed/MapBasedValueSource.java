@@ -21,7 +21,6 @@ import java.util.Map;
 /**
  * Wraps a Map, and looks up the whole expression as a single key, returning the
  * value mapped to it.
- * @version $Id$
  */
 public class MapBasedValueSource
     implements FixedValueSource
@@ -31,6 +30,7 @@ public class MapBasedValueSource
 
     /**
      * Construct a new value source to wrap the supplied map.
+     * @param values the key/value pairs.
      */
     public MapBasedValueSource( Map values )
     {

@@ -24,29 +24,33 @@ public interface BasicInterpolator
 {
     /**
      * See {@link org.codehaus.plexus.interpolation.Interpolator#interpolate(String, String, org.codehaus.plexus.interpolation.RecursionInterceptor)}.
-     * <br/>
+     * <p>
      * This method triggers the use of a {@link org.codehaus.plexus.interpolation.SimpleRecursionInterceptor}
      * instance for protection against expression cycles. It also leaves empty the
      * expression prefix which would otherwise be trimmed from expressions. The
-     * result is that any detected expression will be resolved as-is.
+     * result is that any detected expression will be resolved as-is.</p>
      *
      * @param input The input string to interpolate
+     * @return the interpolated string.
+     * @throws InterpolationException in case of an error.
      */
     String interpolate( String input )
         throws InterpolationException;
 
     /**
      * See {@link org.codehaus.plexus.interpolation.Interpolator#interpolate(String, String, org.codehaus.plexus.interpolation.RecursionInterceptor)}.
-     * <br/>
+     * <p>
      * This method leaves empty the expression prefix which would otherwise be
      * trimmed from expressions. The result is that any detected expression will
-     * be resolved as-is.
+     * be resolved as-is.</p>
      *
      * @param input The input string to interpolate
      *
      * @param recursionInterceptor Used to protect the interpolation process
      *                             from expression cycles, and throw an
      *                             exception if one is detected.
+     * @return the interpolated string.
+     * @throws InterpolationException in case of an error.
      */
     String interpolate( String input, RecursionInterceptor recursionInterceptor )
         throws InterpolationException;

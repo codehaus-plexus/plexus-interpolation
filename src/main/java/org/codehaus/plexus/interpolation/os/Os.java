@@ -59,16 +59,14 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * <b>NOTE:</b> This class was copied from plexus-utils, to allow this library
- * to stand completely self-contained.
- * <br/>
- * Condition that tests the OS type.
+ * <p><b>NOTE:</b> This class was copied from plexus-utils, to allow this library
+ * to stand completely self-contained.</p>
+ * <p>Condition that tests the OS type.</p>
  *
  * @author Stefan Bodewig
  * @author Magesh Umasankar
  * @author Brian Fox
  * @since 1.0
- * @version $Id$
  */
 public class Os
 {
@@ -159,8 +157,8 @@ public class Os
     /**
      * Sets the desired OS family type
      *
-     * @param f The OS family type desired<br />
-     *            Possible values:<br />
+     * @param f The OS family type desired
+     *            Possible values:
      *            <ul>
      *            <li>dos</li>
      *            <li>mac</li>
@@ -215,6 +213,8 @@ public class Os
      * set in setFamily.
      *
      * @see Os#setFamily(String)
+     * @return true/false.
+     * @throws Exception in case of an error.
      */
     public boolean eval()
         throws Exception

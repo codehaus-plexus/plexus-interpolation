@@ -24,8 +24,7 @@ import java.util.List;
  * if the value of an expression contains more expressions, RecursionInterceptor
  * implementations ensure that those expressions don't reference an expression
  * which is in the process of being resolved. If that happens, the expression
- * references are cyclical, and would othewise result in an infinite loop.
- * @version $Id$
+ * references are cyclical, and would otherwise result in an infinite loop.
  */
 public interface RecursionInterceptor
 {
@@ -61,6 +60,7 @@ public interface RecursionInterceptor
     /**
      * @return The list of expressions that participate in the cycle caused by
      * the given expression.
+     * @param expression the expression to start with.
      */
     List getExpressionCycle( String expression );
 

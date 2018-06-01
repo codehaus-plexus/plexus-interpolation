@@ -69,7 +69,6 @@ import java.util.LinkedHashSet;
  * implementation. This implementation is heavily based on org.codehaus.plexus.util.InterpolationFilterReader.
  *
  * @author cstamas
- * @version $Id: InterpolatorFilterReader.java 8351 2009-08-20 22:25:14Z jdcasey $
  */
 public class MultiDelimiterInterpolatorFilterReader
     extends FilterReader

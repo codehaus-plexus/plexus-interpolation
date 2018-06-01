@@ -26,7 +26,6 @@ import java.util.List;
  * wraps that source with a {@link PrefixedValueSourceWrapper} instance, to which
  * this class delegates all of its calls.
  *
- * @version $Id$
  */
 public class PrefixedObjectValueSource
     extends AbstractDelegatingValueSource
@@ -35,8 +34,9 @@ public class PrefixedObjectValueSource
 
     /**
      * Wrap the specified root object, allowing the specified expression prefix.
+     * @param prefix the prefix.
+     * @param root the root of the graph.
      */
-    @SuppressWarnings( "UnusedDeclaration" )
     public PrefixedObjectValueSource( String prefix, Object root )
     {
         super( new PrefixedValueSourceWrapper( new ObjectBasedValueSource( root ), prefix ) );
@@ -46,6 +46,9 @@ public class PrefixedObjectValueSource
      * Wrap the specified root object, allowing the specified list of expression
      * prefixes and setting whether the {@link PrefixedValueSourceWrapper} allows
      * unprefixed expressions.
+     * @param possiblePrefixes The possible prefixes.
+     * @param root The root of the graph.
+     * @param allowUnprefixedExpressions if we allow undefined expressions or not.
      */
     public PrefixedObjectValueSource( List<String> possiblePrefixes, Object root, boolean allowUnprefixedExpressions )
     {

@@ -27,7 +27,6 @@ import java.util.List;
  *
  * @author jdcasey
  * @author krosenvold
- * @version $Id$
  */
 public class PrefixedValueSourceWrapper implements FixedValueSource
 {

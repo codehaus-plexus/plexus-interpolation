@@ -26,24 +26,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>
  * A fixed string search interpolator is permanently bound to a given set of value sources,
- * an is totally fixed and stateless over these value sources.
- * <p/>
- * The fixed interpolator is also a #StatelessValueSource and can be used as a source
- * for a different fixed interpolator, creating a scope chain.
- * <p/>
- * Once constructed, this interpolator will always point to the same set of objects (value sources),
+ * an is totally fixed and stateless over these value sources.</p>
+ * <p>The fixed interpolator is also a #StatelessValueSource and can be used as a source
+ * for a different fixed interpolator, creating a scope chain.</p>
+ * <p>Once constructed, this interpolator will always point to the same set of objects (value sources),
  * in such a way that if the underlying object is fixed, expressions will always
- * evaluate to the same result.
- * <p/>
- * Th fixed interpolator can be shared among different clients and is thread safe to
+ * evaluate to the same result.</p>
+ * <p>The fixed interpolator can be shared among different clients and is thread safe to
  * the extent the underlying value sources can be accessed safely.
  * Since interpolation expressions cannot modify the objects, thread safety concerns
  * this will normally be limited to safe publication and memory model visibility of
- * underlying objects.
- * <p/>
- * <p/>
- * The fixed interpolator can be a valuesource
+ * underlying objects.</p>
+ * <p>The fixed interpolator can be a valuesource</p>
  */
 public class FixedStringSearchInterpolator
     implements FixedValueSource

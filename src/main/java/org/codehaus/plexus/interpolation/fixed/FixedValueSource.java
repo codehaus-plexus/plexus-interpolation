@@ -19,6 +19,8 @@ package org.codehaus.plexus.interpolation.fixed;
 public interface FixedValueSource
 {
     /**
+     * @param expression The expression.
+     * @param interpolationState {@link InterpolationState}.
      * @return the value related to the expression, or null if not found (not available
      * from this source)
      */

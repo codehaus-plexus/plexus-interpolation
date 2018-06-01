@@ -32,7 +32,6 @@ import org.codehaus.plexus.interpolation.util.StringUtils;
  * and includes a {@link RecursionInterceptor} parameter in its interpolate(..)
  * call, to allow the detection of cyclical expression references.
  *
- * @version $Id$
  */
 public class RegexBasedInterpolator
     implements Interpolator
@@ -62,8 +61,7 @@ public class RegexBasedInterpolator
     
     /**
      * Setup a basic interpolator.
-     * <br/>
-     * <b>NOTE:</b> You will have to call
+     * <p><b>NOTE:</b> You will have to call</p>
      * {@link RegexBasedInterpolator#addValueSource(ValueSource)} at least once
      * if you use this constructor!
      */
@@ -85,10 +83,9 @@ public class RegexBasedInterpolator
     /**
      * Setup an interpolator with no value sources, and the specified regex pattern
      * prefix and suffix in place of the default one.
-     * <br/>
-     * <b>NOTE:</b> You will have to call
+     * <p><b>NOTE:</b> You will have to call
      * {@link RegexBasedInterpolator#addValueSource(ValueSource)} at least once
-     * if you use this constructor!
+     * if you use this constructor!</p>
      *
      * @param startRegex start of the regular expression to use
      * @param endRegex end of the regular expression to use
@@ -378,9 +375,9 @@ public class RegexBasedInterpolator
 
     /**
      * See {@link RegexBasedInterpolator#interpolate(String, String, RecursionInterceptor)}.
-     * <br/>
+     * <p>
      * This method triggers the use of a {@link SimpleRecursionInterceptor}
-     * instance for protection against expression cycles.
+     * instance for protection against expression cycles.</p>
      *
      * @param input The input string to interpolate
      *
@@ -396,11 +393,11 @@ public class RegexBasedInterpolator
 
     /**
      * See {@link RegexBasedInterpolator#interpolate(String, String, RecursionInterceptor)}.
-     * <br/>
+     * <p>
      * This method triggers the use of a {@link SimpleRecursionInterceptor}
      * instance for protection against expression cycles. It also leaves empty the
      * expression prefix which would otherwise be trimmed from expressions. The
-     * result is that any detected expression will be resolved as-is.
+     * result is that any detected expression will be resolved as-is.</p>
      *
      * @param input The input string to interpolate
      */
@@ -412,10 +409,10 @@ public class RegexBasedInterpolator
 
     /**
      * See {@link RegexBasedInterpolator#interpolate(String, String, RecursionInterceptor)}.
-     * <br/>
+     * <p>
      * This method leaves empty the expression prefix which would otherwise be
      * trimmed from expressions. The result is that any detected expression will
-     * be resolved as-is.
+     * be resolved as-is.</p>
      *
      * @param input The input string to interpolate
      *

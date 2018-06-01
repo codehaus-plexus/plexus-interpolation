@@ -25,16 +25,14 @@ import java.util.Map;
 /**
  * <b>NOTE:</b> This class was copied from plexus-utils, to allow this library
  * to stand completely self-contained.
- * <br/>
- * A cache of introspection information for a specific class instance.
- * Keys {@link java.lang.Method} objects by a concatenation of the
- * method name and the names of classes that make up the parameters.
+ * <p>A cache of introspection information for a specific class instance.
+ * Keys {@link Method} objects by a concatenation of the
+ * method name and the names of classes that make up the parameters.</p>
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
  * @author <a href="mailto:bob@werken.com">Bob McWhirter</a>
  * @author <a href="mailto:szegedia@freemail.hu">Attila Szegedi</a>
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
- * @version $Id$
  */
 public class ClassMap
 {
@@ -61,6 +59,7 @@ public class ClassMap
 
     /**
      * Standard constructor
+     * @param clazz The class to be analyzed.
      */
     public ClassMap( Class<?> clazz )
     {
@@ -77,16 +76,18 @@ public class ClassMap
     }
 
     /**
-     * Find a Method using the methodKey
-     * provided.
-     * <p/>
-     * Look in the methodMap for an entry.  If found,
+     * <p>Find a Method using the methodKey
+     * provided.</p>
+     * <p>Look in the methodMap for an entry.  If found,
      * it'll either be a CACHE_MISS, in which case we
      * simply give up, or it'll be a Method, in which
-     * case, we return it.
-     * <p/>
-     * If nothing is found, then we must actually go
-     * and introspect the method from the MethodMap.
+     * case, we return it.</p>
+     * <p>If nothing is found, then we must actually go
+     * and introspect the method from the MethodMap.</p>
+     * @param name name of the method.
+     * @param params The parameters for the method.
+     * @return {@link Method}.
+     * @throws MethodMap.AmbiguousException in case of an error.
      */
     public Method findMethod( String name, Object[] params )
         throws MethodMap.AmbiguousException

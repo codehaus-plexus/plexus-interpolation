@@ -26,12 +26,11 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * <b>NOTE:</b> This class was copied from plexus-utils, to allow this library to stand completely self-contained. <br/>
- * Using simple dotted expressions extract the values from a MavenProject instance, For example we might want to extract
- * a value like: project.build.sourceDirectory
+ * <b>NOTE:</b> This class was copied from plexus-utils, to allow this library to stand completely self-contained.
+ * <p>Using simple dotted expressions extract the values from a MavenProject instance, For example we might want to extract
+ * a value like: project.build.sourceDirectory</p>
  *
  * @author <a href="mailto:jason@maven.org">Jason van Zyl </a>
- * @version $Id$
  */
 public class ReflectionValueExtractor
 {
@@ -142,7 +141,7 @@ public class ReflectionValueExtractor
      * pattern, i.e. "user.addresses[1].street"</li>
      * <li>mapped properties should be contains <code>(\\w+)\\((.+)\\)</code> pattern, i.e.
      * "user.addresses(myAddress).street"</li>
-     * <ul>
+     * </ul>
      * 
      * @param expression not null expression
      * @param root not null object
@@ -165,10 +164,11 @@ public class ReflectionValueExtractor
      * pattern, i.e. "user.addresses[1].street"</li>
      * <li>mapped properties should be contains <code>(\\w+)\\((.+)\\)</code> pattern, i.e.
      * "user.addresses(myAddress).street"</li>
-     * <ul>
+     * </ul>
      * 
      * @param expression not null expression
      * @param root not null object
+     * @param trimRootToken trim the token or not.
      * @return the object defined by the expression
      * @throws Exception if any
      */

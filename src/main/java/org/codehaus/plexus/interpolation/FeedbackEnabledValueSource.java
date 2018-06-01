@@ -22,7 +22,6 @@ package org.codehaus.plexus.interpolation;
  * about what may have gone wrong while resolving the value for an expression.
  *
  * @author jdcasey
- * @version $Id$
  *
  * @deprecated Rolled into {@link ValueSource} now.
  */

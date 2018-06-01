@@ -24,7 +24,6 @@ import java.util.Collection;
  * Utility methods shared by multiple {@link ValueSource} implementations.
  *
  * @author jdcasey
- * @version $Id$
  */
 public final class ValueSourceUtils
 {
