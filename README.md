@@ -8,7 +8,7 @@ The current master is now at https://github.com/codehaus-plexus/plexus-interpola
 
 Components for interpolating `${}` strings and the like.
 
-For publishing [the site](https://codehaus-plexus.github.io/plexus-io/) do the following:
+For publishing [the site](https://codehaus-plexus.github.io/plexus-interpolation/) do the following:
 
 ```
 mvn -Preporting verify site-deploy
