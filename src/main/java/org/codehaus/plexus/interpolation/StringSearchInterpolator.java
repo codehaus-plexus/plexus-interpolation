@@ -61,6 +61,7 @@ public class StringSearchInterpolator
     /**
      * {@inheritDoc}
      */
+    @Override
     public void addValueSource( ValueSource valueSource )
     {
         valueSources.add( valueSource );
@@ -69,6 +70,7 @@ public class StringSearchInterpolator
     /**
      * {@inheritDoc}
      */
+    @Override
     public void removeValuesSource( ValueSource valueSource )
     {
         valueSources.remove( valueSource );
@@ -77,6 +79,7 @@ public class StringSearchInterpolator
     /**
      * {@inheritDoc}
      */
+    @Override
     public void addPostProcessor( InterpolationPostProcessor postProcessor )
     {
         postProcessors.add( postProcessor );
@@ -85,23 +88,27 @@ public class StringSearchInterpolator
     /**
      * {@inheritDoc}
      */
+    @Override
     public void removePostProcessor( InterpolationPostProcessor postProcessor )
     {
         postProcessors.remove( postProcessor );
     }
 
+    @Override
     public String interpolate( String input, String thisPrefixPattern )
         throws InterpolationException
     {
         return interpolate( input, new SimpleRecursionInterceptor() );
     }
 
+    @Override
     public String interpolate( String input, String thisPrefixPattern, RecursionInterceptor recursionInterceptor )
         throws InterpolationException
     {
         return interpolate( input, recursionInterceptor );
     }
 
+    @Override
     public String interpolate( String input )
         throws InterpolationException
     {
@@ -114,6 +121,7 @@ public class StringSearchInterpolator
      *
      * TODO: Ensure unresolvable expressions don't trigger infinite recursion.
      */
+    @Override
     public String interpolate( String input, RecursionInterceptor recursionInterceptor )
         throws InterpolationException
     {
@@ -186,7 +194,7 @@ public class StringSearchInterpolator
                 recursionInterceptor.expressionResolutionStarted( realExpr );
                 try
                 {
-                    Object value = existingAnswers.get( realExpr );
+                    Object value = getExistingAnswer( realExpr );
                     Object bestAnswer = null;
 
                     for ( ValueSource valueSource : valueSources )
@@ -235,6 +243,11 @@ public class StringSearchInterpolator
                         // behaviour
                         result.append( String.valueOf( value ) );
                         resolved = true;
+
+                        if (cacheAnswers)
+                        {
+                            existingAnswers.put( realExpr, value );
+                        }
                     }
                     else
                     {
@@ -279,6 +292,7 @@ public class StringSearchInterpolator
      * @return a {@link List} that may be interspersed with {@link String} and
      *         {@link Throwable} instances.
      */
+    @Override
     public List getFeedback()
     {
         List<?> messages = new ArrayList();
@@ -297,6 +311,7 @@ public class StringSearchInterpolator
     /**
      * Clear the feedback messages from previous interpolate(..) calls.
      */
+    @Override
     public void clearFeedback()
     {
         for ( ValueSource vs : valueSources )
@@ -305,16 +320,19 @@ public class StringSearchInterpolator
         }
     }
 
+    @Override
     public boolean isCacheAnswers()
     {
         return cacheAnswers;
     }
 
+    @Override
     public void setCacheAnswers( boolean cacheAnswers )
     {
         this.cacheAnswers = cacheAnswers;
     }
 
+    @Override
     public void clearAnswers()
     {
         existingAnswers.clear();
@@ -328,6 +346,16 @@ public class StringSearchInterpolator
     public void setEscapeString( String escapeString )
     {
         this.escapeString = escapeString;
+    }
+
+    /**
+     * For testing purposes only. Not part of the public API.
+     * @param key the key of a possible existing answer.
+     * @return the associated interpolated object, or null if there is none.
+     */
+    protected Object getExistingAnswer(String key)
+    {
+        return existingAnswers.get( key );
     }
 
 }
