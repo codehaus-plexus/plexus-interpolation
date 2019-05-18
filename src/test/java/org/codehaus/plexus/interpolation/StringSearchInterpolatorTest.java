@@ -406,6 +406,75 @@ public class StringSearchInterpolatorTest {
                 "should not believe there is a cycle here");
     }
 
+    public void testCacheAnswersTrue() throws InterpolationException {
+        Properties p = new Properties();
+        p.setProperty("key", "value");
+
+        class CountingStringSearchInterpolator extends StringSearchInterpolator {
+            private int existingCallCount;
+
+            @Override
+            protected Object getExistingAnswer(String key) {
+                Object value = super.getExistingAnswer(key);
+                if (value != null) {
+                    ++existingCallCount;
+                }
+                return value;
+            }
+
+            public int getExistingCallCount() {
+                return existingCallCount;
+            }
+        }
+
+        CountingStringSearchInterpolator interpolator = new CountingStringSearchInterpolator();
+        interpolator.setCacheAnswers(true);
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        String result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+
+        assertEquals("value-value-value-value", result);
+        // first value is interpolated and saved, then the 3 next answers came from existing answer Map
+        assertEquals(3, interpolator.getExistingCallCount());
+
+        // answers are preserved between calls:
+        result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+        assertEquals("value-value-value-value", result);
+        // 3 from the first call to interpolate(), plus 4 from second call
+        assertEquals(3 + 4, interpolator.getExistingCallCount());
+    }
+
+    public void testCacheAnswersFalse() throws InterpolationException {
+        Properties p = new Properties();
+        p.setProperty("key", "value");
+
+        class CountingStringSearchInterpolator extends StringSearchInterpolator {
+            private int existingCallCount;
+
+            @Override
+            protected Object getExistingAnswer(String key) {
+                Object value = super.getExistingAnswer(key);
+                if (value != null) {
+                    ++existingCallCount;
+                }
+                return value;
+            }
+
+            public int getExistingCallCount() {
+                return existingCallCount;
+            }
+        }
+
+        CountingStringSearchInterpolator interpolator = new CountingStringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        String result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+
+        assertEquals("value-value-value-value", result);
+        // all values are interpolated each time
+        assertEquals(0, interpolator.getExistingCallCount());
+    }
+
     public String getVar() {
         return "testVar";
     }
