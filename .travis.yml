@@ -13,5 +13,4 @@ branches:
         - gh-pages
 notifications:
     email:
-        - olamy@apache.org
         - kama@soebes.de
