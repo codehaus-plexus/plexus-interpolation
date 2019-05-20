@@ -33,7 +33,6 @@ public class StringSearchInterpolatorTest
     extends TestCase
 {
 
-    @Override
     @Before
     public void setUp()
     {
@@ -189,7 +188,6 @@ public class StringSearchInterpolatorTest
     {
         OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
         {
-            @Override
             public Map<String, String> getEnvMap()
             {
                 HashMap<String,String> map = new HashMap<String,String>();
@@ -220,7 +218,6 @@ public class StringSearchInterpolatorTest
 
         rbi.addPostProcessor( new InterpolationPostProcessor()
         {
-            @Override
             public Object execute( String expression, Object value )
             {
                 return null;
@@ -245,7 +242,6 @@ public class StringSearchInterpolatorTest
 
         rbi.addPostProcessor( new InterpolationPostProcessor()
         {
-            @Override
             public Object execute( String expression, Object value )
             {
                 return value + "2";
@@ -412,7 +408,6 @@ public class StringSearchInterpolatorTest
         final boolean[] error = new boolean[] { false };
         interpolator.addValueSource( new ValueSource()
         {
-            @Override
             public Object getValue( String expression ) {
                 if ( expression.equals( "key" ) )
                 {
@@ -427,12 +422,10 @@ public class StringSearchInterpolatorTest
                     return null;
                 }
             }
-            @Override
             public List getFeedback()
             {
                 return Collections.EMPTY_LIST;
             }
-            @Override
             public void clearFeedback()
             {
             }
