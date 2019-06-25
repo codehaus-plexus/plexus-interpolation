@@ -138,136 +138,144 @@ public class StringSearchInterpolator
             // return empty String to prevent NPE too
             return "";
         }
-        StringBuilder result = new StringBuilder( input.length() * 2 );
 
         int startIdx;
         int endIdx = -1;
-        while ( ( startIdx = input.indexOf( startExpr, endIdx + 1 ) ) > -1 )
+        if ( ( startIdx = input.indexOf( startExpr, endIdx + 1 ) ) > -1 )
         {
-            result.append( input, endIdx + 1, startIdx );
-
-            endIdx = input.indexOf( endExpr, startIdx + 1 );
-            if ( endIdx < 0 )
-            {
-                break;
-            }
-
-            final String wholeExpr = input.substring( startIdx, endIdx + endExpr.length() );
-            String realExpr = wholeExpr.substring( startExpr.length(), wholeExpr.length() - endExpr.length() );
-
-            if ( startIdx >= 0 && escapeString != null && escapeString.length() > 0 )
-            {
-                int startEscapeIdx = startIdx == 0 ? 0 : startIdx - escapeString.length();
-                if ( startEscapeIdx >= 0 )
+            StringBuilder result = new StringBuilder( input.length() * 2 );
+            do
                 {
-                    String escape = input.substring( startEscapeIdx, startIdx );
-                    if ( escapeString.equals( escape ) )
+                result.append( input, endIdx + 1, startIdx );
+
+                endIdx = input.indexOf( endExpr, startIdx + 1 );
+                if ( endIdx < 0 )
+                {
+                    break;
+                }
+
+                final String wholeExpr = input.substring( startIdx, endIdx + endExpr.length() );
+                String realExpr = wholeExpr.substring( startExpr.length(), wholeExpr.length() - endExpr.length() );
+
+                if ( startIdx >= 0 && escapeString != null && escapeString.length() > 0 )
+                {
+                    int startEscapeIdx = startIdx == 0 ? 0 : startIdx - escapeString.length();
+                    if ( startEscapeIdx >= 0 )
                     {
-                        result.append( wholeExpr );
-                        result.replace( startEscapeIdx, startEscapeIdx + escapeString.length(), "" );
-                        continue;
-                    }
-                }
-            }
-
-            boolean resolved = false;
-            if ( !unresolvable.contains( wholeExpr ) )
-            {
-                if ( realExpr.startsWith( "." ) )
-                {
-                    realExpr = realExpr.substring( 1 );
-                }
-
-                if ( recursionInterceptor.hasRecursiveExpression( realExpr ) )
-                {
-                    throw new InterpolationCycleException( recursionInterceptor, realExpr, wholeExpr );
-                }
-
-                recursionInterceptor.expressionResolutionStarted( realExpr );
-                try
-                {
-                    Object value = existingAnswers.get( realExpr );
-                    Object bestAnswer = null;
-
-                    for ( ValueSource valueSource : valueSources )
-                    {
-                        if ( value != null )
+                        String escape = input.substring( startEscapeIdx, startIdx );
+                        if ( escapeString.equals( escape ) )
                         {
-                            break;
-                        }
-                        value = valueSource.getValue( realExpr );
-
-                        if ( value != null && value.toString().contains( wholeExpr ) )
-                        {
-                            bestAnswer = value;
-                            value = null;
+                            result.append(wholeExpr);
+                            result.replace(startEscapeIdx, startEscapeIdx + escapeString.length(), "");
+                            continue;
                         }
                     }
+                }
 
-                    // this is the simplest recursion check to catch exact recursion
-                    // (non synonym), and avoid the extra effort of more string
-                    // searching.
-                    if ( value == null && bestAnswer != null )
+                boolean resolved = false;
+                if ( !unresolvable.contains( wholeExpr ) )
+                {
+                    if ( realExpr.startsWith( "." ) )
+                    {
+                        realExpr = realExpr.substring(1);
+                    }
+
+                    if ( recursionInterceptor.hasRecursiveExpression( realExpr ) )
                     {
                         throw new InterpolationCycleException( recursionInterceptor, realExpr, wholeExpr );
                     }
 
-                    if ( value != null )
+                    recursionInterceptor.expressionResolutionStarted( realExpr );
+                    try
                     {
-                        value = interpolate( String.valueOf( value ), recursionInterceptor, unresolvable );
+                        Object value = existingAnswers.get( realExpr );
+                        Object bestAnswer = null;
 
-                        if ( postProcessors != null && !postProcessors.isEmpty() )
+                        for ( ValueSource valueSource : valueSources )
                         {
-                            for ( InterpolationPostProcessor postProcessor : postProcessors )
+                            if ( value != null )
                             {
-                                Object newVal = postProcessor.execute( realExpr, value );
-                                if ( newVal != null )
-                                {
-                                    value = newVal;
-                                    break;
-                                }
+                                break;
+                            }
+                            value = valueSource.getValue( realExpr );
+
+                            if ( value != null && value.toString().contains( wholeExpr ) )
+                            {
+                                bestAnswer = value;
+                                value = null;
                             }
                         }
 
-                        // could use:
-                        // result = matcher.replaceFirst( stringValue );
-                        // but this could result in multiple lookups of stringValue, and replaceAll is not correct
-                        // behaviour
-                        result.append( String.valueOf( value ) );
-                        resolved = true;
+                        // this is the simplest recursion check to catch exact recursion
+                        // (non synonym), and avoid the extra effort of more string
+                        // searching.
+                        if ( value == null && bestAnswer != null )
+                        {
+                            throw new InterpolationCycleException( recursionInterceptor, realExpr, wholeExpr );
+                        }
+
+                        if ( value != null )
+                        {
+                            value = interpolate( String.valueOf(value), recursionInterceptor, unresolvable );
+
+                            if ( postProcessors != null && !postProcessors.isEmpty() )
+                            {
+                                for ( InterpolationPostProcessor postProcessor : postProcessors )
+                                {
+                                    Object newVal = postProcessor.execute( realExpr, value );
+                                    if ( newVal != null )
+                                    {
+                                        value = newVal;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            // could use:
+                            // result = matcher.replaceFirst( stringValue );
+                            // but this could result in multiple lookups of stringValue, and replaceAll is not correct
+                            // behaviour
+                            result.append( String.valueOf( value ) );
+                            resolved = true;
+                        }
+                        else
+                        {
+                            unresolvable.add( wholeExpr );
+                        }
                     }
-                    else
+                    finally
                     {
-                        unresolvable.add( wholeExpr );
+                        recursionInterceptor.expressionResolutionFinished( realExpr );
                     }
                 }
-                finally
+
+                if (!resolved)
                 {
-                    recursionInterceptor.expressionResolutionFinished( realExpr );
+                    result.append( wholeExpr );
+                }
+
+                if ( endIdx > -1 )
+                {
+                    endIdx += endExpr.length() - 1;
                 }
             }
+            while ( ( startIdx = input.indexOf( startExpr, endIdx + 1 ) ) > -1);
 
-            if ( !resolved )
+            if ( endIdx == -1 && startIdx > -1 )
             {
-                result.append( wholeExpr );
+                result.append( input, startIdx, input.length());
+            }
+            else if ( endIdx < input.length() )
+            {
+                result.append( input, endIdx + 1, input.length() );
             }
 
-            if ( endIdx > -1 )
-            {
-                endIdx += endExpr.length() - 1;
-            }
+            return result.toString();
         }
-
-        if ( endIdx == -1 && startIdx > -1 )
+        else
         {
-            result.append( input, startIdx, input.length());
+            return input;
         }
-        else if ( endIdx < input.length() )
-        {
-            result.append( input, endIdx + 1, input.length() );
-        }
-
-        return result.toString();
     }
 
     /**
