@@ -3,6 +3,15 @@ jdk:
   - openjdk7
   - oraclejdk8
   - openjdk11
+  
+matrix:
+  include:
+    - arch: ppc64le
+      jdk: openjdk8
+      addons: [ apt: [ packages: maven ]]
+    - arch: ppc64le
+      jdk: openjdk11
+      addons: [ apt: [ packages: maven ]]
 
 script: "mvn --show-version --errors --batch-mode -Prun-its clean verify"
 
