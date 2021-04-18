@@ -1,0 +1,2 @@
+_extends: .github
+tag-template: plexus-interpolation-$NEXT_MINOR_VERSION
