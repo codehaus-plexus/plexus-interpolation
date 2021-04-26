@@ -12,7 +12,7 @@
 <div class="separator">&nbsp;</div>
 <table class="report">
 <thead><tr>  <td class="heading">Classes in this File</td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Line Coverage</a></td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Branch Coverage</a></td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Complexity</a></td></tr></thead>
-  <tr><td><a href="org.codehaus.plexus.interpolation.InterpolatorFilterReader.html">InterpolatorFilterReader</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">67%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:67px"><span class="text">81/120</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">62%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:62px"><span class="text">56/90</span></div></div></td></tr></table></td><td class="value"><span class="hidden">4.6;</span>4.6</td></tr>
+  <tr><td><a href="org.codehaus.plexus.interpolation.InterpolatorFilterReader.html">InterpolatorFilterReader</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">66%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:66px"><span class="text">78/117</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">62%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:62px"><span class="text">56/90</span></div></div></td></tr></table></td><td class="value"><span class="hidden">4.6;</span>4.6</td></tr>
 
 </table>
 <div class="separator">&nbsp;</div>
@@ -514,10 +514,13 @@
 <tr>  <td class="numLine">&nbsp;273</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;274</td>  <td class="nbHitsCovered">&nbsp;163</td>  <td class="src"><pre class="src">&nbsp;                    key.append( (<span class="keyword">char</span>) ch );</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;275</td>  <td class="nbHitsCovered"><a title="Line 275: Conditional coverage 100% (2/2).">&nbsp;163</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 275: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span> ( ( beginTokenMatchPos &lt; <span class="keyword">this</span>.beginToken.length() )</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;276</td>  <td class="nbHitsCovered"><a title="Line 276: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;33</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 276: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">                        &amp;&amp; ( ch != <span class="keyword">this</span>.beginToken.charAt( beginTokenMatchPos++ ) )</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;277</td>  <td class="nbHitsCovered"><a title="Line 277: Conditional coverage 100% (2/2).">&nbsp;15</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 277: Conditional coverage 100% (2/2).">                        &amp;&amp; ( useEscape &amp;&amp; <span class="keyword">this</span>.orginalBeginToken.length() &gt; ( beginTokenMatchPos - 1 ) &amp;&amp; ch != <span class="keyword">this</span>.orginalBeginToken</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;278</td>  <td class="nbHitsUncovered"><a title="Line 278: Conditional coverage 50% (1/2).">&nbsp;6</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 278: Conditional coverage 50% (1/2).">                            .charAt( beginTokenMatchPos - 1 ) ) )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;275</td>  <td class="nbHitsUncovered"><a title="Line 275: Conditional coverage 90% (9/10) [each condition: 100%, 100%, 100%, 100%, 50%].">&nbsp;163</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 275: Conditional coverage 90% (9/10) [each condition: 100%, 100%, 100%, 100%, 50%].">                    <span class="keyword">if</span> ( ( beginTokenMatchPos &lt; <span class="keyword">this</span>.beginToken.length() )</a></span></pre></td></tr>
+<tr>  <td class="numLine">&nbsp;276</td>  <td class="nbHits">&nbsp;</td>
+  <td class="src"><pre class="src">&nbsp;                        &amp;&amp; ( ch != <span class="keyword">this</span>.beginToken.charAt( beginTokenMatchPos++ ) )</pre></td></tr>
+<tr>  <td class="numLine">&nbsp;277</td>  <td class="nbHits">&nbsp;</td>
+  <td class="src"><pre class="src">&nbsp;                        &amp;&amp; ( useEscape &amp;&amp; <span class="keyword">this</span>.orginalBeginToken.length() &gt; ( beginTokenMatchPos - 1 ) &amp;&amp; ch != <span class="keyword">this</span>.orginalBeginToken</pre></td></tr>
+<tr>  <td class="numLine">&nbsp;278</td>  <td class="nbHits">&nbsp;</td>
+  <td class="src"><pre class="src">&nbsp;                            .charAt( beginTokenMatchPos - 1 ) ) )</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;279</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;280</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                        ch = -1; <span class="comment">// not really EOF but to trigger code below</span></span></pre></td></tr>
@@ -799,6 +802,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 6/1/18 8:32 PM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 4/27/21 12:19 AM.</div>
 </body>
 </html>

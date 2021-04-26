@@ -23,10 +23,10 @@ under the License.
     <link>http://codehaus-plexus.github.io/plexus-interpolation/</link>
     <description>Plexus Interpolation API - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2001 - 2018 Codehaus Plexus</copyright>
+    <copyright>&#169;2001 - 2021 Codehaus Plexus</copyright>
     <item>
       <title>File: 51,
-             Errors: 169,
+             Errors: 182,
              Warnings: 170,
              Infos: 25
       </title>
@@ -46,128 +46,16 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.MapBasedValueSource.java">org/codehaus/plexus/interpolation/MapBasedValueSource.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.BasicInterpolator.java">org/codehaus/plexus/interpolation/BasicInterpolator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PrefixAwareRecursionInterceptor.java">org/codehaus/plexus/interpolation/PrefixAwareRecursionInterceptor.java</a>
-                </td>
-                <td>
-                  2
-                </td>
-                <td>
-                  6
+                  0
                 </td>
                 <td>
                   3
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolationException.java">org/codehaus/plexus/interpolation/InterpolationException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.RecursionInterceptor.java">org/codehaus/plexus/interpolation/RecursionInterceptor.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.InterpolationCycleException.java">org/codehaus/plexus/interpolation/fixed/InterpolationCycleException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.AbstractDelegatingValueSource.java">org/codehaus/plexus/interpolation/AbstractDelegatingValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  5
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.InterpolationState.java">org/codehaus/plexus/interpolation/fixed/InterpolationState.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
-                </td>
-                <td>
-                  23
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PrefixedObjectValueSource.java">org/codehaus/plexus/interpolation/PrefixedObjectValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolatorFilterReader.java">org/codehaus/plexus/interpolation/InterpolatorFilterReader.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-                <td>
-                  5
                 </td>
               </tr>
                           <tr>
@@ -186,49 +74,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.FixedInterpolatorValueSource.java">org/codehaus/plexus/interpolation/FixedInterpolatorValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.multi.DelimiterSpecification.java">org/codehaus/plexus/interpolation/multi/DelimiterSpecification.java</a>
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  11
-                </td>
-                <td>
-                  9
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.os.Os.java">org/codehaus/plexus/interpolation/os/Os.java</a>
-                </td>
-                <td>
-                  15
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PrefixedPropertiesValueSource.java">org/codehaus/plexus/interpolation/PrefixedPropertiesValueSource.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PrefixedObjectValueSource.java">org/codehaus/plexus/interpolation/PrefixedObjectValueSource.java</a>
                 </td>
                 <td>
                   0
@@ -238,216 +84,6 @@ under the License.
                 </td>
                 <td>
                   1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolationPostProcessor.java">org/codehaus/plexus/interpolation/InterpolationPostProcessor.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PrefixedValueSourceWrapper.java">org/codehaus/plexus/interpolation/PrefixedValueSourceWrapper.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.ValueSource.java">org/codehaus/plexus/interpolation/ValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.multi.MultiDelimiterStringSearchInterpolator.java">org/codehaus/plexus/interpolation/multi/MultiDelimiterStringSearchInterpolator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  20
-                </td>
-                <td>
-                  8
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.AbstractFunctionValueSourceWrapper.java">org/codehaus/plexus/interpolation/AbstractFunctionValueSourceWrapper.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-                <td>
-                  3
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.AbstractDelegatingValueSource.java">org/codehaus/plexus/interpolation/fixed/AbstractDelegatingValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  4
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.ObjectBasedValueSource.java">org/codehaus/plexus/interpolation/fixed/ObjectBasedValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.object.ObjectInterpolationWarning.java">org/codehaus/plexus/interpolation/object/ObjectInterpolationWarning.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  6
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.SingleResponseValueSource.java">org/codehaus/plexus/interpolation/SingleResponseValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  5
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.EnvarBasedValueSource.java">org/codehaus/plexus/interpolation/fixed/EnvarBasedValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.os.OperatingSystemUtils.java">org/codehaus/plexus/interpolation/os/OperatingSystemUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.util.ValueSourceUtils.java">org/codehaus/plexus/interpolation/util/ValueSourceUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.PrefixedObjectValueSource.java">org/codehaus/plexus/interpolation/fixed/PrefixedObjectValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.RegexBasedInterpolator.java">org/codehaus/plexus/interpolation/RegexBasedInterpolator.java</a>
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  13
-                </td>
-                <td>
-                  12
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.PrefixedPropertiesValueSource.java">org/codehaus/plexus/interpolation/fixed/PrefixedPropertiesValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  5
                 </td>
               </tr>
                           <tr>
@@ -466,41 +102,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.Interpolator.java">org/codehaus/plexus/interpolation/Interpolator.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PrefixedValueSourceWrapper.java">org/codehaus/plexus/interpolation/PrefixedValueSourceWrapper.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.BasicInterpolator.java">org/codehaus/plexus/interpolation/BasicInterpolator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.PrefixedValueSourceWrapper.java">org/codehaus/plexus/interpolation/fixed/PrefixedValueSourceWrapper.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
+                  4
                 </td>
                 <td>
                   2
@@ -508,63 +116,49 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.AbstractValueSource.java">org/codehaus/plexus/interpolation/AbstractValueSource.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolationPostProcessor.java">org/codehaus/plexus/interpolation/InterpolationPostProcessor.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  5
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.multi.MultiDelimiterStringSearchInterpolator.java">org/codehaus/plexus/interpolation/multi/MultiDelimiterStringSearchInterpolator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  20
+                </td>
+                <td>
+                  8
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.MapBasedValueSource.java">org/codehaus/plexus/interpolation/MapBasedValueSource.java</a>
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   2
                 </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.EnvarBasedValueSource.java">org/codehaus/plexus/interpolation/EnvarBasedValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
                 <td>
                   1
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.object.ObjectInterpolator.java">org/codehaus/plexus/interpolation/object/ObjectInterpolator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.MapBasedValueSource.java">org/codehaus/plexus/interpolation/fixed/MapBasedValueSource.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.FeedbackEnabledValueSource.java">org/codehaus/plexus/interpolation/FeedbackEnabledValueSource.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolationException.java">org/codehaus/plexus/interpolation/InterpolationException.java</a>
                 </td>
                 <td>
                   0
@@ -592,7 +186,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.reflection.MethodMap.java">org/codehaus/plexus/interpolation/reflection/MethodMap.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PrefixedPropertiesValueSource.java">org/codehaus/plexus/interpolation/PrefixedPropertiesValueSource.java</a>
                 </td>
                 <td>
                   0
@@ -601,21 +195,63 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  1
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.StringSearchInterpolator.java">org/codehaus/plexus/interpolation/StringSearchInterpolator.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.os.Os.java">org/codehaus/plexus/interpolation/os/Os.java</a>
+                </td>
+                <td>
+                  15
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   2
                 </td>
+              </tr>
+                          <tr>
                 <td>
-                  14
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.SingleResponseValueSource.java">org/codehaus/plexus/interpolation/SingleResponseValueSource.java</a>
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   5
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.multi.MultiDelimiterInterpolatorFilterReader.java">org/codehaus/plexus/interpolation/multi/MultiDelimiterInterpolatorFilterReader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  12
+                </td>
+                <td>
+                  4
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.RecursionInterceptor.java">org/codehaus/plexus/interpolation/RecursionInterceptor.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
                 </td>
               </tr>
                           <tr>
@@ -634,35 +270,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.object.FieldBasedObjectInterpolator.java">org/codehaus/plexus/interpolation/object/FieldBasedObjectInterpolator.java</a>
-                </td>
-                <td>
-                  2
-                </td>
-                <td>
-                  4
-                </td>
-                <td>
-                  5
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.FixedStringSearchInterpolator.java">org/codehaus/plexus/interpolation/fixed/FixedStringSearchInterpolator.java</a>
-                </td>
-                <td>
-                  2
-                </td>
-                <td>
-                  15
-                </td>
-                <td>
-                  10
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PropertiesBasedValueSource.java">org/codehaus/plexus/interpolation/PropertiesBasedValueSource.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.util.StringUtils.java">org/codehaus/plexus/interpolation/util/StringUtils.java</a>
                 </td>
                 <td>
                   0
@@ -671,7 +279,35 @@ under the License.
                   1
                 </td>
                 <td>
-                  1
+                  4
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.InterpolationState.java">org/codehaus/plexus/interpolation/fixed/InterpolationState.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  4
+                </td>
+                <td>
+                  23
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.InterpolatorFilterReader.java">org/codehaus/plexus/interpolation/InterpolatorFilterReader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+                <td>
+                  5
                 </td>
               </tr>
                           <tr>
@@ -683,6 +319,76 @@ under the License.
                 </td>
                 <td>
                   1
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.EnvarBasedValueSource.java">org/codehaus/plexus/interpolation/fixed/EnvarBasedValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.InterpolationCycleException.java">org/codehaus/plexus/interpolation/fixed/InterpolationCycleException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.ValueSource.java">org/codehaus/plexus/interpolation/ValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.FeedbackEnabledValueSource.java">org/codehaus/plexus/interpolation/FeedbackEnabledValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.AbstractValueSource.java">org/codehaus/plexus/interpolation/AbstractValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
                 </td>
                 <td>
                   2
@@ -704,7 +410,35 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.util.StringUtils.java">org/codehaus/plexus/interpolation/util/StringUtils.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.PrefixedObjectValueSource.java">org/codehaus/plexus/interpolation/fixed/PrefixedObjectValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.PrefixedPropertiesValueSource.java">org/codehaus/plexus/interpolation/fixed/PrefixedPropertiesValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.Interpolator.java">org/codehaus/plexus/interpolation/Interpolator.java</a>
                 </td>
                 <td>
                   0
@@ -713,21 +447,133 @@ under the License.
                   1
                 </td>
                 <td>
-                  4
+                  1
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.ObjectBasedValueSource.java">org/codehaus/plexus/interpolation/ObjectBasedValueSource.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.reflection.MethodMap.java">org/codehaus/plexus/interpolation/reflection/MethodMap.java</a>
                 </td>
                 <td>
                   0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.object.FieldBasedObjectInterpolator.java">org/codehaus/plexus/interpolation/object/FieldBasedObjectInterpolator.java</a>
                 </td>
                 <td>
                   2
                 </td>
                 <td>
+                  4
+                </td>
+                <td>
+                  5
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.FixedInterpolatorValueSource.java">org/codehaus/plexus/interpolation/FixedInterpolatorValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  4
+                </td>
+                <td>
                   1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.PrefixedValueSourceWrapper.java">org/codehaus/plexus/interpolation/fixed/PrefixedValueSourceWrapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.MapBasedValueSource.java">org/codehaus/plexus/interpolation/fixed/MapBasedValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.object.ObjectInterpolationWarning.java">org/codehaus/plexus/interpolation/object/ObjectInterpolationWarning.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.ObjectBasedValueSource.java">org/codehaus/plexus/interpolation/fixed/ObjectBasedValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.FixedStringSearchInterpolator.java">org/codehaus/plexus/interpolation/fixed/FixedStringSearchInterpolator.java</a>
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  15
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.AbstractDelegatingValueSource.java">org/codehaus/plexus/interpolation/AbstractDelegatingValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  2
                 </td>
               </tr>
                           <tr>
@@ -746,16 +592,170 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.multi.MultiDelimiterInterpolatorFilterReader.java">org/codehaus/plexus/interpolation/multi/MultiDelimiterInterpolatorFilterReader.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.ObjectBasedValueSource.java">org/codehaus/plexus/interpolation/ObjectBasedValueSource.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  12
+                  2
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.StringSearchInterpolator.java">org/codehaus/plexus/interpolation/StringSearchInterpolator.java</a>
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  14
+                </td>
+                <td>
+                  18
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.os.OperatingSystemUtils.java">org/codehaus/plexus/interpolation/os/OperatingSystemUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.AbstractFunctionValueSourceWrapper.java">org/codehaus/plexus/interpolation/AbstractFunctionValueSourceWrapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.util.ValueSourceUtils.java">org/codehaus/plexus/interpolation/util/ValueSourceUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.multi.DelimiterSpecification.java">org/codehaus/plexus/interpolation/multi/DelimiterSpecification.java</a>
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  11
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.EnvarBasedValueSource.java">org/codehaus/plexus/interpolation/EnvarBasedValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.fixed.AbstractDelegatingValueSource.java">org/codehaus/plexus/interpolation/fixed/AbstractDelegatingValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
                 </td>
                 <td>
                   4
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PropertiesBasedValueSource.java">org/codehaus/plexus/interpolation/PropertiesBasedValueSource.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.PrefixAwareRecursionInterceptor.java">org/codehaus/plexus/interpolation/PrefixAwareRecursionInterceptor.java</a>
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  6
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.object.ObjectInterpolator.java">org/codehaus/plexus/interpolation/object/ObjectInterpolator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-interpolation//checkstyle.html#org.codehaus.plexus.interpolation.RegexBasedInterpolator.java">org/codehaus/plexus/interpolation/RegexBasedInterpolator.java</a>
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  13
+                </td>
+                <td>
+                  12
                 </td>
               </tr>
                       </tbody>
