@@ -188,7 +188,7 @@ public class StringSearchInterpolator
                     recursionInterceptor.expressionResolutionStarted( realExpr );
                     try
                     {
-                        Object value = existingAnswers.get( realExpr );
+                        Object value = getExistingAnswer( realExpr );
                         Object bestAnswer = null;
 
                         for ( ValueSource valueSource : valueSources )
@@ -237,6 +237,11 @@ public class StringSearchInterpolator
                             // behaviour
                             result.append( String.valueOf( value ) );
                             resolved = true;
+
+                            if (cacheAnswers)
+                            {
+                                existingAnswers.put( realExpr, value );
+                            }
                         }
                         else
                         {
@@ -336,6 +341,16 @@ public class StringSearchInterpolator
     public void setEscapeString( String escapeString )
     {
         this.escapeString = escapeString;
+    }
+
+    /**
+     * For testing purposes only. Not part of the public API.
+     * @param key the key of a possible existing answer.
+     * @return the associated interpolated object, or null if there is none.
+     */
+    protected Object getExistingAnswer(String key)
+    {
+        return existingAnswers.get( key );
     }
 
 }
