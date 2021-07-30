@@ -1,7 +1,7 @@
 Plexus-Interpolation
 ===============
 
-[![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.plexus/plexus-interpolation.svg?label=Maven%20Central)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.codehaus.plexus%22%20AND%20a%3A%22plexus-interpolation%22)
+[![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.plexus/plexus-interpolation.svg?label=Maven%20Central)](http://search.maven.org/artifact/org.codehaus.plexus/plexus-interpolation)
 
 The current master is now at https://github.com/codehaus-plexus/plexus-interpolation
 
