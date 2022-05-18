@@ -16,37 +16,18 @@
 # under the License.
 
 name: GitHub CI
-
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
+
   build:
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest,windows-latest, macOS-latest]
-        java: [8, 11, 14, 15]
-      fail-fast: false
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.0.2
-
-      - name: Set up cache for ~./m2/repository
-        uses: actions/cache@v3.0.2
-        with:
-          path: ~/.m2/repository
-          key: maven-${{ matrix.os }}-java${{ matrix.java }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            maven-${{ matrix.os }}-java${{ matrix.java }}-
-            maven-${{ matrix.os }}-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'adopt'
-          java-version: ${{ matrix.java }}
-
-      - name: Build with Maven
-        run: mvn install javadoc:javadoc -e -B -V 
+    name: Build it
+    uses: codehaus-plexus/.github/.github/workflows/maven.yml@master
+    with:
+      jdk-fast-fail-build: '11'
+      jdk-matrix: '["11", "17"]'
+      jdk-distribution-matrix: '["zulu", "temurin", "microsoft", "liberica"]'
+      os-matrix: '["ubuntu-latest","windows-latest", "macOS-latest"]'
+      maven_args: 'install javadoc:javadoc -e -B -V -fae '
