@@ -16,14 +16,17 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.Properties;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 public class PrefixedValueSourceWrapperTest
-    extends TestCase
 {
 
+    @Test
     public void testShouldReturnValueForPropertyVSWRappedWithSinglePrefix()
     {
         String prefix = "prefix.";
@@ -38,6 +41,7 @@ public class PrefixedValueSourceWrapperTest
         assertEquals( value, wrapper.getValue( prefix + key ) );
     }
 
+    @Test
     public void testShouldReturnNullForIncorrectPrefixUsingPropertyVSWRappedWithSinglePrefix()
     {
         String prefix = "prefix.";
@@ -53,6 +57,7 @@ public class PrefixedValueSourceWrapperTest
         assertNull( wrapper.getValue( otherPrefix + key ) );
     }
 
+    @Test
     public void testShouldNullForMissingValueInPropertyVSWRappedWithSinglePrefix()
     {
         String prefix = "prefix.";

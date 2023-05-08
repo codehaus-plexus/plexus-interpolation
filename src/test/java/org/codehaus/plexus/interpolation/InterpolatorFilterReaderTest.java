@@ -24,13 +24,15 @@ package org.codehaus.plexus.interpolation;
  * SOFTWARE.
  */
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 /**
  * InterpolatorFilterReaderTest, heavily based on InterpolationFilterReaderTest. Heh, even the test strings remained the
@@ -40,12 +42,12 @@ import junit.framework.TestCase;
  * 
  */
 public class InterpolatorFilterReaderTest
-    extends TestCase
 {
     /*
      * Added and commented by jdcasey@03-Feb-2005 because it is a bug in the InterpolationFilterReader.
      * kenneyw@15-04-2005 fixed the bug.
      */
+    @Test
     public void testShouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken()
         throws Exception
     {
@@ -60,6 +62,7 @@ public class InterpolatorFilterReaderTest
     /*
      * kenneyw@14-04-2005 Added test to check above fix.
      */
+    @Test
     public void testShouldNotInterpolateExpressionWithMissingEndToken()
         throws Exception
     {
@@ -71,6 +74,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "This is a ${test, really", interpolate( testStr, m ) );
     }
 
+    @Test
     public void testShouldNotInterpolateWithMalformedStartToken()
         throws Exception
     {
@@ -82,6 +86,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "This is a $!test} again", interpolate( foo, m ) );
     }
 
+    @Test
     public void testShouldNotInterpolateWithMalformedEndToken()
         throws Exception
     {
@@ -93,6 +98,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "This is a ${test!} again", interpolate( foo, m ) );
     }
 
+    @Test
     public void testDefaultInterpolationWithNonInterpolatedValueAtEnd()
         throws Exception
     {
@@ -105,6 +111,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "jason is an asshole. ${not.interpolated}", interpolate( foo, m ) );
     }
 
+    @Test
     public void testDefaultInterpolationWithInterpolatedValueAtEnd()
         throws Exception
     {
@@ -117,6 +124,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "jason is an asshole", interpolate( foo, m ) );
     }
 
+    @Test
     public void testInterpolationWithInterpolatedValueAtEndWithCustomToken()
         throws Exception
     {
@@ -129,6 +137,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "jason is an asshole", interpolate( foo, m, "@{", "}" ) );
     }
 
+    @Test
     public void testInterpolationWithInterpolatedValueAtEndWithCustomTokenAndCustomString()
         throws Exception
     {
@@ -141,6 +150,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "jason is an asshole", interpolate( foo, m, "@", "@" ) );
     }
 
+    @Test
     public void testEscape()
         throws Exception
     {
@@ -153,6 +163,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "jason is an ${noun}", interpolate( foo, m, "\\" ) );
     }
 
+    @Test
     public void testEscapeAtStart()
         throws Exception
     {
@@ -165,6 +176,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "${name} is an ${noun}", interpolate( foo, m, "\\" ) );
     }
 
+    @Test
     public void testEscapeOnlyAtStart()
         throws Exception
     {
@@ -178,6 +190,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "@name@ is an asshole", result );
     }
 
+    @Test
     public void testEscapeOnlyAtStartDefaultToken()
         throws Exception
     {
@@ -191,6 +204,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( "${name} is an asshole", result );
     }
 
+    @Test
     public void testShouldDetectRecursiveExpressionPassingThroughTwoPrefixes()
         throws Exception
     {
@@ -224,6 +238,7 @@ public class InterpolatorFilterReaderTest
         assertEquals( input, buf.toString() );
     }
 
+    @Test
     public void testShouldDetectRecursiveExpressionWithPrefixAndWithout()
         throws Exception
     {

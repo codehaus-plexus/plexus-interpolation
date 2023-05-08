@@ -16,21 +16,22 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
-import org.junit.Before;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RegexBasedInterpolatorTest
-    extends TestCase
 {
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         EnvarBasedValueSource.resetStatics();
@@ -41,6 +42,7 @@ public class RegexBasedInterpolatorTest
         return "testVar";
     }
 
+    @Test
     public void testShouldFailOnExpressionCycle()
     {
         Properties props = new Properties();
@@ -62,6 +64,7 @@ public class RegexBasedInterpolatorTest
         }
     }
 
+    @Test
     public void testShouldResolveByMy_getVar_Method()
         throws InterpolationException
     {
@@ -72,6 +75,7 @@ public class RegexBasedInterpolatorTest
         assertEquals( "this is a testVar", result );
     }
 
+    @Test
     public void testShouldResolveByContextValue()
         throws InterpolationException
     {
@@ -87,6 +91,7 @@ public class RegexBasedInterpolatorTest
         assertEquals( "this is a testVar", result );
     }
 
+    @Test
     public void testShouldResolveByEnvar()
         throws IOException, InterpolationException
     {
@@ -109,6 +114,7 @@ public class RegexBasedInterpolatorTest
         assertEquals( "this is a variable", result );
     }
 
+    @Test
     public void testUseAlternateRegex()
         throws Exception
     {
@@ -124,6 +130,7 @@ public class RegexBasedInterpolatorTest
         assertEquals( "this is a testVar", result );
     }
 
+    @Test
     public void testNPEFree()
         throws Exception
     {
@@ -137,8 +144,9 @@ public class RegexBasedInterpolatorTest
         String result = rbi.interpolate( null );
 
         assertEquals( "", result );
-    }    
-    
+    }
+
+    @Test
     public void testUsePostProcessor_DoesNotChangeValue()
         throws InterpolationException
     {
@@ -162,6 +170,7 @@ public class RegexBasedInterpolatorTest
         assertEquals( "this is a testVar", result );
     }
 
+    @Test
     public void testUsePostProcessor_ChangesValue()
         throws InterpolationException
     {

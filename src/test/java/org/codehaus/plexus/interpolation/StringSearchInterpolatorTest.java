@@ -16,6 +16,9 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,20 +28,19 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
-import org.junit.Before;
-
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class StringSearchInterpolatorTest
-    extends TestCase
 {
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         EnvarBasedValueSource.resetStatics();
     }
 
+    @Test
     public void testLongDelimitersInContext()
         throws InterpolationException
     {
@@ -54,6 +56,7 @@ public class StringSearchInterpolatorTest
         assertEquals( result, interpolator.interpolate( src ) );
     }
 
+    @Test
     public void testLongDelimitersWithNoStartContext()
         throws InterpolationException
     {
@@ -69,6 +72,7 @@ public class StringSearchInterpolatorTest
         assertEquals( result, interpolator.interpolate( src ) );
     }
 
+    @Test
     public void testLongDelimitersWithNoEndContext()
         throws InterpolationException
     {
@@ -84,6 +88,7 @@ public class StringSearchInterpolatorTest
         assertEquals( result, interpolator.interpolate( src ) );
     }
 
+    @Test
     public void testLongDelimitersWithNoContext()
         throws InterpolationException
     {
@@ -99,6 +104,7 @@ public class StringSearchInterpolatorTest
         assertEquals( result, interpolator.interpolate( src ) );
     }
 
+    @Test
     public void testSimpleSubstitution()
         throws InterpolationException
     {
@@ -111,6 +117,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "This is a test value.", interpolator.interpolate( "This is a test ${key}." ) );
     }
 
+    @Test
     public void testSimpleSubstitution_TwoExpressions()
         throws InterpolationException
     {
@@ -124,6 +131,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "value-value2", interpolator.interpolate( "${key}-${key2}" ) );
     }
 
+    @Test
     public void testBrokenExpression_LeaveItAlone()
         throws InterpolationException
     {
@@ -136,6 +144,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "This is a test ${key.", interpolator.interpolate( "This is a test ${key." ) );
     }
 
+    @Test
     public void testShouldFailOnExpressionCycle()
     {
         Properties props = new Properties();
@@ -157,6 +166,7 @@ public class StringSearchInterpolatorTest
         }
     }
 
+    @Test
     public void testShouldResolveByUsingObject_List_Map()
         throws InterpolationException
     {
@@ -168,6 +178,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "this is a testVar testIndexedWithList testIndexedWithArray testMap", result );
     }
 
+    @Test
     public void testShouldResolveByContextValue()
         throws InterpolationException
     {
@@ -183,6 +194,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "this is a testVar", result );
     }
 
+    @Test
     public void testShouldResolveByEnvar()
         throws IOException, InterpolationException
     {
@@ -206,6 +218,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "this is a variable other variable", result );
     }
 
+    @Test
     public void testUsePostProcessor_DoesNotChangeValue()
         throws InterpolationException
     {
@@ -229,6 +242,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "this is a testVar", result );
     }
 
+    @Test
     public void testUsePostProcessor_ChangesValue()
         throws InterpolationException
     {
@@ -253,6 +267,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "this is a testVar2", result );
     }
 
+    @Test
     public void testSimpleSubstitutionWithDefinedExpr()
         throws InterpolationException
     {
@@ -265,6 +280,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "This is a test value.", interpolator.interpolate( "This is a test @{key}." ) );
     }
 
+    @Test
     public void testEscape()
         throws InterpolationException
     {
@@ -280,6 +296,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "This is a test @{key}.", result );
     }
 
+    @Test
     public void testEscapeWithLongEscapeStr()
         throws InterpolationException
     {
@@ -295,6 +312,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "This is a test @{key}.", result );
     }
 
+    @Test
     public void testEscapeWithLongEscapeStrAtStart()
         throws InterpolationException
     {
@@ -310,6 +328,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "@{key} This is a test.", result );
     }
 
+    @Test
     public void testNotEscapeWithLongEscapeStrAtStart()
         throws InterpolationException
     {
@@ -325,6 +344,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "value This is a test.", result );
     }
 
+    @Test
     public void testEscapeNotFailWithNullEscapeStr()
         throws InterpolationException
     {
@@ -340,6 +360,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "This is a test value.", result );
     }
 
+    @Test
     public void testOnlyEscapeExprAtStart()
         throws InterpolationException
     {
@@ -355,6 +376,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "@{key} This is a test.", result );
     }
 
+    @Test
     public void testNotEscapeExprAtStart()
         throws InterpolationException
     {
@@ -370,6 +392,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "value This is a test.", result );
     }
 
+    @Test
     public void testEscapeExprAtStart()
         throws InterpolationException
     {
@@ -385,6 +408,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "@key@ This is a test value.", result );
     }
 
+    @Test
     public void testNPEFree()
         throws InterpolationException
     {
@@ -400,6 +424,7 @@ public class StringSearchInterpolatorTest
         assertEquals( "", result );
     }
 
+    @Test
     public void testInterruptedInterpolate()
         throws InterpolationException
     {
@@ -430,7 +455,7 @@ public class StringSearchInterpolatorTest
             {
             }
         } );
-        assertEquals( "control case", "-val-" , interpolator.interpolate( "-${key}-", recursionInterceptor ) );
+        assertEquals( "-val-" , interpolator.interpolate( "-${key}-", recursionInterceptor ) , "control case");
         error[ 0 ] = true;
         try
         {
@@ -442,7 +467,7 @@ public class StringSearchInterpolatorTest
             // right
         }
         error[ 0 ] = false;
-        assertEquals( "should not believe there is a cycle here", "-val-", interpolator.interpolate( "-${key}-", recursionInterceptor ) );
+        assertEquals( "-val-", interpolator.interpolate( "-${key}-", recursionInterceptor ) , "should not believe there is a cycle here");
     }
 
     public String getVar()

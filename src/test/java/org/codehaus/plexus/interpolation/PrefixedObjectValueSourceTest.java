@@ -16,15 +16,17 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 public class PrefixedObjectValueSourceTest
-    extends TestCase
 {
-    
+
+    @Test
     public void testEmptyExpressionResultsInNullReturn_NoPrefixUsed()
     {
         String target = "Target object";
@@ -39,6 +41,7 @@ public class PrefixedObjectValueSourceTest
         assertNull( result );
     }
 
+    @Test
     public void testEmptyExpressionResultsInNullReturn_PrefixUsedWithDot()
     {
         String target = "Target object";
@@ -53,6 +56,7 @@ public class PrefixedObjectValueSourceTest
         assertNull( result );
     }
 
+    @Test
     public void testEmptyExpressionResultsInNullReturn_PrefixUsedWithoutDot()
     {
         String target = "Target object";

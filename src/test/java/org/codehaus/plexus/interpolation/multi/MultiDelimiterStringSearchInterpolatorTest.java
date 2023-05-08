@@ -19,17 +19,17 @@ package org.codehaus.plexus.interpolation.multi;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.MapBasedValueSource;
 import org.codehaus.plexus.interpolation.ValueSource;
-import org.codehaus.plexus.interpolation.multi.MultiDelimiterStringSearchInterpolator;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MultiDelimiterStringSearchInterpolatorTest
-    extends TestCase
 {
 
+    @Test
     public void testInterpolationWithDifferentDelimiters()
         throws InterpolationException
     {
@@ -48,6 +48,7 @@ public class MultiDelimiterStringSearchInterpolatorTest
         assertEquals( ctx.get( "name" ), result );
     }
 
+    @Test
     public void testSuccessiveInterpolationWithDifferentDelimiters_ReversedDelimiterSequence()
         throws InterpolationException
     {
@@ -66,8 +67,9 @@ public class MultiDelimiterStringSearchInterpolatorTest
         assertEquals( ctx.get( "name" ), result );
     }
 
+    @Test
     public void testInterpolationWithMultipleEscapes()
-            throws InterpolationException
+        throws InterpolationException
         {
             Map ctx = new HashMap();
             ctx.put( "name", "User" );
@@ -85,6 +87,7 @@ public class MultiDelimiterStringSearchInterpolatorTest
             assertEquals( "#${first} and ${last}", result );
         }
 
+    @Test
     public void testInterpolationWithMultipleEscapes2()
         throws InterpolationException
     {
@@ -104,6 +107,7 @@ public class MultiDelimiterStringSearchInterpolatorTest
         assertEquals( "${first} and #${last}", result );
     }
 
+    @Test
     public void testInterpolationWithMultipleEscapes3()
         throws InterpolationException
     {

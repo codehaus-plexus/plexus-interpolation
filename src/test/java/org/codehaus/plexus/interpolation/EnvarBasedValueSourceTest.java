@@ -16,27 +16,29 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class EnvarBasedValueSourceTest
 {
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         EnvarBasedValueSource.resetStatics();
     }
 
     @Test
-    public void testNoArgConstructorIsCaseSensitive()
+    void testNoArgConstructorIsCaseSensitive()
         throws IOException
     {
         OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
@@ -58,7 +60,7 @@ public class EnvarBasedValueSourceTest
     }
 
     @Test
-    public void testCaseInsensitive()
+    void testCaseInsensitive()
         throws IOException
     {
         OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
@@ -80,7 +82,7 @@ public class EnvarBasedValueSourceTest
     }
 
     @Test
-    public void testGetRealEnvironmentVariable()
+    void testGetRealEnvironmentVariable()
         throws IOException
     {
         OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.DefaultEnvVarSource() );
@@ -90,7 +92,7 @@ public class EnvarBasedValueSourceTest
         String realEnvVar = "JAVA_HOME";
 
         String realValue = System.getenv().get( realEnvVar );
-        assertNotNull( "Can't run this test until " + realEnvVar + " env variable is set", realValue );
+        assertNotNull( realValue , "Can't run this test until " + realEnvVar + " env variable is set");
 
         assertEquals( realValue, source.getValue( realEnvVar ) );
     }

@@ -2,7 +2,7 @@ package org.codehaus.plexus.interpolation.fixed;
 /*
  * Copyright 2001-2008 Codehaus Foundation.
  *
- * Licensed under the Apache License, VerDefaultInterpolationStatesion 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -16,8 +16,8 @@ package org.codehaus.plexus.interpolation.fixed;
  */
 
 import static org.codehaus.plexus.interpolation.fixed.FixedStringSearchInterpolator.create;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,20 +31,20 @@ import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.InterpolationPostProcessor;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class FixedStringSearchInterpolatorTest
 {
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         EnvarBasedValueSource.resetStatics();
     }
 
     @Test
-    public void testLongDelimitersInContext()
+    void testLongDelimitersInContext()
     {
         String src = "This is a <expression>test.label</expression> for long delimiters in context.";
         String result = "This is a test for long delimiters in context.";
@@ -59,7 +59,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testLongDelimitersWithNoStartContext()
+    void testLongDelimitersWithNoStartContext()
     {
         String src = "<expression>test.label</expression> for long delimiters in context.";
         String result = "test for long delimiters in context.";
@@ -74,7 +74,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testLongDelimitersWithNoEndContext()
+    void testLongDelimitersWithNoEndContext()
     {
         String src = "This is a <expression>test.label</expression>";
         String result = "This is a test";
@@ -89,7 +89,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testLongDelimitersWithNoContext()
+    void testLongDelimitersWithNoContext()
     {
         String src = "<expression>test.label</expression>";
         String result = "test";
@@ -104,7 +104,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testSimpleSubstitution()
+    void testSimpleSubstitution()
     {
         Properties p = new Properties();
         p.setProperty( "key", "value" );
@@ -115,7 +115,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testSimpleSubstitution_TwoExpressions()
+    void testSimpleSubstitution_TwoExpressions()
     {
         Properties p = new Properties();
         p.setProperty( "key", "value" );
@@ -127,7 +127,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testBrokenExpression_LeaveItAlone()
+    void testBrokenExpression_LeaveItAlone()
     {
         Properties p = new Properties();
         p.setProperty( "key", "value" );
@@ -138,7 +138,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testShouldFailOnExpressionCycle()
+    void testShouldFailOnExpressionCycle()
     {
         Properties props = new Properties();
         props.setProperty( "key1", "${key2}" );
@@ -146,20 +146,12 @@ public class FixedStringSearchInterpolatorTest
 
         FixedStringSearchInterpolator rbi = create( new PropertiesBasedValueSource( props ) );
 
-        try
-        {
-            rbi.interpolate( "${key1}" );
-
-            fail( "Should detect expression cycle and fail." );
-        }
-        catch ( org.codehaus.plexus.interpolation.fixed.InterpolationCycleException e )
-        {
-            // expected
-        }
+        assertThrows(InterpolationCycleException.class, () -> rbi.interpolate( "${key1}" ),
+                "Should detect expression cycle and fail." );
     }
 
     @Test
-    public void testShouldResolveByUsingObject_List_Map()
+    void testShouldResolveByUsingObject_List_Map()
         throws InterpolationException
     {
         FixedStringSearchInterpolator rbi = create( new ObjectBasedValueSource( this ) );
@@ -170,7 +162,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testShouldResolveByContextValue()
+    void testShouldResolveByContextValue()
         throws InterpolationException
     {
 
@@ -185,7 +177,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testShouldResolveByEnvar()
+    void testShouldResolveByEnvar()
         throws IOException, InterpolationException
     {
         OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
@@ -207,7 +199,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testUsePostProcessor_DoesNotChangeValue()
+    void testUsePostProcessor_DoesNotChangeValue()
         throws InterpolationException
     {
 
@@ -230,7 +222,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testUsePostProcessor_ChangesValue()
+    void testUsePostProcessor_ChangesValue()
         throws InterpolationException
     {
 
@@ -254,7 +246,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testSimpleSubstitutionWithDefinedExpr()
+    void testSimpleSubstitutionWithDefinedExpr()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -266,7 +258,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testEscape()
+    void testEscape()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -281,7 +273,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testEscapeWithLongEscapeStr()
+    void testEscapeWithLongEscapeStr()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -296,7 +288,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testEscapeWithLongEscapeStrAtStart()
+    void testEscapeWithLongEscapeStrAtStart()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -311,7 +303,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testNotEscapeWithLongEscapeStrAtStart()
+    void testNotEscapeWithLongEscapeStrAtStart()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -326,7 +318,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testEscapeNotFailWithNullEscapeStr()
+    void testEscapeNotFailWithNullEscapeStr()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -341,7 +333,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testOnlyEscapeExprAtStart()
+    void testOnlyEscapeExprAtStart()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -356,7 +348,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testNotEscapeExprAtStart()
+    void testNotEscapeExprAtStart()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -371,7 +363,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testEscapeExprAtStart()
+    void testEscapeExprAtStart()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -386,7 +378,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testNPEFree()
+    void testNPEFree()
         throws InterpolationException
     {
         Properties p = new Properties();
@@ -401,7 +393,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testInterruptedInterpolate()
+    void testInterruptedInterpolate()
         throws InterpolationException
     {
         final boolean[] error = new boolean[]{ false };
@@ -426,19 +418,14 @@ public class FixedStringSearchInterpolatorTest
 
         FixedStringSearchInterpolator interpolator = create( valueSource );
 
-        assertEquals( "control case", "-val-", interpolator.interpolate( "-${key}-" ) );
+        assertEquals( "-val-", interpolator.interpolate( "-${key}-" ) , "control case");
         error[0] = true;
-        try
-        {
-            interpolator.interpolate( "-${key}-" );
-            fail( "should have thrown exception" );
-        }
-        catch ( IllegalStateException x )
-        {
-            // right
-        }
+
+        assertThrows( IllegalStateException.class, () -> interpolator.interpolate( "-${key}-" ) ,
+                "should have thrown exception");
+
         error[0] = false;
-        assertEquals( "should not believe there is a cycle here", "-val-", interpolator.interpolate( "-${key}-" ) );
+        assertEquals( "-val-", interpolator.interpolate( "-${key}-" ) , "should not believe there is a cycle here");
     }
 
     public String getVar()
@@ -487,7 +474,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testLinkedInterpolators()
+    void testLinkedInterpolators()
     {
         final String EXPR = "${test.label}AND${test2}";
         final String EXPR2 = "${test.label}${test2.label}AND${test2}";
@@ -502,7 +489,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void testDominance()
+    void testDominance()
     {
         final String EXPR = "${test.label}AND${test2}";
         final String EXPR2 = "${test.label}${test2.label}AND${test2}";
@@ -517,7 +504,7 @@ public class FixedStringSearchInterpolatorTest
     }
 
     @Test
-    public void unresolable_linked()
+    void unresolable_linked()
     {
         final String EXPR2 = "${test.label}${test2.label}AND${test2}";
 
@@ -529,24 +516,28 @@ public class FixedStringSearchInterpolatorTest
         assertEquals( "pdominantANDx", joined.interpolate( EXPR2 ) );
     }
 
-    @Test( expected = InterpolationCycleException.class )
-    public void testCyclesWithLinked()
+    @Test
+    void testCyclesWithLinked()
     {
-        FixedStringSearchInterpolator first = create( properttyBasedValueSource( "key1", "${key2}" ) );
-        FixedStringSearchInterpolator second = create( first, properttyBasedValueSource( "key2", "${key1}" ) );
-        second.interpolate( "${key2}" );
-    }
-
-    @Test( expected = InterpolationCycleException.class )
-    public void testCyclesWithLinked_betweenRootAndOther()
-    {
-        FixedStringSearchInterpolator first = create( properttyBasedValueSource( "key1", "${key2}" ) );
-        FixedStringSearchInterpolator second = create( first, properttyBasedValueSource( "key2", "${key1}" ) );
-        second.interpolate( "${key1}" );
+        assertThrows( InterpolationCycleException.class, () -> {
+            FixedStringSearchInterpolator first = create( properttyBasedValueSource( "key1", "${key2}" ) );
+            FixedStringSearchInterpolator second = create( first, properttyBasedValueSource( "key2", "${key1}" ) );
+            second.interpolate( "${key2}" );
+        } );
     }
 
     @Test
-    public void fixedInjectedIntoRegular()
+    void testCyclesWithLinked_betweenRootAndOther()
+    {
+        assertThrows( InterpolationCycleException.class, () -> {
+            FixedStringSearchInterpolator first = create( properttyBasedValueSource( "key1", "${key2}" ) );
+            FixedStringSearchInterpolator second = create( first, properttyBasedValueSource( "key2", "${key1}" ) );
+            second.interpolate( "${key1}" );
+        } );
+    }
+
+    @Test
+    void fixedInjectedIntoRegular()
         throws InterpolationException
     {
         FixedStringSearchInterpolator first = create( properttyBasedValueSource( "key1", "v1" ) );
