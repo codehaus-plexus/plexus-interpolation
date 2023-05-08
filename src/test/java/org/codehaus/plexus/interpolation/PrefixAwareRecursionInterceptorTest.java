@@ -16,15 +16,19 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Collections;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 public class PrefixAwareRecursionInterceptorTest
-    extends TestCase
 {
 
+    @Test
     public void testFindExpression()
     {
         PrefixAwareRecursionInterceptor receptor = new PrefixAwareRecursionInterceptor(
@@ -42,6 +46,7 @@ public class PrefixAwareRecursionInterceptorTest
         assertFalse( receptor.hasRecursiveExpression( expr ) );
     }
 
+    @Test
     public void testFindExpressionWithDifferentPrefix()
     {
         PrefixAwareRecursionInterceptor receptor = new PrefixAwareRecursionInterceptor(
@@ -61,6 +66,7 @@ public class PrefixAwareRecursionInterceptorTest
         assertFalse( receptor.hasRecursiveExpression( expr ) );
     }
 
+    @Test
     public void testFindExpressionWithoutPrefix()
     {
         PrefixAwareRecursionInterceptor receptor = new PrefixAwareRecursionInterceptor(

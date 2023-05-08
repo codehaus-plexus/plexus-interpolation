@@ -16,6 +16,8 @@ package org.codehaus.plexus.interpolation.object;
  * limitations under the License.
  */
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,15 +25,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import junit.framework.TestCase;
-
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
+import org.junit.jupiter.api.Test;
 
 public class FieldBasedObjectInterpolatorTest
-    extends TestCase
 {
 
+    @Test
     public void testInterpolateStringArray()
         throws Exception
     {
@@ -50,6 +51,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "value2", values[1] );
     }
 
+    @Test
     public void testInterpolateObjectWithStringArrayField()
         throws Exception
     {
@@ -70,6 +72,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "value2", obj.values[1] );
     }
 
+    @Test
     public void testInterpolateObjectWithStringListField()
         throws Exception
     {
@@ -92,6 +95,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "value2", obj.values.get( 1 ) );
     }
 
+    @Test
     public void testInterpolateObjectWithStringListFieldAndOneLiteralValue()
         throws Exception
     {
@@ -114,6 +118,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "value2", obj.values.get( 1 ) );
     }
 
+    @Test
     public void testInterpolateObjectWithUnmodifiableStringListField()
         throws Exception
     {
@@ -133,6 +138,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "${key}", obj.values.get( 0 ) );
     }
 
+    @Test
     public void testInterpolateObjectWithStringArrayListField()
         throws Exception
     {
@@ -159,6 +165,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "value4", ( (String[]) obj.values.get( 1 ) )[1] );
     }
 
+    @Test
     public void testInterpolateObjectWithStringToStringMapField()
         throws Exception
     {
@@ -181,6 +188,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "value2", obj.values.get( "key2" ) );
     }
 
+    @Test
     public void testInterpolateObjectWithStringToStringMapFieldAndOneLiteralValue()
         throws Exception
     {
@@ -203,6 +211,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "value2", obj.values.get( "key2" ) );
     }
 
+    @Test
     public void testInterpolateObjectWithUnmodifiableStringToStringMapField()
         throws Exception
     {
@@ -222,6 +231,7 @@ public class FieldBasedObjectInterpolatorTest
         assertEquals( "${key}", obj.values.get( "key" ) );
     }
 
+    @Test
     public void testInterpolateObjectWithStringToStringArrayMapField()
         throws Exception
     {
