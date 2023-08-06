@@ -16,8 +16,6 @@ package org.codehaus.plexus.interpolation.object;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,261 +27,236 @@ import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.junit.jupiter.api.Test;
 
-public class FieldBasedObjectInterpolatorTest
-{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class FieldBasedObjectInterpolatorTest {
 
     @Test
-    public void testInterpolateStringArray()
-        throws Exception
-    {
+    public void testInterpolateStringArray() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
 
-        String[] values = { "${key}", "${key2}" };
+        String[] values = {"${key}", "${key2}"};
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( values, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(values, interpolator);
 
-        assertEquals( "value", values[0] );
-        assertEquals( "value2", values[1] );
+        assertEquals("value", values[0]);
+        assertEquals("value2", values[1]);
     }
 
     @Test
-    public void testInterpolateObjectWithStringArrayField()
-        throws Exception
-    {
+    public void testInterpolateObjectWithStringArrayField() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
 
-        String[] values = { "${key}", "${key2}" };
+        String[] values = {"${key}", "${key2}"};
 
-        ObjectWithStringArrayField obj = new ObjectWithStringArrayField( values );
+        ObjectWithStringArrayField obj = new ObjectWithStringArrayField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "value", obj.values[0] );
-        assertEquals( "value2", obj.values[1] );
+        assertEquals("value", obj.values[0]);
+        assertEquals("value2", obj.values[1]);
     }
 
     @Test
-    public void testInterpolateObjectWithStringListField()
-        throws Exception
-    {
+    public void testInterpolateObjectWithStringListField() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
 
         List<String> values = new ArrayList<String>();
-        values.add( "${key}" );
-        values.add( "${key2}" );
+        values.add("${key}");
+        values.add("${key2}");
 
-        ObjectWithListField obj = new ObjectWithListField( values );
+        ObjectWithListField obj = new ObjectWithListField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "value", obj.values.get( 0 ) );
-        assertEquals( "value2", obj.values.get( 1 ) );
+        assertEquals("value", obj.values.get(0));
+        assertEquals("value2", obj.values.get(1));
     }
 
     @Test
-    public void testInterpolateObjectWithStringListFieldAndOneLiteralValue()
-        throws Exception
-    {
+    public void testInterpolateObjectWithStringListFieldAndOneLiteralValue() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
 
         List<String> values = new ArrayList<String>();
-        values.add( "key" );
-        values.add( "${key2}" );
+        values.add("key");
+        values.add("${key2}");
 
-        ObjectWithListField obj = new ObjectWithListField( values );
+        ObjectWithListField obj = new ObjectWithListField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "key", obj.values.get( 0 ) );
-        assertEquals( "value2", obj.values.get( 1 ) );
+        assertEquals("key", obj.values.get(0));
+        assertEquals("value2", obj.values.get(1));
     }
 
     @Test
-    public void testInterpolateObjectWithUnmodifiableStringListField()
-        throws Exception
-    {
+    public void testInterpolateObjectWithUnmodifiableStringListField() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
 
-        List values = Collections.unmodifiableList( Collections.singletonList( "${key}" ) );
+        List values = Collections.unmodifiableList(Collections.singletonList("${key}"));
 
-        ObjectWithListField obj = new ObjectWithListField( values );
+        ObjectWithListField obj = new ObjectWithListField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "${key}", obj.values.get( 0 ) );
+        assertEquals("${key}", obj.values.get(0));
     }
 
     @Test
-    public void testInterpolateObjectWithStringArrayListField()
-        throws Exception
-    {
+    public void testInterpolateObjectWithStringArrayListField() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
-        p.setProperty( "key3", "value3" );
-        p.setProperty( "key4", "value4" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
+        p.setProperty("key3", "value3");
+        p.setProperty("key4", "value4");
 
         List<String[]> values = new ArrayList<String[]>();
-        values.add( new String[] { "${key}", "${key2}" } );
-        values.add( new String[] { "${key3}", "${key4}" } );
+        values.add(new String[] {"${key}", "${key2}"});
+        values.add(new String[] {"${key3}", "${key4}"});
 
-        ObjectWithListField obj = new ObjectWithListField( values );
+        ObjectWithListField obj = new ObjectWithListField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "value", ( (String[]) obj.values.get( 0 ) )[0] );
-        assertEquals( "value2", ( (String[]) obj.values.get( 0 ) )[1] );
-        assertEquals( "value3", ( (String[]) obj.values.get( 1 ) )[0] );
-        assertEquals( "value4", ( (String[]) obj.values.get( 1 ) )[1] );
+        assertEquals("value", ((String[]) obj.values.get(0))[0]);
+        assertEquals("value2", ((String[]) obj.values.get(0))[1]);
+        assertEquals("value3", ((String[]) obj.values.get(1))[0]);
+        assertEquals("value4", ((String[]) obj.values.get(1))[1]);
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringMapField()
-        throws Exception
-    {
+    public void testInterpolateObjectWithStringToStringMapField() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
 
-        Map<String,String> values = new HashMap<String,String>();
-        values.put( "key", "${key}" );
-        values.put( "key2", "${key2}" );
+        Map<String, String> values = new HashMap<String, String>();
+        values.put("key", "${key}");
+        values.put("key2", "${key2}");
 
-        ObjectWithMapField obj = new ObjectWithMapField( values );
+        ObjectWithMapField obj = new ObjectWithMapField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "value", obj.values.get( "key" ) );
-        assertEquals( "value2", obj.values.get( "key2" ) );
+        assertEquals("value", obj.values.get("key"));
+        assertEquals("value2", obj.values.get("key2"));
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringMapFieldAndOneLiteralValue()
-        throws Exception
-    {
+    public void testInterpolateObjectWithStringToStringMapFieldAndOneLiteralValue() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
 
-        Map<String,String> values = new HashMap<String,String>();
-        values.put( "key", "val" );
-        values.put( "key2", "${key2}" );
+        Map<String, String> values = new HashMap<String, String>();
+        values.put("key", "val");
+        values.put("key2", "${key2}");
 
-        ObjectWithMapField obj = new ObjectWithMapField( values );
+        ObjectWithMapField obj = new ObjectWithMapField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "val", obj.values.get( "key" ) );
-        assertEquals( "value2", obj.values.get( "key2" ) );
+        assertEquals("val", obj.values.get("key"));
+        assertEquals("value2", obj.values.get("key2"));
     }
 
     @Test
-    public void testInterpolateObjectWithUnmodifiableStringToStringMapField()
-        throws Exception
-    {
+    public void testInterpolateObjectWithUnmodifiableStringToStringMapField() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
 
-        Map values = Collections.unmodifiableMap( Collections.singletonMap( "key", "${key}" ) );
+        Map values = Collections.unmodifiableMap(Collections.singletonMap("key", "${key}"));
 
-        ObjectWithMapField obj = new ObjectWithMapField( values );
+        ObjectWithMapField obj = new ObjectWithMapField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "${key}", obj.values.get( "key" ) );
+        assertEquals("${key}", obj.values.get("key"));
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringArrayMapField()
-        throws Exception
-    {
+    public void testInterpolateObjectWithStringToStringArrayMapField() throws Exception {
         Properties p = new Properties();
-        p.setProperty( "key", "value" );
-        p.setProperty( "key2", "value2" );
-        p.setProperty( "key3", "value3" );
-        p.setProperty( "key4", "value4" );
+        p.setProperty("key", "value");
+        p.setProperty("key2", "value2");
+        p.setProperty("key3", "value3");
+        p.setProperty("key4", "value4");
 
-        Map<String,String[]> values = new HashMap<String,String[]>();
-        values.put( "key", new String[] { "${key}", "${key2}" } );
-        values.put( "key2", new String[] { "${key3}", "${key4}" } );
+        Map<String, String[]> values = new HashMap<String, String[]>();
+        values.put("key", new String[] {"${key}", "${key2}"});
+        values.put("key2", new String[] {"${key3}", "${key4}"});
 
-        ObjectWithMapField obj = new ObjectWithMapField( values );
+        ObjectWithMapField obj = new ObjectWithMapField(values);
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new PropertiesBasedValueSource( p ) );
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
 
-        new FieldBasedObjectInterpolator().interpolate( obj, interpolator );
+        new FieldBasedObjectInterpolator().interpolate(obj, interpolator);
 
-        assertEquals( "value", ( (String[]) obj.values.get( "key" ) )[0] );
-        assertEquals( "value2", ( (String[]) obj.values.get( "key" ) )[1] );
-        assertEquals( "value3", ( (String[]) obj.values.get( "key2" ) )[0] );
-        assertEquals( "value4", ( (String[]) obj.values.get( "key2" ) )[1] );
+        assertEquals("value", ((String[]) obj.values.get("key"))[0]);
+        assertEquals("value2", ((String[]) obj.values.get("key"))[1]);
+        assertEquals("value3", ((String[]) obj.values.get("key2"))[0]);
+        assertEquals("value4", ((String[]) obj.values.get("key2"))[1]);
     }
 
-    private static final class ObjectWithStringArrayField
-    {
+    private static final class ObjectWithStringArrayField {
         private final String[] values;
 
-        public ObjectWithStringArrayField( String[] values )
-        {
+        public ObjectWithStringArrayField(String[] values) {
             this.values = values;
         }
     }
 
-    private static final class ObjectWithListField
-    {
+    private static final class ObjectWithListField {
         private final List values;
 
-        public ObjectWithListField( List values )
-        {
+        public ObjectWithListField(List values) {
             this.values = values;
         }
     }
 
-    private static final class ObjectWithMapField
-    {
+    private static final class ObjectWithMapField {
         private final Map values;
 
-        public ObjectWithMapField( Map values )
-        {
+        public ObjectWithMapField(Map values) {
             this.values = values;
         }
     }

@@ -25,63 +25,52 @@ import java.io.StringWriter;
  * thrown. Each warning contains the path through the object graph from the point
  * of entry to the place where the warning occurred, along with a message containing
  * the actual warning and possibly a {@link Throwable} cause.
- * 
+ *
  * @author jdcasey
  */
-public class ObjectInterpolationWarning
-{
-    
+public class ObjectInterpolationWarning {
+
     private final String message;
     private Throwable cause;
     private final String path;
 
-    public ObjectInterpolationWarning( String path, String message )
-    {
+    public ObjectInterpolationWarning(String path, String message) {
         this.path = path;
         this.message = message;
     }
 
-    public ObjectInterpolationWarning( String path, String message, Throwable cause )
-    {
+    public ObjectInterpolationWarning(String path, String message, Throwable cause) {
         this.path = path;
         this.message = message;
         this.cause = cause;
     }
-    
-    public String getPath()
-    {
+
+    public String getPath() {
         return path;
     }
 
-    public String getMessage()
-    {
+    public String getMessage() {
         return message;
     }
 
-    public Throwable getCause()
-    {
+    public Throwable getCause() {
         return cause;
     }
-    
-    public String toString()
-    {
-        if ( cause == null )
-        {
+
+    public String toString() {
+        if (cause == null) {
             return path + ": " + message;
-        }
-        else
-        {
+        } else {
             StringWriter w = new StringWriter();
-            PrintWriter pw = new PrintWriter( w );
-            
-            pw.print( path );
-            pw.print( ": " );
-            pw.println( message );
-            pw.println( "Cause: " );
-            cause.printStackTrace( pw );
-            
+            PrintWriter pw = new PrintWriter(w);
+
+            pw.print(path);
+            pw.print(": ");
+            pw.println(message);
+            pw.println("Cause: ");
+            cause.printStackTrace(pw);
+
             return w.toString();
         }
     }
-
 }

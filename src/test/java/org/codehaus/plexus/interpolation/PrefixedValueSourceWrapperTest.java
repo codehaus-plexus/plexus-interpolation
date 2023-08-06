@@ -16,58 +16,56 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 
-public class PrefixedValueSourceWrapperTest
-{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+public class PrefixedValueSourceWrapperTest {
 
     @Test
-    public void testShouldReturnValueForPropertyVSWRappedWithSinglePrefix()
-    {
+    public void testShouldReturnValueForPropertyVSWRappedWithSinglePrefix() {
         String prefix = "prefix.";
         String key = "key";
         String value = "value";
 
         Properties props = new Properties();
-        props.setProperty( key, value );
+        props.setProperty(key, value);
 
-        PrefixedValueSourceWrapper wrapper = new PrefixedValueSourceWrapper( new PropertiesBasedValueSource( props ), prefix );
+        PrefixedValueSourceWrapper wrapper =
+                new PrefixedValueSourceWrapper(new PropertiesBasedValueSource(props), prefix);
 
-        assertEquals( value, wrapper.getValue( prefix + key ) );
+        assertEquals(value, wrapper.getValue(prefix + key));
     }
 
     @Test
-    public void testShouldReturnNullForIncorrectPrefixUsingPropertyVSWRappedWithSinglePrefix()
-    {
+    public void testShouldReturnNullForIncorrectPrefixUsingPropertyVSWRappedWithSinglePrefix() {
         String prefix = "prefix.";
         String otherPrefix = "other.";
         String key = "key";
         String value = "value";
 
         Properties props = new Properties();
-        props.setProperty( key, value );
+        props.setProperty(key, value);
 
-        PrefixedValueSourceWrapper wrapper = new PrefixedValueSourceWrapper( new PropertiesBasedValueSource( props ), prefix );
+        PrefixedValueSourceWrapper wrapper =
+                new PrefixedValueSourceWrapper(new PropertiesBasedValueSource(props), prefix);
 
-        assertNull( wrapper.getValue( otherPrefix + key ) );
+        assertNull(wrapper.getValue(otherPrefix + key));
     }
 
     @Test
-    public void testShouldNullForMissingValueInPropertyVSWRappedWithSinglePrefix()
-    {
+    public void testShouldNullForMissingValueInPropertyVSWRappedWithSinglePrefix() {
         String prefix = "prefix.";
         String key = "key";
 
         Properties props = new Properties();
 
-        PrefixedValueSourceWrapper wrapper = new PrefixedValueSourceWrapper( new PropertiesBasedValueSource( props ), prefix );
+        PrefixedValueSourceWrapper wrapper =
+                new PrefixedValueSourceWrapper(new PropertiesBasedValueSource(props), prefix);
 
-        assertNull( wrapper.getValue( prefix + key ) );
+        assertNull(wrapper.getValue(prefix + key));
     }
-
 }

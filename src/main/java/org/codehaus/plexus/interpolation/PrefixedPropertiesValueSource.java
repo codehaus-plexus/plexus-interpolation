@@ -29,10 +29,7 @@ import java.util.Properties;
  * the properties value source and then wrapping it with a prefixed value-source wrapper.</p>
  *
  */
-public class PrefixedPropertiesValueSource
-    extends AbstractDelegatingValueSource
-    implements QueryEnabledValueSource
-{
+public class PrefixedPropertiesValueSource extends AbstractDelegatingValueSource implements QueryEnabledValueSource {
 
     /**
      * Wrap the specified properties file with a new {@link PropertiesBasedValueSource}, then
@@ -43,9 +40,8 @@ public class PrefixedPropertiesValueSource
      * @param prefix     The expression prefix to trim
      * @param properties The properties instance to wrap
      */
-    public PrefixedPropertiesValueSource( String prefix, Properties properties )
-    {
-        super( new PrefixedValueSourceWrapper( new PropertiesBasedValueSource( properties ), prefix ) );
+    public PrefixedPropertiesValueSource(String prefix, Properties properties) {
+        super(new PrefixedValueSourceWrapper(new PropertiesBasedValueSource(properties), prefix));
     }
 
     /**
@@ -58,19 +54,16 @@ public class PrefixedPropertiesValueSource
      * @param properties       The properties instance to wrap
      * @param allowUnprefixedExpressions allow unprefixed expressions or not.
      */
-    public PrefixedPropertiesValueSource( List<String> possiblePrefixes, Properties properties,
-                                          boolean allowUnprefixedExpressions )
-    {
-        super( new PrefixedValueSourceWrapper( new PropertiesBasedValueSource( properties ), possiblePrefixes,
-                                               allowUnprefixedExpressions ) );
+    public PrefixedPropertiesValueSource(
+            List<String> possiblePrefixes, Properties properties, boolean allowUnprefixedExpressions) {
+        super(new PrefixedValueSourceWrapper(
+                new PropertiesBasedValueSource(properties), possiblePrefixes, allowUnprefixedExpressions));
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getLastExpression()
-    {
-        return ( (QueryEnabledValueSource) getDelegate() ).getLastExpression();
+    public String getLastExpression() {
+        return ((QueryEnabledValueSource) getDelegate()).getLastExpression();
     }
-
 }

@@ -26,8 +26,7 @@ import java.util.List;
  * which is in the process of being resolved. If that happens, the expression
  * references are cyclical, and would otherwise result in an infinite loop.
  */
-public interface RecursionInterceptor
-{
+public interface RecursionInterceptor {
 
     /**
      * Log the intention to start resolving the given expression. This signals
@@ -36,7 +35,7 @@ public interface RecursionInterceptor
      *
      * @param expression The expression to be resolved.
      */
-    void expressionResolutionStarted( String expression );
+    void expressionResolutionStarted(String expression);
 
     /**
      * Signal to the interceptor that the all efforts to resolve the given
@@ -45,7 +44,7 @@ public interface RecursionInterceptor
      *
      * @param expression The expression to stop tracking.
      */
-    void expressionResolutionFinished( String expression );
+    void expressionResolutionFinished(String expression);
 
     /**
      * Check whether the given value contains an expression that is currently
@@ -55,18 +54,17 @@ public interface RecursionInterceptor
      * @param value The value to check for expression cycles.
      * @return True if the value contains tracked expressions; false otherwise.
      */
-    boolean hasRecursiveExpression( String value );
+    boolean hasRecursiveExpression(String value);
 
     /**
      * @return The list of expressions that participate in the cycle caused by
      * the given expression.
      * @param expression the expression to start with.
      */
-    List getExpressionCycle( String expression );
+    List getExpressionCycle(String expression);
 
     /**
      * Reset the interceptor
      */
     public void clear();
-
 }

@@ -23,36 +23,34 @@ import java.util.List;
  *
  * @author cstamas
  */
-public interface Interpolator
-    extends BasicInterpolator
-{
+public interface Interpolator extends BasicInterpolator {
 
     /**
      * Add a new {@link ValueSource} to the stack used to resolve expressions
      * in this interpolator instance.
      * @param valueSource {@link ValueSource}.
      */
-    void addValueSource( ValueSource valueSource );
+    void addValueSource(ValueSource valueSource);
 
     /**
      * Remove the specified {@link ValueSource} from the stack used to resolve
      * expressions in this interpolator instance.
      * @param valueSource {@link ValueSource}.
      */
-    void removeValuesSource( ValueSource valueSource );
-    
+    void removeValuesSource(ValueSource valueSource);
+
     /**
-     * Add a new post-processor to handle final processing after 
+     * Add a new post-processor to handle final processing after
      * recursively-interpolated value is determined.
      * @param postProcessor {@link InterpolationPostProcessor}.
      */
-    void addPostProcessor( InterpolationPostProcessor postProcessor );
+    void addPostProcessor(InterpolationPostProcessor postProcessor);
 
     /**
      * Remove the given post-processor.
      * @param postProcessor {@link InterpolationPostProcessor}.
      */
-    void removePostProcessor( InterpolationPostProcessor postProcessor );
+    void removePostProcessor(InterpolationPostProcessor postProcessor);
 
     /**
      * See {@link Interpolator#interpolate(String, String, RecursionInterceptor)}.
@@ -67,9 +65,7 @@ public interface Interpolator
      * @return interpolated string.
      * @throws InterpolationException in case of an error.
      */
-    String interpolate( String input,
-                        String thisPrefixPattern )
-        throws InterpolationException;
+    String interpolate(String input, String thisPrefixPattern) throws InterpolationException;
 
     /**
      * Attempt to resolve all expressions in the given input string, using the
@@ -89,10 +85,8 @@ public interface Interpolator
      * @return interpolated string.
      * @throws InterpolationException in case of an error.
      */
-    String interpolate( String input,
-                        String thisPrefixPattern,
-                        RecursionInterceptor recursionInterceptor )
-        throws InterpolationException;
+    String interpolate(String input, String thisPrefixPattern, RecursionInterceptor recursionInterceptor)
+            throws InterpolationException;
 
     /**
      * Return any feedback messages and errors that were generated - but
@@ -109,7 +103,7 @@ public interface Interpolator
      * Clear the feedback messages from previous interpolate(..) calls.
      */
     void clearFeedback();
-    
+
     /**
      * @return state of the cacheAnswers
      */
@@ -118,7 +112,7 @@ public interface Interpolator
     /**
      * @param cacheAnswers true/false.
      */
-    void setCacheAnswers( boolean cacheAnswers );
-    
+    void setCacheAnswers(boolean cacheAnswers);
+
     void clearAnswers();
 }

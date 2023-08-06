@@ -59,8 +59,7 @@ package org.codehaus.plexus.interpolation.util;
  *
  * @author jdcasey
  */
-public class StringUtils
-{
+public class StringUtils {
 
     /**
      * <p>Replace all occurrences of a String within another String.</p>
@@ -73,9 +72,8 @@ public class StringUtils
      * @param with String to replace with
      * @return the text with any replacements processed
      */
-    public static String replace( String text, String repl, String with )
-    {
-        return replace( text, repl, with, -1 );
+    public static String replace(String text, String repl, String with) {
+        return replace(text, repl, with, -1);
     }
 
     /**
@@ -90,41 +88,34 @@ public class StringUtils
      * @param max maximum number of values to replace, or <code>-1</code> if no maximum
      * @return the text with any replacements processed
      */
-    public static String replace( String text, String repl, String with, int max )
-    {
-        if ( ( text == null ) || ( repl == null ) || ( with == null ) || ( repl.length() == 0 ) )
-        {
+    public static String replace(String text, String repl, String with, int max) {
+        if ((text == null) || (repl == null) || (with == null) || (repl.length() == 0)) {
             return text;
         }
 
-        StringBuilder buf = new StringBuilder( text.length() );
+        StringBuilder buf = new StringBuilder(text.length());
         int start = 0, end;
-        while ( ( end = text.indexOf( repl, start ) ) != -1 )
-        {
-            buf.append( text, start, end ).append( with );
+        while ((end = text.indexOf(repl, start)) != -1) {
+            buf.append(text, start, end).append(with);
             start = end + repl.length();
 
-            if ( --max == 0 )
-            {
+            if (--max == 0) {
                 break;
             }
         }
-        buf.append( text, start, text.length());
+        buf.append(text, start, text.length());
         return buf.toString();
     }
 
-    public static String capitalizeFirstLetter( String data )
-    {
-        char firstChar = data.charAt( 0 );
-        char titleCase = Character.toTitleCase( firstChar );
-        if (firstChar == titleCase)
-        {
+    public static String capitalizeFirstLetter(String data) {
+        char firstChar = data.charAt(0);
+        char titleCase = Character.toTitleCase(firstChar);
+        if (firstChar == titleCase) {
             return data;
         }
-        StringBuilder result = new StringBuilder( data.length() );
-        result.append( titleCase );
-        result.append(  data, 1, data.length() );
+        StringBuilder result = new StringBuilder(data.length());
+        result.append(titleCase);
+        result.append(data, 1, data.length());
         return result.toString();
     }
-
 }

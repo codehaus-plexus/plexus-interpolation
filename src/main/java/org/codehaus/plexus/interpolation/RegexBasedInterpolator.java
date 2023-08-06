@@ -33,52 +33,48 @@ import org.codehaus.plexus.interpolation.util.StringUtils;
  * call, to allow the detection of cyclical expression references.
  *
  */
-public class RegexBasedInterpolator
-    implements Interpolator
-{
+public class RegexBasedInterpolator implements Interpolator {
 
     private String startRegex;
 
     private String endRegex;
-    
+
     private Map existingAnswers = new HashMap();
 
     private List<ValueSource> valueSources = new ArrayList<ValueSource>();
-    
+
     private List<InterpolationPostProcessor> postProcessors = new ArrayList<InterpolationPostProcessor>();
-    
+
     private boolean reusePatterns = false;
-    
+
     private boolean cacheAnswers = false;
-    
+
     public static final String DEFAULT_REGEXP = "\\$\\{(.+?)\\}";
-    
+
     /**
-     * the key is the regex the value is the Pattern 
+     * the key is the regex the value is the Pattern
      * At the class construction time the Map will contains the default Pattern
      */
-    private Map<String,Pattern> compiledPatterns = new WeakHashMap<String,Pattern>();
-    
+    private Map<String, Pattern> compiledPatterns = new WeakHashMap<String, Pattern>();
+
     /**
      * Setup a basic interpolator.
      * <p><b>NOTE:</b> You will have to call</p>
      * {@link RegexBasedInterpolator#addValueSource(ValueSource)} at least once
      * if you use this constructor!
      */
-    public RegexBasedInterpolator()
-    {
-        compiledPatterns.put( DEFAULT_REGEXP, Pattern.compile( DEFAULT_REGEXP ) );
+    public RegexBasedInterpolator() {
+        compiledPatterns.put(DEFAULT_REGEXP, Pattern.compile(DEFAULT_REGEXP));
     }
-    
-    /**
 
+    /**
+     *
      * @param reusePatterns already compiled patterns will be reused
      */
-    public RegexBasedInterpolator( boolean reusePatterns )
-    {
+    public RegexBasedInterpolator(boolean reusePatterns) {
         this();
         this.reusePatterns = reusePatterns;
-    }    
+    }
 
     /**
      * Setup an interpolator with no value sources, and the specified regex pattern
@@ -90,8 +86,7 @@ public class RegexBasedInterpolator
      * @param startRegex start of the regular expression to use
      * @param endRegex end of the regular expression to use
      */
-    public RegexBasedInterpolator (String startRegex, String endRegex)
-    {
+    public RegexBasedInterpolator(String startRegex, String endRegex) {
         this();
         this.startRegex = startRegex;
         this.endRegex = endRegex;
@@ -102,10 +97,9 @@ public class RegexBasedInterpolator
      *
      * @param valueSources The list of value sources to use
      */
-    public RegexBasedInterpolator( List valueSources )
-    {
+    public RegexBasedInterpolator(List valueSources) {
         this();
-        this.valueSources.addAll( valueSources );
+        this.valueSources.addAll(valueSources);
     }
 
     /**
@@ -116,44 +110,39 @@ public class RegexBasedInterpolator
      * @param endRegex end of the regular expression to use
      * @param valueSources The list of value sources to use
      */
-    public RegexBasedInterpolator (String startRegex, String endRegex, List valueSources )
-    {
+    public RegexBasedInterpolator(String startRegex, String endRegex, List valueSources) {
         this();
         this.startRegex = startRegex;
         this.endRegex = endRegex;
-        this.valueSources.addAll( valueSources );
+        this.valueSources.addAll(valueSources);
     }
 
     /**
      * {@inheritDoc}
      */
-    public void addValueSource( ValueSource valueSource )
-    {
-        valueSources.add( valueSource );
+    public void addValueSource(ValueSource valueSource) {
+        valueSources.add(valueSource);
     }
 
     /**
      * {@inheritDoc}
      */
-    public void removeValuesSource( ValueSource valueSource )
-    {
-        valueSources.remove( valueSource );
+    public void removeValuesSource(ValueSource valueSource) {
+        valueSources.remove(valueSource);
     }
 
     /**
      * {@inheritDoc}
      */
-    public void addPostProcessor( InterpolationPostProcessor postProcessor )
-    {
-        postProcessors.add( postProcessor );
+    public void addPostProcessor(InterpolationPostProcessor postProcessor) {
+        postProcessors.add(postProcessor);
     }
 
     /**
      * {@inheritDoc}
      */
-    public void removePostProcessor( InterpolationPostProcessor postProcessor )
-    {
-        postProcessors.remove( postProcessor  );
+    public void removePostProcessor(InterpolationPostProcessor postProcessor) {
+        postProcessors.remove(postProcessor);
     }
 
     /**
@@ -172,85 +161,63 @@ public class RegexBasedInterpolator
      *                             from expression cycles, and throw an
      *                             exception if one is detected.
      */
-    public String interpolate( String input,
-                               String thisPrefixPattern,
-                               RecursionInterceptor recursionInterceptor )
-        throws InterpolationException
-    {
-        if (input == null )
-        {
+    public String interpolate(String input, String thisPrefixPattern, RecursionInterceptor recursionInterceptor)
+            throws InterpolationException {
+        if (input == null) {
             // return empty String to prevent NPE too
             return "";
         }
-        if ( recursionInterceptor == null )
-        {
+        if (recursionInterceptor == null) {
             recursionInterceptor = new SimpleRecursionInterceptor();
         }
 
-        if ( thisPrefixPattern != null && thisPrefixPattern.length() == 0 )
-        {
+        if (thisPrefixPattern != null && thisPrefixPattern.length() == 0) {
             thisPrefixPattern = null;
         }
 
         int realExprGroup = 2;
         Pattern expressionPattern;
-        if ( startRegex != null || endRegex != null )
-        {
-            if ( thisPrefixPattern == null )
-            {
-                expressionPattern = getPattern( startRegex + endRegex );
+        if (startRegex != null || endRegex != null) {
+            if (thisPrefixPattern == null) {
+                expressionPattern = getPattern(startRegex + endRegex);
                 realExprGroup = 1;
-            }
-            else
-            {
-                expressionPattern = getPattern( startRegex + thisPrefixPattern + endRegex );
+            } else {
+                expressionPattern = getPattern(startRegex + thisPrefixPattern + endRegex);
             }
 
-        }
-        else if ( thisPrefixPattern != null )
-        {
-            expressionPattern = getPattern( "\\$\\{(" + thisPrefixPattern + ")?(.+?)\\}" );
-        }
-        else
-        {
-            expressionPattern = getPattern( DEFAULT_REGEXP );
+        } else if (thisPrefixPattern != null) {
+            expressionPattern = getPattern("\\$\\{(" + thisPrefixPattern + ")?(.+?)\\}");
+        } else {
+            expressionPattern = getPattern(DEFAULT_REGEXP);
             realExprGroup = 1;
         }
 
-        try
-        {
-            return interpolate( input, recursionInterceptor, expressionPattern, realExprGroup );
-        }
-        finally
-        {
-            if ( !cacheAnswers )
-            {
+        try {
+            return interpolate(input, recursionInterceptor, expressionPattern, realExprGroup);
+        } finally {
+            if (!cacheAnswers) {
                 clearAnswers();
             }
         }
     }
-    
-    private Pattern getPattern( String regExp )
-    {
-        if ( !reusePatterns )
-        {
-            return Pattern.compile( regExp );
+
+    private Pattern getPattern(String regExp) {
+        if (!reusePatterns) {
+            return Pattern.compile(regExp);
         }
-           
+
         Pattern pattern;
-        synchronized( this )
-        {
-            pattern = compiledPatterns.get( regExp );
-            
-            if ( pattern != null )
-            {
+        synchronized (this) {
+            pattern = compiledPatterns.get(regExp);
+
+            if (pattern != null) {
                 return pattern;
             }
 
-            pattern = Pattern.compile( regExp );
-            compiledPatterns.put( regExp, pattern );
+            pattern = Pattern.compile(regExp);
+            compiledPatterns.put(regExp, pattern);
         }
-        
+
         return pattern;
     }
 
@@ -260,59 +227,45 @@ public class RegexBasedInterpolator
      *
      * @todo Ensure unresolvable expressions don't trigger infinite recursion.
      */
-    private String interpolate( String input,
-                                RecursionInterceptor recursionInterceptor,
-                                Pattern expressionPattern,
-                                int realExprGroup )
-        throws InterpolationException
-    {
-        if (input == null )
-        {
+    private String interpolate(
+            String input, RecursionInterceptor recursionInterceptor, Pattern expressionPattern, int realExprGroup)
+            throws InterpolationException {
+        if (input == null) {
             // return empty String to prevent NPE too
             return "";
-        }        
+        }
         String result = input;
-        
-        Matcher matcher = expressionPattern.matcher( result );
 
-        while ( matcher.find() )
-        {
-            String wholeExpr = matcher.group( 0 );
-            String realExpr = matcher.group( realExprGroup );
+        Matcher matcher = expressionPattern.matcher(result);
 
-            if ( realExpr.startsWith( "." ) )
-            {
-                realExpr = realExpr.substring( 1 );
+        while (matcher.find()) {
+            String wholeExpr = matcher.group(0);
+            String realExpr = matcher.group(realExprGroup);
+
+            if (realExpr.startsWith(".")) {
+                realExpr = realExpr.substring(1);
             }
 
-            if ( recursionInterceptor.hasRecursiveExpression( realExpr ) )
-            {
-                throw new InterpolationCycleException( recursionInterceptor, realExpr, wholeExpr );
+            if (recursionInterceptor.hasRecursiveExpression(realExpr)) {
+                throw new InterpolationCycleException(recursionInterceptor, realExpr, wholeExpr);
             }
 
-            recursionInterceptor.expressionResolutionStarted( realExpr );
-            try
-            {
-                Object value = existingAnswers.get( realExpr );
-                for ( ValueSource vs : valueSources )
-                {
-                   if (value != null) break;
+            recursionInterceptor.expressionResolutionStarted(realExpr);
+            try {
+                Object value = existingAnswers.get(realExpr);
+                for (ValueSource vs : valueSources) {
+                    if (value != null) break;
 
-                    value = vs.getValue( realExpr );
+                    value = vs.getValue(realExpr);
                 }
 
-                if ( value != null )
-                {
-                    value =
-                        interpolate( String.valueOf( value ), recursionInterceptor, expressionPattern, realExprGroup );
+                if (value != null) {
+                    value = interpolate(String.valueOf(value), recursionInterceptor, expressionPattern, realExprGroup);
 
-                    if ( postProcessors != null && !postProcessors.isEmpty() )
-                    {
-                        for ( InterpolationPostProcessor postProcessor : postProcessors )
-                        {
-                            Object newVal = postProcessor.execute( realExpr, value );
-                            if ( newVal != null )
-                            {
+                    if (postProcessors != null && !postProcessors.isEmpty()) {
+                        for (InterpolationPostProcessor postProcessor : postProcessors) {
+                            Object newVal = postProcessor.execute(realExpr, value);
+                            if (newVal != null) {
                                 value = newVal;
                                 break;
                             }
@@ -322,17 +275,15 @@ public class RegexBasedInterpolator
                     // could use:
                     // result = matcher.replaceFirst( stringValue );
                     // but this could result in multiple lookups of stringValue, and replaceAll is not correct behaviour
-                    result = StringUtils.replace( result, wholeExpr, String.valueOf( value ) );
+                    result = StringUtils.replace(result, wholeExpr, String.valueOf(value));
 
-                    matcher.reset( result );
+                    matcher.reset(result);
                 }
-            }
-            finally
-            {
-                recursionInterceptor.expressionResolutionFinished( realExpr );
+            } finally {
+                recursionInterceptor.expressionResolutionFinished(realExpr);
             }
         }
-        
+
         return result;
     }
 
@@ -345,16 +296,13 @@ public class RegexBasedInterpolator
      * @return a {@link List} that may be interspersed with {@link String} and
      * {@link Throwable} instances.
      */
-    public List getFeedback()
-    {
+    public List getFeedback() {
         List messages = new ArrayList();
-        for ( Object valueSource : valueSources )
-        {
+        for (Object valueSource : valueSources) {
             ValueSource vs = (ValueSource) valueSource;
             List feedback = vs.getFeedback();
-            if ( feedback != null && !feedback.isEmpty() )
-            {
-                messages.addAll( feedback );
+            if (feedback != null && !feedback.isEmpty()) {
+                messages.addAll(feedback);
             }
         }
 
@@ -364,10 +312,8 @@ public class RegexBasedInterpolator
     /**
      * Clear the feedback messages from previous interpolate(..) calls.
      */
-    public void clearFeedback()
-    {
-        for ( Object valueSource : valueSources )
-        {
+    public void clearFeedback() {
+        for (Object valueSource : valueSources) {
             ValueSource vs = (ValueSource) valueSource;
             vs.clearFeedback();
         }
@@ -384,11 +330,8 @@ public class RegexBasedInterpolator
      * @param thisPrefixPattern An optional pattern that should be trimmed from
      *                          the start of any expressions found in the input.
      */
-    public String interpolate( String input,
-                               String thisPrefixPattern )
-        throws InterpolationException
-    {
-        return interpolate( input, thisPrefixPattern, null );
+    public String interpolate(String input, String thisPrefixPattern) throws InterpolationException {
+        return interpolate(input, thisPrefixPattern, null);
     }
 
     /**
@@ -401,10 +344,8 @@ public class RegexBasedInterpolator
      *
      * @param input The input string to interpolate
      */
-    public String interpolate( String input )
-        throws InterpolationException
-    {
-        return interpolate( input, null, null );
+    public String interpolate(String input) throws InterpolationException {
+        return interpolate(input, null, null);
     }
 
     /**
@@ -420,36 +361,27 @@ public class RegexBasedInterpolator
      *                             from expression cycles, and throw an
      *                             exception if one is detected.
      */
-    public String interpolate( String input,
-                               RecursionInterceptor recursionInterceptor )
-        throws InterpolationException
-    {
-        return interpolate( input, null, recursionInterceptor );
+    public String interpolate(String input, RecursionInterceptor recursionInterceptor) throws InterpolationException {
+        return interpolate(input, null, recursionInterceptor);
     }
 
-    public boolean isReusePatterns()
-    {
+    public boolean isReusePatterns() {
         return reusePatterns;
     }
 
-    public void setReusePatterns( boolean reusePatterns )
-    {
+    public void setReusePatterns(boolean reusePatterns) {
         this.reusePatterns = reusePatterns;
     }
 
-    public boolean isCacheAnswers()
-    {
+    public boolean isCacheAnswers() {
         return cacheAnswers;
     }
 
-    public void setCacheAnswers( boolean cacheAnswers )
-    {
+    public void setCacheAnswers(boolean cacheAnswers) {
         this.cacheAnswers = cacheAnswers;
     }
-    
-    public void clearAnswers()
-    {
+
+    public void clearAnswers() {
         existingAnswers.clear();
     }
-
 }

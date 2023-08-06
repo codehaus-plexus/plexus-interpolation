@@ -22,9 +22,7 @@ import java.util.Map;
  * Wraps a Map, and looks up the whole expression as a single key, returning the
  * value mapped to it.
  */
-public class MapBasedValueSource
-    implements FixedValueSource
-{
+public class MapBasedValueSource implements FixedValueSource {
 
     private final Map values;
 
@@ -32,8 +30,7 @@ public class MapBasedValueSource
      * Construct a new value source to wrap the supplied map.
      * @param values the key/value pairs.
      */
-    public MapBasedValueSource( Map values )
-    {
+    public MapBasedValueSource(Map values) {
         this.values = values;
     }
 
@@ -41,9 +38,7 @@ public class MapBasedValueSource
      * Lookup the supplied expression as a key in the wrapped Map, and return
      * its value.
      */
-    public Object getValue( String expression, InterpolationState interpolationState )
-    {
-        return values == null ? null : values.get( expression );
+    public Object getValue(String expression, InterpolationState interpolationState) {
+        return values == null ? null : values.get(expression);
     }
-
 }

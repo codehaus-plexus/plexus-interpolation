@@ -16,115 +16,107 @@ package org.codehaus.plexus.interpolation.multi;
  * limitations under the License.
  */
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.MapBasedValueSource;
 import org.codehaus.plexus.interpolation.ValueSource;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MultiDelimiterStringSearchInterpolatorTest
-{
+public class MultiDelimiterStringSearchInterpolatorTest {
 
     @Test
-    public void testInterpolationWithDifferentDelimiters()
-        throws InterpolationException
-    {
+    public void testInterpolationWithDifferentDelimiters() throws InterpolationException {
         Map ctx = new HashMap();
-        ctx.put( "name", "User" );
-        ctx.put( "otherName", "@name@" );
+        ctx.put("name", "User");
+        ctx.put("otherName", "@name@");
 
         String input = "${otherName}";
 
-        ValueSource vs = new MapBasedValueSource( ctx );
-        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator().addDelimiterSpec( "@" )
-                                                                      .withValueSource( vs );
+        ValueSource vs = new MapBasedValueSource(ctx);
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator()
+                .addDelimiterSpec("@")
+                .withValueSource(vs);
 
-        String result = interpolator.interpolate( input );
+        String result = interpolator.interpolate(input);
 
-        assertEquals( ctx.get( "name" ), result );
+        assertEquals(ctx.get("name"), result);
     }
 
     @Test
     public void testSuccessiveInterpolationWithDifferentDelimiters_ReversedDelimiterSequence()
-        throws InterpolationException
-    {
+            throws InterpolationException {
         Map ctx = new HashMap();
-        ctx.put( "name", "User" );
-        ctx.put( "otherName", "${name}" );
+        ctx.put("name", "User");
+        ctx.put("otherName", "${name}");
 
         String input = "@otherName@";
 
-        ValueSource vs = new MapBasedValueSource( ctx );
-        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator().addDelimiterSpec( "@" )
-                                                                      .withValueSource( vs );
+        ValueSource vs = new MapBasedValueSource(ctx);
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator()
+                .addDelimiterSpec("@")
+                .withValueSource(vs);
 
-        String result = interpolator.interpolate( input );
+        String result = interpolator.interpolate(input);
 
-        assertEquals( ctx.get( "name" ), result );
+        assertEquals(ctx.get("name"), result);
     }
 
     @Test
-    public void testInterpolationWithMultipleEscapes()
-        throws InterpolationException
-        {
-            Map ctx = new HashMap();
-            ctx.put( "name", "User" );
-            ctx.put( "otherName", "##${first} and #${last}" );
-
-            String input = "${otherName}";
-
-            ValueSource vs = new MapBasedValueSource( ctx );
-            MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator()
-                                                                          .withValueSource( vs );
-            interpolator.setEscapeString("#");
-
-            String result = interpolator.interpolate( input );
-
-            assertEquals( "#${first} and ${last}", result );
-        }
-
-    @Test
-    public void testInterpolationWithMultipleEscapes2()
-        throws InterpolationException
-    {
+    public void testInterpolationWithMultipleEscapes() throws InterpolationException {
         Map ctx = new HashMap();
-        ctx.put( "name", "User" );
-        ctx.put( "otherName", "#${first} and ##${last}" );
+        ctx.put("name", "User");
+        ctx.put("otherName", "##${first} and #${last}");
 
         String input = "${otherName}";
 
-        ValueSource vs = new MapBasedValueSource( ctx );
+        ValueSource vs = new MapBasedValueSource(ctx);
         MultiDelimiterStringSearchInterpolator interpolator =
-            new MultiDelimiterStringSearchInterpolator().withValueSource( vs );
-        interpolator.setEscapeString( "#" );
+                new MultiDelimiterStringSearchInterpolator().withValueSource(vs);
+        interpolator.setEscapeString("#");
 
-        String result = interpolator.interpolate( input );
+        String result = interpolator.interpolate(input);
 
-        assertEquals( "${first} and #${last}", result );
+        assertEquals("#${first} and ${last}", result);
     }
 
     @Test
-    public void testInterpolationWithMultipleEscapes3()
-        throws InterpolationException
-    {
+    public void testInterpolationWithMultipleEscapes2() throws InterpolationException {
         Map ctx = new HashMap();
-        ctx.put( "name", "User" );
-        ctx.put( "last", "beer" );
-        ctx.put( "otherName", "###${first} and ##${second} and ${last}" );
+        ctx.put("name", "User");
+        ctx.put("otherName", "#${first} and ##${last}");
 
         String input = "${otherName}";
 
-        ValueSource vs = new MapBasedValueSource( ctx );
+        ValueSource vs = new MapBasedValueSource(ctx);
+        MultiDelimiterStringSearchInterpolator interpolator =
+                new MultiDelimiterStringSearchInterpolator().withValueSource(vs);
+        interpolator.setEscapeString("#");
+
+        String result = interpolator.interpolate(input);
+
+        assertEquals("${first} and #${last}", result);
+    }
+
+    @Test
+    public void testInterpolationWithMultipleEscapes3() throws InterpolationException {
+        Map ctx = new HashMap();
+        ctx.put("name", "User");
+        ctx.put("last", "beer");
+        ctx.put("otherName", "###${first} and ##${second} and ${last}");
+
+        String input = "${otherName}";
+
+        ValueSource vs = new MapBasedValueSource(ctx);
         MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator() //
-            .withValueSource( vs ) //
-            .escapeString( "#" );
+                .withValueSource(vs) //
+                .escapeString("#");
 
-        String result = interpolator.interpolate( input );
+        String result = interpolator.interpolate(input);
 
-        assertEquals( "##${first} and #${second} and beer", result );
+        assertEquals("##${first} and #${second} and beer", result);
     }
 }

@@ -16,8 +16,6 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-
-
 import java.util.List;
 
 /**
@@ -25,18 +23,15 @@ import java.util.List;
  * wraps that source with a {@link org.codehaus.plexus.interpolation.fixed.PrefixedValueSourceWrapper} instance, to which
  * this class delegates all of its calls.
  */
-public class PrefixedObjectValueSource
-    extends AbstractDelegatingValueSource
-{
+public class PrefixedObjectValueSource extends AbstractDelegatingValueSource {
 
     /**
      * Wrap the specified root object, allowing the specified expression prefix.
      * @param prefix the prefix.
      * @param root The root of the graph.
      */
-    public PrefixedObjectValueSource( String prefix, Object root )
-    {
-        super( new PrefixedValueSourceWrapper( new ObjectBasedValueSource( root ), prefix ) );
+    public PrefixedObjectValueSource(String prefix, Object root) {
+        super(new PrefixedValueSourceWrapper(new ObjectBasedValueSource(root), prefix));
     }
 
     /**
@@ -47,9 +42,8 @@ public class PrefixedObjectValueSource
      * @param root The root of the graph.
      * @param allowUnprefixedExpressions allow unrefixed expressions or not.
      */
-    public PrefixedObjectValueSource( List<String> possiblePrefixes, Object root, boolean allowUnprefixedExpressions )
-    {
-        super( new PrefixedValueSourceWrapper( new ObjectBasedValueSource( root ), possiblePrefixes,
-                                               allowUnprefixedExpressions ) );
+    public PrefixedObjectValueSource(List<String> possiblePrefixes, Object root, boolean allowUnprefixedExpressions) {
+        super(new PrefixedValueSourceWrapper(
+                new ObjectBasedValueSource(root), possiblePrefixes, allowUnprefixedExpressions));
     }
 }

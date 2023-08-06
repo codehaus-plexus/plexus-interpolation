@@ -16,75 +16,64 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-public class PrefixAwareRecursionInterceptorTest
-{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class PrefixAwareRecursionInterceptorTest {
 
     @Test
-    public void testFindExpression()
-    {
-        PrefixAwareRecursionInterceptor receptor = new PrefixAwareRecursionInterceptor(
-                                                                                        Collections.singleton( "prefix." ) );
+    public void testFindExpression() {
+        PrefixAwareRecursionInterceptor receptor =
+                new PrefixAwareRecursionInterceptor(Collections.singleton("prefix."));
 
         String expr = "prefix.first";
 
-        receptor.expressionResolutionStarted( expr );
+        receptor.expressionResolutionStarted(expr);
 
-        assertTrue( receptor.hasRecursiveExpression( expr ) );
-        assertEquals( "[first]", receptor.getExpressionCycle( expr ).toString() );
+        assertTrue(receptor.hasRecursiveExpression(expr));
+        assertEquals("[first]", receptor.getExpressionCycle(expr).toString());
 
-        receptor.expressionResolutionFinished( expr );
+        receptor.expressionResolutionFinished(expr);
 
-        assertFalse( receptor.hasRecursiveExpression( expr ) );
+        assertFalse(receptor.hasRecursiveExpression(expr));
     }
 
     @Test
-    public void testFindExpressionWithDifferentPrefix()
-    {
-        PrefixAwareRecursionInterceptor receptor = new PrefixAwareRecursionInterceptor(
-                                                                                        Arrays.asList( new String[] {
-                                                                                            "prefix.",
-                                                                                            "other."
-                                                                                        } ) );
+    public void testFindExpressionWithDifferentPrefix() {
+        PrefixAwareRecursionInterceptor receptor =
+                new PrefixAwareRecursionInterceptor(Arrays.asList(new String[] {"prefix.", "other."}));
 
         String expr = "prefix.first";
 
-        receptor.expressionResolutionStarted( expr );
+        receptor.expressionResolutionStarted(expr);
 
-        assertTrue( receptor.hasRecursiveExpression( expr ) );
+        assertTrue(receptor.hasRecursiveExpression(expr));
 
-        receptor.expressionResolutionFinished( expr );
+        receptor.expressionResolutionFinished(expr);
 
-        assertFalse( receptor.hasRecursiveExpression( expr ) );
+        assertFalse(receptor.hasRecursiveExpression(expr));
     }
 
     @Test
-    public void testFindExpressionWithoutPrefix()
-    {
-        PrefixAwareRecursionInterceptor receptor = new PrefixAwareRecursionInterceptor(
-                                                                                        Arrays.asList( new String[] {
-                                                                                            "prefix.",
-                                                                                            "other."
-                                                                                        } ) );
+    public void testFindExpressionWithoutPrefix() {
+        PrefixAwareRecursionInterceptor receptor =
+                new PrefixAwareRecursionInterceptor(Arrays.asList(new String[] {"prefix.", "other."}));
 
         String prefixedExpr = "prefix.first";
         String expr = "first";
 
-        receptor.expressionResolutionStarted( prefixedExpr );
+        receptor.expressionResolutionStarted(prefixedExpr);
 
-        assertTrue( receptor.hasRecursiveExpression( expr ) );
+        assertTrue(receptor.hasRecursiveExpression(expr));
 
-        receptor.expressionResolutionFinished( prefixedExpr );
+        receptor.expressionResolutionFinished(prefixedExpr);
 
-        assertFalse( receptor.hasRecursiveExpression( expr ) );
+        assertFalse(receptor.hasRecursiveExpression(expr));
     }
-
 }

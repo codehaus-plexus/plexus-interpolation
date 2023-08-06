@@ -16,7 +16,6 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-
 import java.util.Properties;
 
 /**
@@ -27,9 +26,7 @@ import java.util.Properties;
  *
  * @author jdcasey
  */
-public class PropertiesBasedValueSource
-    implements FixedValueSource
-{
+public class PropertiesBasedValueSource implements FixedValueSource {
 
     private final Properties properties;
 
@@ -39,8 +36,7 @@ public class PropertiesBasedValueSource
      *
      * @param properties The properties instance to wrap.
      */
-    public PropertiesBasedValueSource( Properties properties )
-    {
+    public PropertiesBasedValueSource(Properties properties) {
         this.properties = properties;
     }
 
@@ -49,10 +45,7 @@ public class PropertiesBasedValueSource
      * entire expression as the key to lookup. If the wrapped properties instance
      * is null, simply return null.
      */
-
-    public Object getValue( String expression, InterpolationState interpolationState )
-    {
-        return properties == null ? null : properties.getProperty( expression );
+    public Object getValue(String expression, InterpolationState interpolationState) {
+        return properties == null ? null : properties.getProperty(expression);
     }
-
 }

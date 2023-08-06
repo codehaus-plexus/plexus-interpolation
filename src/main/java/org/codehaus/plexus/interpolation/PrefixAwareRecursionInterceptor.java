@@ -16,12 +16,12 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.interpolation.util.ValueSourceUtils;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+
+import org.codehaus.plexus.interpolation.util.ValueSourceUtils;
 
 /**
  * {@link RecursionInterceptor} implementation that provides support for expressions
@@ -30,9 +30,7 @@ import java.util.Stack;
  *
  * @author jdcasey
  */
-public class PrefixAwareRecursionInterceptor
-    implements RecursionInterceptor
-{
+public class PrefixAwareRecursionInterceptor implements RecursionInterceptor {
 
     public static final String DEFAULT_START_TOKEN = "\\$\\{";
 
@@ -51,9 +49,8 @@ public class PrefixAwareRecursionInterceptor
      * @param possiblePrefixes           The collection of expression prefixes supported
      * @param watchUnprefixedExpressions Whether to consider unprefixed expressions as synonyms
      */
-    public PrefixAwareRecursionInterceptor( Collection<String> possiblePrefixes, boolean watchUnprefixedExpressions )
-    {
-        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()]) ;
+    public PrefixAwareRecursionInterceptor(Collection<String> possiblePrefixes, boolean watchUnprefixedExpressions) {
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
         this.watchUnprefixedExpressions = watchUnprefixedExpressions;
     }
 
@@ -63,27 +60,22 @@ public class PrefixAwareRecursionInterceptor
      *
      * @param possiblePrefixes The collection of expression prefixes supported
      */
-    public PrefixAwareRecursionInterceptor( Collection<String> possiblePrefixes )
-    {
-        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()]) ;
+    public PrefixAwareRecursionInterceptor(Collection<String> possiblePrefixes) {
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
     }
 
-    public boolean hasRecursiveExpression( String expression )
-    {
-        String realExpr = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, watchUnprefixedExpressions );
-        return realExpr != null && nakedExpressions.contains( realExpr );
-
+    public boolean hasRecursiveExpression(String expression) {
+        String realExpr = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, watchUnprefixedExpressions);
+        return realExpr != null && nakedExpressions.contains(realExpr);
     }
 
-    public void expressionResolutionFinished( String expression )
-    {
+    public void expressionResolutionFinished(String expression) {
         nakedExpressions.pop();
     }
 
-    public void expressionResolutionStarted( String expression )
-    {
-        String realExpr = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, watchUnprefixedExpressions );
-        nakedExpressions.push( realExpr );
+    public void expressionResolutionStarted(String expression) {
+        String realExpr = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, watchUnprefixedExpressions);
+        nakedExpressions.push(realExpr);
     }
 
     /**
@@ -94,28 +86,22 @@ public class PrefixAwareRecursionInterceptor
      * prefix from this interceptor's list, and unprefixed expressions aren't allowed
      * then return {@link Collections#EMPTY_LIST}.
      */
-    public List getExpressionCycle( String expression )
-    {
-        String expr = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, watchUnprefixedExpressions );
+    public List getExpressionCycle(String expression) {
+        String expr = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, watchUnprefixedExpressions);
 
-        if ( expr == null )
-        {
+        if (expr == null) {
             return Collections.EMPTY_LIST;
         }
 
-        int idx = nakedExpressions.indexOf( expr );
-        if ( idx < 0 )
-        {
+        int idx = nakedExpressions.indexOf(expr);
+        if (idx < 0) {
             return Collections.EMPTY_LIST;
-        }
-        else
-        {
-            return nakedExpressions.subList( idx, nakedExpressions.size() );
+        } else {
+            return nakedExpressions.subList(idx, nakedExpressions.size());
         }
     }
 
-    public void clear()
-    {
+    public void clear() {
         nakedExpressions.clear();
     }
 }

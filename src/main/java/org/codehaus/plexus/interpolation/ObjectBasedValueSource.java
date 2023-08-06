@@ -24,9 +24,7 @@ import org.codehaus.plexus.interpolation.reflection.ReflectionValueExtractor;
  * 'rootObject.getChild().getName()' for non-boolean properties, and
  * 'rootObject.getChild().isName()' for boolean properties.
  */
-public class ObjectBasedValueSource
-    extends AbstractValueSource
-{
+public class ObjectBasedValueSource extends AbstractValueSource {
 
     private final Object root;
 
@@ -36,9 +34,8 @@ public class ObjectBasedValueSource
      * the object graph beneath this root.
      * @param root the root of the graph.
      */
-    public ObjectBasedValueSource( Object root )
-    {
-        super( true );
+    public ObjectBasedValueSource(Object root) {
+        super(true);
         this.root = root;
     }
 
@@ -48,27 +45,21 @@ public class ObjectBasedValueSource
      * to the object graph below this root, using either 'getXXX()' or 'isXXX()'
      * accessor types to resolve the value for each successive expression part.
      * Finally, return the result of the last expression part's resolution.</p>
-     * 
+     *
      * <p><b>NOTE:</b> The object-graph nagivation actually takes place via the
      * {@link ReflectionValueExtractor} class.</p>
      */
-    public Object getValue( String expression )
-    {
-        if ( expression == null || expression.trim().length() < 1 )
-        {
+    public Object getValue(String expression) {
+        if (expression == null || expression.trim().length() < 1) {
             return null;
         }
-        
-        try
-        {
-            return ReflectionValueExtractor.evaluate( expression, root, false );
-        }
-        catch ( Exception e )
-        {
-            addFeedback( "Failed to extract \'" + expression + "\' from: " + root, e );
+
+        try {
+            return ReflectionValueExtractor.evaluate(expression, root, false);
+        } catch (Exception e) {
+            addFeedback("Failed to extract \'" + expression + "\' from: " + root, e);
         }
 
         return null;
     }
-
 }

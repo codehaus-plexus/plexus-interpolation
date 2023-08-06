@@ -16,7 +16,6 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-
 /**
  * Represents a {@link ValueSource} which provides information back to the caller
  * about what may have gone wrong while resolving the value for an expression.
@@ -25,7 +24,4 @@ package org.codehaus.plexus.interpolation;
  *
  * @deprecated Rolled into {@link ValueSource} now.
  */
-public interface FeedbackEnabledValueSource
-    extends ValueSource
-{
-}
+public interface FeedbackEnabledValueSource extends ValueSource {}

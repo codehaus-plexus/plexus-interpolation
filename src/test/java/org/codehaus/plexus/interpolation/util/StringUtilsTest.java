@@ -15,18 +15,15 @@ package org.codehaus.plexus.interpolation.util;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
-public class StringUtilsTest
-{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class StringUtilsTest {
     @Test
-    public void testCapitalizeFirstLetter()
-        throws Exception
-    {
-        assertEquals( "Abc", StringUtils.capitalizeFirstLetter( "abc" ) );
-        assertEquals( "\u00cdce", StringUtils.capitalizeFirstLetter( "\u00edce" ) );
-        assertEquals( "X", StringUtils.capitalizeFirstLetter( "x" ) );
+    public void testCapitalizeFirstLetter() throws Exception {
+        assertEquals("Abc", StringUtils.capitalizeFirstLetter("abc"));
+        assertEquals("\u00cdce", StringUtils.capitalizeFirstLetter("\u00edce"));
+        assertEquals("X", StringUtils.capitalizeFirstLetter("x"));
     }
 }

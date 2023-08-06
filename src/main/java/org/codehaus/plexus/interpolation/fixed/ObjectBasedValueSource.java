@@ -16,7 +16,6 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-
 import org.codehaus.plexus.interpolation.reflection.ReflectionValueExtractor;
 
 /**
@@ -25,9 +24,7 @@ import org.codehaus.plexus.interpolation.reflection.ReflectionValueExtractor;
  * 'rootObject.getChild().getName()' for non-boolean properties, and
  * 'rootObject.getChild().isName()' for boolean properties.
  */
-public class ObjectBasedValueSource
-    implements FixedValueSource
-{
+public class ObjectBasedValueSource implements FixedValueSource {
 
     private final Object root;
 
@@ -37,8 +34,7 @@ public class ObjectBasedValueSource
      * the object graph beneath this root.
      * @param root The root of the graph.
      */
-    public ObjectBasedValueSource( Object root )
-    {
+    public ObjectBasedValueSource(Object root) {
         this.root = root;
     }
 
@@ -51,23 +47,17 @@ public class ObjectBasedValueSource
      * <p><b>NOTE:</b> The object-graph nagivation actually takes place via the
      * {@link org.codehaus.plexus.interpolation.reflection.ReflectionValueExtractor} class.</p>
      */
-    public Object getValue( String expression, InterpolationState interpolationState )
-    {
-        if ( expression == null || expression.trim().length() < 1 )
-        {
+    public Object getValue(String expression, InterpolationState interpolationState) {
+        if (expression == null || expression.trim().length() < 1) {
             return null;
         }
-        
-        try
-        {
-            return ReflectionValueExtractor.evaluate( expression, root, false );
-        }
-        catch ( Exception e )
-        {
-            interpolationState.addFeedback( "Failed to extract \'" + expression + "\' from: " + root, e );
+
+        try {
+            return ReflectionValueExtractor.evaluate(expression, root, false);
+        } catch (Exception e) {
+            interpolationState.addFeedback("Failed to extract \'" + expression + "\' from: " + root, e);
         }
 
         return null;
     }
-
 }

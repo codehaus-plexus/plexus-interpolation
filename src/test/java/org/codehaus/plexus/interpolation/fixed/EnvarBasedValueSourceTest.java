@@ -16,10 +16,6 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,73 +24,64 @@ import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class EnvarBasedValueSourceTest
-{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+public class EnvarBasedValueSourceTest {
 
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         EnvarBasedValueSource.resetStatics();
     }
 
     @Test
-    void testNoArgConstructorIsCaseSensitive()
-        throws IOException
-    {
-        OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
-        {
-            public Map<String, String> getEnvMap()
-            {
+    void testNoArgConstructorIsCaseSensitive() throws IOException {
+        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
+            public Map<String, String> getEnvMap() {
                 HashMap<String, String> map = new HashMap<String, String>();
-                map.put( "aVariable", "variable" );
+                map.put("aVariable", "variable");
                 return map;
             }
-        } );
+        });
 
         EnvarBasedValueSource source = new EnvarBasedValueSource();
 
-        assertEquals( "variable", source.getValue( "aVariable", null ) );
-        assertEquals( "variable", source.getValue( "env.aVariable", null ) );
-        assertNull( source.getValue( "AVARIABLE", null ) );
-        assertNull( source.getValue( "env.AVARIABLE", null ) );
+        assertEquals("variable", source.getValue("aVariable", null));
+        assertEquals("variable", source.getValue("env.aVariable", null));
+        assertNull(source.getValue("AVARIABLE", null));
+        assertNull(source.getValue("env.AVARIABLE", null));
     }
 
     @Test
-    void testCaseInsensitive()
-        throws IOException
-    {
-        OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
-        {
-            public Map<String, String> getEnvMap()
-            {
+    void testCaseInsensitive() throws IOException {
+        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
+            public Map<String, String> getEnvMap() {
                 HashMap<String, String> map = new HashMap<String, String>();
-                map.put( "aVariable", "variable" );
+                map.put("aVariable", "variable");
                 return map;
             }
-        } );
+        });
 
-        EnvarBasedValueSource source = new EnvarBasedValueSource( false );
+        EnvarBasedValueSource source = new EnvarBasedValueSource(false);
 
-        assertEquals( "variable", source.getValue( "aVariable", null ) );
-        assertEquals( "variable", source.getValue( "env.aVariable", null ) );
-        assertEquals( "variable", source.getValue( "AVARIABLE", null ) );
-        assertEquals( "variable", source.getValue( "env.AVARIABLE", null ) );
+        assertEquals("variable", source.getValue("aVariable", null));
+        assertEquals("variable", source.getValue("env.aVariable", null));
+        assertEquals("variable", source.getValue("AVARIABLE", null));
+        assertEquals("variable", source.getValue("env.AVARIABLE", null));
     }
 
     @Test
-    void testGetRealEnvironmentVariable()
-        throws IOException
-    {
-        OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.DefaultEnvVarSource() );
+    void testGetRealEnvironmentVariable() throws IOException {
+        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.DefaultEnvVarSource());
 
         EnvarBasedValueSource source = new EnvarBasedValueSource();
 
         String realEnvVar = "JAVA_HOME";
 
-        String realValue = System.getenv().get( realEnvVar );
-        assertNotNull( realValue , "Can't run this test until " + realEnvVar + " env variable is set");
+        String realValue = System.getenv().get(realEnvVar);
+        assertNotNull(realValue, "Can't run this test until " + realEnvVar + " env variable is set");
 
-        assertEquals( realValue, source.getValue( realEnvVar, null ) );
+        assertEquals(realValue, source.getValue(realEnvVar, null));
     }
-
 }
