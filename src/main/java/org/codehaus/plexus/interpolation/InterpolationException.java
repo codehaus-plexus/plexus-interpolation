@@ -24,14 +24,12 @@ package org.codehaus.plexus.interpolation;
  * particular expression part, should <b>NOT</b> result in InterpolationExceptions
  * being thrown. Instead, they should be reported in the feedback from the {@link ValueSource},
  * which is propagated out through {@link Interpolator#getFeedback()}.
- * 
+ *
  */
-public class InterpolationException
-    extends Exception
-{
+public class InterpolationException extends Exception {
 
     private static final long serialVersionUID = 1L;
-    
+
     private final String expression;
 
     /**
@@ -39,11 +37,8 @@ public class InterpolationException
      * @param expression The expression that triggered the problem
      * @param cause The wrapped exception
      */
-    public InterpolationException( String message,
-                                      String expression,
-                                      Throwable cause )
-    {
-        super( buildMessage( message, expression ), cause );
+    public InterpolationException(String message, String expression, Throwable cause) {
+        super(buildMessage(message, expression), cause);
         this.expression = expression;
     }
 
@@ -51,24 +46,19 @@ public class InterpolationException
      * @param message The general description of the problem
      * @param expression The expression that triggered the problem
      */
-    public InterpolationException( String message, String expression )
-    {
-        super( buildMessage( message, expression ) );
+    public InterpolationException(String message, String expression) {
+        super(buildMessage(message, expression));
         this.expression = expression;
     }
 
-    private static String buildMessage( String message,
-                                        String expression )
-    {
+    private static String buildMessage(String message, String expression) {
         return "Resolving expression: '" + expression + "': " + message;
     }
 
     /**
      * @return The expression that triggered this exception.
      */
-    public String getExpression()
-    {
+    public String getExpression() {
         return expression;
     }
-
 }

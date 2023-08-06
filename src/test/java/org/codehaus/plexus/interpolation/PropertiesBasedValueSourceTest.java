@@ -16,41 +16,37 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 
-public class PropertiesBasedValueSourceTest
-{
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+public class PropertiesBasedValueSourceTest {
 
     @Test
-    public void testPropertyShouldReturnValueFromProperties()
-    {
+    public void testPropertyShouldReturnValueFromProperties() {
         Properties props = new Properties();
 
         String key = "key";
         String value = "value";
 
-        props.setProperty( key, value );
+        props.setProperty(key, value);
 
-        PropertiesBasedValueSource vs = new PropertiesBasedValueSource( props );
+        PropertiesBasedValueSource vs = new PropertiesBasedValueSource(props);
 
-        assertNotNull( vs.getValue( key ) );
+        assertNotNull(vs.getValue(key));
     }
 
     @Test
-    public void testPropertyShouldReturnNullWhenPropertyMissing()
-    {
+    public void testPropertyShouldReturnNullWhenPropertyMissing() {
         Properties props = new Properties();
 
         String key = "key";
 
-        PropertiesBasedValueSource vs = new PropertiesBasedValueSource( props );
+        PropertiesBasedValueSource vs = new PropertiesBasedValueSource(props);
 
-        assertNull( vs.getValue( key ) );
+        assertNull(vs.getValue(key));
     }
-
 }

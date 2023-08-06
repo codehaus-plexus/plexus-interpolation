@@ -16,10 +16,10 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.interpolation.util.ValueSourceUtils;
-
 import java.util.Collections;
 import java.util.List;
+
+import org.codehaus.plexus.interpolation.util.ValueSourceUtils;
 
 /**
  * {@link ValueSource} implementation which simply wraps another value source,
@@ -28,9 +28,7 @@ import java.util.List;
  *
  * @author jdcasey
  */
-public class PrefixedValueSourceWrapper
-    implements FeedbackEnabledValueSource, QueryEnabledValueSource
-{
+public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, QueryEnabledValueSource {
 
     private final ValueSource valueSource;
 
@@ -48,10 +46,9 @@ public class PrefixedValueSourceWrapper
      * @param valueSource The {@link ValueSource} to wrap.
      * @param prefix      The expression prefix to trim.
      */
-    public PrefixedValueSourceWrapper( ValueSource valueSource, String prefix )
-    {
+    public PrefixedValueSourceWrapper(ValueSource valueSource, String prefix) {
         this.valueSource = valueSource;
-        possiblePrefixes = new String[]{ prefix };
+        possiblePrefixes = new String[] {prefix};
     }
 
     /**
@@ -67,10 +64,9 @@ public class PrefixedValueSourceWrapper
      * @param allowUnprefixedExpressions Flag telling the wrapper whether to
      *                                   continue resolving expressions that don't start with the prefix it tracks.
      */
-    public PrefixedValueSourceWrapper( ValueSource valueSource, String prefix, boolean allowUnprefixedExpressions )
-    {
+    public PrefixedValueSourceWrapper(ValueSource valueSource, String prefix, boolean allowUnprefixedExpressions) {
         this.valueSource = valueSource;
-        possiblePrefixes = new String[]{ prefix };
+        possiblePrefixes = new String[] {prefix};
         this.allowUnprefixedExpressions = allowUnprefixedExpressions;
     }
 
@@ -82,10 +78,9 @@ public class PrefixedValueSourceWrapper
      * @param valueSource      The {@link ValueSource} to wrap.
      * @param possiblePrefixes The List of expression prefixes to trim.
      */
-    public PrefixedValueSourceWrapper( ValueSource valueSource, List<String> possiblePrefixes )
-    {
+    public PrefixedValueSourceWrapper(ValueSource valueSource, List<String> possiblePrefixes) {
         this.valueSource = valueSource;
-        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()] );
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
     }
 
     /**
@@ -101,11 +96,10 @@ public class PrefixedValueSourceWrapper
      * @param allowUnprefixedExpressions Flag telling the wrapper whether to
      *                                   continue resolving expressions that don't start with one of the prefixes it tracks.
      */
-    public PrefixedValueSourceWrapper( ValueSource valueSource, List<String> possiblePrefixes,
-                                       boolean allowUnprefixedExpressions )
-    {
+    public PrefixedValueSourceWrapper(
+            ValueSource valueSource, List<String> possiblePrefixes, boolean allowUnprefixedExpressions) {
         this.valueSource = valueSource;
-        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()] );
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
         this.allowUnprefixedExpressions = allowUnprefixedExpressions;
     }
 
@@ -116,27 +110,22 @@ public class PrefixedValueSourceWrapper
      * expressions are not allowed here), then return null; otherwise, return the
      * nested {@link ValueSource#getValue(String)} result.
      */
-    public Object getValue( String expression )
-    {
-        lastExpression = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, allowUnprefixedExpressions );
+    public Object getValue(String expression) {
+        lastExpression = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, allowUnprefixedExpressions);
 
-        if ( lastExpression == null )
-        {
+        if (lastExpression == null) {
             return null;
         }
 
-        return valueSource.getValue( lastExpression );
+        return valueSource.getValue(lastExpression);
     }
 
     /**
      * If the nested {@link ValueSource} implements {@link FeedbackEnabledValueSource},
      * then return that source's feedback list. Otherwise, return {@link Collections#EMPTY_LIST}.
      */
-    public List getFeedback()
-    {
-        return ( valueSource instanceof FeedbackEnabledValueSource )
-            ? valueSource.getFeedback()
-            : Collections.EMPTY_LIST;
+    public List getFeedback() {
+        return (valueSource instanceof FeedbackEnabledValueSource) ? valueSource.getFeedback() : Collections.EMPTY_LIST;
     }
 
     /**
@@ -144,20 +133,17 @@ public class PrefixedValueSourceWrapper
      * then return that source's last expression. Otherwise, return the last expression
      * that was processed by the wrapper itself.
      */
-    public String getLastExpression()
-    {
-        return ( valueSource instanceof QueryEnabledValueSource )
-            ? ( (QueryEnabledValueSource) valueSource ).getLastExpression()
-            : lastExpression;
+    public String getLastExpression() {
+        return (valueSource instanceof QueryEnabledValueSource)
+                ? ((QueryEnabledValueSource) valueSource).getLastExpression()
+                : lastExpression;
     }
 
     /**
      * If the nested {@link ValueSource} implements {@link FeedbackEnabledValueSource},
      * then clear that source's feedback list.
      */
-    public void clearFeedback()
-    {
+    public void clearFeedback() {
         valueSource.clearFeedback();
     }
-
 }

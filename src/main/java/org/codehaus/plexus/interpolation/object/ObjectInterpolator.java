@@ -25,47 +25,44 @@ import org.codehaus.plexus.interpolation.RecursionInterceptor;
 
 /**
  * Traverses an object graph and uses an {@link Interpolator} instance to resolve any String values in the
- * graph. 
- * 
+ * graph.
+ *
  * @author jdcasey
  */
-public interface ObjectInterpolator
-{
-    
+public interface ObjectInterpolator {
+
     /**
-     * Traverse the object graph from the given starting point and interpolate 
+     * Traverse the object graph from the given starting point and interpolate
      * any Strings found in that graph using the given {@link Interpolator}.
-     * 
+     *
      * @param target The starting point of the object graph to traverse
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
      * @throws InterpolationException in case of an error.
      */
-    void interpolate( Object target, BasicInterpolator interpolator )
-        throws InterpolationException;
-    
+    void interpolate(Object target, BasicInterpolator interpolator) throws InterpolationException;
+
     /**
-     * Traverse the object graph from the given starting point and interpolate 
+     * Traverse the object graph from the given starting point and interpolate
      * any Strings found in that graph using the given {@link Interpolator}.
-     * 
+     *
      * @param target The starting point of the object graph to traverse
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
      * @param recursionInterceptor The {@link RecursionInterceptor} used to detect cyclical expressions in the graph
      * @throws InterpolationException in case of an error.
      */
-    void interpolate( Object target, BasicInterpolator interpolator, RecursionInterceptor recursionInterceptor )
-        throws InterpolationException;
+    void interpolate(Object target, BasicInterpolator interpolator, RecursionInterceptor recursionInterceptor)
+            throws InterpolationException;
 
     /**
      * Returns true if the last interpolation execution generated warnings.
      * @return true/false.
      */
     boolean hasWarnings();
-    
+
     /**
      * Retrieve the {@link List} of warnings ({@link ObjectInterpolationWarning}
      * instances) generated during the last interpolation execution.
      * @return The list of warnings.
      */
     List getWarnings();
-
 }

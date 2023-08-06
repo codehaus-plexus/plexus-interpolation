@@ -26,9 +26,7 @@ import java.util.Properties;
  *
  * @author jdcasey
  */
-public class PropertiesBasedValueSource
-    extends AbstractValueSource
-{
+public class PropertiesBasedValueSource extends AbstractValueSource {
 
     private final Properties properties;
 
@@ -38,9 +36,8 @@ public class PropertiesBasedValueSource
      *
      * @param properties The properties instance to wrap.
      */
-    public PropertiesBasedValueSource( Properties properties )
-    {
-        super( false );
+    public PropertiesBasedValueSource(Properties properties) {
+        super(false);
         this.properties = properties;
     }
 
@@ -49,9 +46,7 @@ public class PropertiesBasedValueSource
      * entire expression as the key to lookup. If the wrapped properties instance
      * is null, simply return null.
      */
-    public Object getValue( String expression )
-    {
-        return properties == null ? null : properties.getProperty( expression );
+    public Object getValue(String expression) {
+        return properties == null ? null : properties.getProperty(expression);
     }
-
 }

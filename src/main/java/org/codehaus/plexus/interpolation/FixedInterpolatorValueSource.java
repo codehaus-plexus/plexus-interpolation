@@ -1,9 +1,9 @@
 package org.codehaus.plexus.interpolation;
 
+import java.util.List;
+
 import org.codehaus.plexus.interpolation.fixed.FixedStringSearchInterpolator;
 import org.codehaus.plexus.interpolation.fixed.InterpolationState;
-
-import java.util.List;
 
 /**
  * A value source that allows a fixed interpolator to be injected into
@@ -11,30 +11,24 @@ import java.util.List;
  * the fixed interpolator can be used as a singleton, a single FixedInterpolatorValueSource
  * can only belong to one interpolator any given time.
  */
-public class FixedInterpolatorValueSource implements ValueSource
+public class FixedInterpolatorValueSource implements ValueSource {
 
-{
     private final FixedStringSearchInterpolator fixedStringSearchInterpolator;
     private final InterpolationState errorCollector = new InterpolationState();
 
-    public FixedInterpolatorValueSource( FixedStringSearchInterpolator fixedStringSearchInterpolator )
-    {
+    public FixedInterpolatorValueSource(FixedStringSearchInterpolator fixedStringSearchInterpolator) {
         this.fixedStringSearchInterpolator = fixedStringSearchInterpolator;
     }
 
-    public Object getValue( String expression )
-    {
-       return fixedStringSearchInterpolator.getValue( expression, errorCollector  );
+    public Object getValue(String expression) {
+        return fixedStringSearchInterpolator.getValue(expression, errorCollector);
     }
 
-    public List getFeedback()
-    {
+    public List getFeedback() {
         return errorCollector.asList();
     }
 
-    public void clearFeedback()
-    {
+    public void clearFeedback() {
         errorCollector.clear();
-
     }
 }

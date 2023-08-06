@@ -28,9 +28,7 @@ package org.codehaus.plexus.interpolation;
  * value of the second expression, which is resolved from the wrapped value
  * source.</p>
  */
-public abstract class AbstractFunctionValueSourceWrapper
-    implements ValueSource
-{
+public abstract class AbstractFunctionValueSourceWrapper implements ValueSource {
 
     private final ValueSource valueSource;
 
@@ -40,8 +38,7 @@ public abstract class AbstractFunctionValueSourceWrapper
      *
      * @param valueSource The value source to wrap
      */
-    protected AbstractFunctionValueSourceWrapper( ValueSource valueSource )
-    {
+    protected AbstractFunctionValueSourceWrapper(ValueSource valueSource) {
         this.valueSource = valueSource;
     }
 
@@ -56,26 +53,23 @@ public abstract class AbstractFunctionValueSourceWrapper
      *       for the current expression.</li>
      * </ol>
      */
-    public Object getValue( String expression )
-    {
-        Object value = valueSource.getValue( expression );
+    public Object getValue(String expression) {
+        Object value = valueSource.getValue(expression);
 
         String expr = expression;
 
-        if ( valueSource instanceof QueryEnabledValueSource )
-        {
+        if (valueSource instanceof QueryEnabledValueSource) {
             expr = ((QueryEnabledValueSource) valueSource).getLastExpression();
         }
 
-        return executeFunction( expr, value );
+        return executeFunction(expr, value);
     }
 
     /**
      * Retrieve the embedded value source.
      * @return {@link ValueSource}
      */
-    protected ValueSource getValueSource()
-    {
+    protected ValueSource getValueSource() {
         return valueSource;
     }
 
@@ -87,6 +81,5 @@ public abstract class AbstractFunctionValueSourceWrapper
      * @param value The value for the current expression, resolved by the embedded {@link ValueSource}
      * @return The result of modifying the current expression's value using the function named by the last expression.
      */
-    protected abstract Object executeFunction( String expression, Object value );
-
+    protected abstract Object executeFunction(String expression, Object value);
 }

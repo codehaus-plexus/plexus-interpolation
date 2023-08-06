@@ -20,8 +20,7 @@ package org.codehaus.plexus.interpolation;
  *
  * TODO: Really really needs a way to communicate errors.
  */
-public interface BasicInterpolator
-{
+public interface BasicInterpolator {
     /**
      * See {@link org.codehaus.plexus.interpolation.Interpolator#interpolate(String, String, org.codehaus.plexus.interpolation.RecursionInterceptor)}.
      * <p>
@@ -34,8 +33,7 @@ public interface BasicInterpolator
      * @return the interpolated string.
      * @throws InterpolationException in case of an error.
      */
-    String interpolate( String input )
-        throws InterpolationException;
+    String interpolate(String input) throws InterpolationException;
 
     /**
      * See {@link org.codehaus.plexus.interpolation.Interpolator#interpolate(String, String, org.codehaus.plexus.interpolation.RecursionInterceptor)}.
@@ -52,6 +50,5 @@ public interface BasicInterpolator
      * @return the interpolated string.
      * @throws InterpolationException in case of an error.
      */
-    String interpolate( String input, RecursionInterceptor recursionInterceptor )
-        throws InterpolationException;
+    String interpolate(String input, RecursionInterceptor recursionInterceptor) throws InterpolationException;
 }

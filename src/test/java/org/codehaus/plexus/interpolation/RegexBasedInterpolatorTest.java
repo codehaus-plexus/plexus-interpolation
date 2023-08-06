@@ -16,9 +16,6 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,211 +25,180 @@ import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class RegexBasedInterpolatorTest
-{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
+public class RegexBasedInterpolatorTest {
 
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         EnvarBasedValueSource.resetStatics();
     }
 
-    public String getVar()
-    {
+    public String getVar() {
         return "testVar";
     }
 
     @Test
-    public void testShouldFailOnExpressionCycle()
-    {
+    public void testShouldFailOnExpressionCycle() {
         Properties props = new Properties();
-        props.setProperty( "key1", "${key2}" );
-        props.setProperty( "key2", "${key1}" );
+        props.setProperty("key1", "${key2}");
+        props.setProperty("key2", "${key1}");
 
         RegexBasedInterpolator rbi = new RegexBasedInterpolator();
-        rbi.addValueSource( new PropertiesBasedValueSource( props ) );
+        rbi.addValueSource(new PropertiesBasedValueSource(props));
 
-        try
-        {
-            rbi.interpolate( "${key1}", new SimpleRecursionInterceptor() );
+        try {
+            rbi.interpolate("${key1}", new SimpleRecursionInterceptor());
 
-            fail( "Should detect expression cycle and fail." );
-        }
-        catch ( InterpolationException e )
-        {
+            fail("Should detect expression cycle and fail.");
+        } catch (InterpolationException e) {
             // expected
         }
     }
 
     @Test
-    public void testShouldResolveByMy_getVar_Method()
-        throws InterpolationException
-    {
+    public void testShouldResolveByMy_getVar_Method() throws InterpolationException {
         RegexBasedInterpolator rbi = new RegexBasedInterpolator();
-        rbi.addValueSource( new ObjectBasedValueSource( this ) );
-        String result = rbi.interpolate( "this is a ${this.var}", "this" );
+        rbi.addValueSource(new ObjectBasedValueSource(this));
+        String result = rbi.interpolate("this is a ${this.var}", "this");
 
-        assertEquals( "this is a testVar", result );
+        assertEquals("this is a testVar", result);
     }
 
     @Test
-    public void testShouldResolveByContextValue()
-        throws InterpolationException
-    {
+    public void testShouldResolveByContextValue() throws InterpolationException {
         RegexBasedInterpolator rbi = new RegexBasedInterpolator();
 
         Map context = new HashMap();
-        context.put( "var", "testVar" );
+        context.put("var", "testVar");
 
-        rbi.addValueSource( new MapBasedValueSource( context ) );
+        rbi.addValueSource(new MapBasedValueSource(context));
 
-        String result = rbi.interpolate( "this is a ${this.var}", "this" );
+        String result = rbi.interpolate("this is a ${this.var}", "this");
 
-        assertEquals( "this is a testVar", result );
+        assertEquals("this is a testVar", result);
     }
 
     @Test
-    public void testShouldResolveByEnvar()
-        throws IOException, InterpolationException
-    {
-        OperatingSystemUtils.setEnvVarSource( new OperatingSystemUtils.EnvVarSource()
-        {
-            public Map<String, String> getEnvMap()
-            {
-                HashMap<String,String> map = new HashMap<String,String>();
-                map.put( "SOME_ENV", "variable" );
+    public void testShouldResolveByEnvar() throws IOException, InterpolationException {
+        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
+            public Map<String, String> getEnvMap() {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("SOME_ENV", "variable");
                 return map;
             }
-        } );
+        });
 
         RegexBasedInterpolator rbi = new RegexBasedInterpolator();
 
-        rbi.addValueSource( new EnvarBasedValueSource() );
+        rbi.addValueSource(new EnvarBasedValueSource());
 
-        String result = rbi.interpolate( "this is a ${env.SOME_ENV}", "this" );
+        String result = rbi.interpolate("this is a ${env.SOME_ENV}", "this");
 
-        assertEquals( "this is a variable", result );
+        assertEquals("this is a variable", result);
     }
 
     @Test
-    public void testUseAlternateRegex()
-        throws Exception
-    {
-        RegexBasedInterpolator rbi = new RegexBasedInterpolator( "\\@\\{(", ")?([^}]+)\\}@" );
+    public void testUseAlternateRegex() throws Exception {
+        RegexBasedInterpolator rbi = new RegexBasedInterpolator("\\@\\{(", ")?([^}]+)\\}@");
 
         Map context = new HashMap();
-        context.put( "var", "testVar" );
+        context.put("var", "testVar");
 
-        rbi.addValueSource( new MapBasedValueSource( context ) );
+        rbi.addValueSource(new MapBasedValueSource(context));
 
-        String result = rbi.interpolate( "this is a @{this.var}@", "this" );
+        String result = rbi.interpolate("this is a @{this.var}@", "this");
 
-        assertEquals( "this is a testVar", result );
+        assertEquals("this is a testVar", result);
     }
 
     @Test
-    public void testNPEFree()
-        throws Exception
-    {
-        RegexBasedInterpolator rbi = new RegexBasedInterpolator( "\\@\\{(", ")?([^}]+)\\}@" );
+    public void testNPEFree() throws Exception {
+        RegexBasedInterpolator rbi = new RegexBasedInterpolator("\\@\\{(", ")?([^}]+)\\}@");
 
         Map context = new HashMap();
-        context.put( "var", "testVar" );
+        context.put("var", "testVar");
 
-        rbi.addValueSource( new MapBasedValueSource( context ) );
+        rbi.addValueSource(new MapBasedValueSource(context));
 
-        String result = rbi.interpolate( null );
+        String result = rbi.interpolate(null);
 
-        assertEquals( "", result );
+        assertEquals("", result);
     }
 
     @Test
-    public void testUsePostProcessor_DoesNotChangeValue()
-        throws InterpolationException
-    {
+    public void testUsePostProcessor_DoesNotChangeValue() throws InterpolationException {
         RegexBasedInterpolator rbi = new RegexBasedInterpolator();
-        
+
         Map context = new HashMap();
-        context.put( "test.var", "testVar" );
+        context.put("test.var", "testVar");
 
-        rbi.addValueSource( new MapBasedValueSource( context ) );
+        rbi.addValueSource(new MapBasedValueSource(context));
 
-        rbi.addPostProcessor( new InterpolationPostProcessor()
-        {
-            public Object execute( String expression, Object value )
-            {
+        rbi.addPostProcessor(new InterpolationPostProcessor() {
+            public Object execute(String expression, Object value) {
                 return null;
             }
-        } );
+        });
 
-        String result = rbi.interpolate( "this is a ${test.var}", "" );
+        String result = rbi.interpolate("this is a ${test.var}", "");
 
-        assertEquals( "this is a testVar", result );
+        assertEquals("this is a testVar", result);
     }
 
     @Test
-    public void testUsePostProcessor_ChangesValue()
-        throws InterpolationException
-    {
+    public void testUsePostProcessor_ChangesValue() throws InterpolationException {
 
         int loopNumber = 200000;
-        
+
         long start = System.currentTimeMillis();
 
         RegexBasedInterpolator rbi = new RegexBasedInterpolator();
 
         Map context = new HashMap();
-        context.put( "test.var", "testVar" );
+        context.put("test.var", "testVar");
 
-        rbi.addValueSource( new MapBasedValueSource( context ) );
+        rbi.addValueSource(new MapBasedValueSource(context));
 
-        rbi.addPostProcessor( new InterpolationPostProcessor()
-        {
-            public Object execute( String expression, Object value )
-            {
+        rbi.addPostProcessor(new InterpolationPostProcessor() {
+            public Object execute(String expression, Object value) {
                 return value + "2";
             }
-        } );        
-        
-        for ( int i = 0, number = loopNumber; i < number; i++ )
-        {
+        });
 
+        for (int i = 0, number = loopNumber; i < number; i++) {
 
-            String result = rbi.interpolate( "this is a ${test.var}", "" );
+            String result = rbi.interpolate("this is a ${test.var}", "");
 
-            assertEquals( "this is a testVar2", result );
+            assertEquals("this is a testVar2", result);
         }
         long end = System.currentTimeMillis();
 
-        System.out.println( "time without pattern reuse and RegexBasedInterpolator instance reuse " + ( end - start ) );
+        System.out.println("time without pattern reuse and RegexBasedInterpolator instance reuse " + (end - start));
 
         System.gc();
-        
-        start = System.currentTimeMillis();
-        
-        
 
-        rbi = new RegexBasedInterpolator( true );
-        
-        rbi.addPostProcessor( new InterpolationPostProcessor()
-        {
-            public Object execute( String expression, Object value )
-            {
+        start = System.currentTimeMillis();
+
+        rbi = new RegexBasedInterpolator(true);
+
+        rbi.addPostProcessor(new InterpolationPostProcessor() {
+            public Object execute(String expression, Object value) {
                 return value + "2";
             }
-        } );        
-        
-        rbi.addValueSource( new MapBasedValueSource( context ) );
-        
-        for ( int i = 0, number = loopNumber; i < number; i++ )
-        {
+        });
 
-            String result = rbi.interpolate( "this is a ${test.var}", "" );
+        rbi.addValueSource(new MapBasedValueSource(context));
 
-            assertEquals( "this is a testVar2", result );
+        for (int i = 0, number = loopNumber; i < number; i++) {
+
+            String result = rbi.interpolate("this is a ${test.var}", "");
+
+            assertEquals("this is a testVar2", result);
         }
         end = System.currentTimeMillis();
 
-        System.out.println( "time with pattern reuse and RegexBasedInterpolator instance reuse " + ( end - start ) );
+        System.out.println("time with pattern reuse and RegexBasedInterpolator instance reuse " + (end - start));
     }
 }

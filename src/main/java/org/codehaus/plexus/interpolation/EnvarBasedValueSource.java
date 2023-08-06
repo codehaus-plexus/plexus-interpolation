@@ -16,10 +16,10 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
-
 import java.io.IOException;
 import java.util.Properties;
+
+import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
 
 /**
  * {@link ValueSource} which resolves expressions against the environment variables
@@ -27,9 +27,7 @@ import java.util.Properties;
  * that created the present Java process). If the expression starts with 'env.',
  * this prefix is trimmed before resolving the rest as an environment variable name.
  */
-public class EnvarBasedValueSource
-    extends AbstractValueSource
-{
+public class EnvarBasedValueSource extends AbstractValueSource {
 
     private static Properties envarsCaseSensitive;
     private static Properties envarsCaseInsensitive;
@@ -43,9 +41,8 @@ public class EnvarBasedValueSource
      *
      * @throws IOException in case of an error.
      */
-    public EnvarBasedValueSource() throws IOException
-    {
-        this( true );
+    public EnvarBasedValueSource() throws IOException {
+        this(true);
     }
 
     /**
@@ -55,29 +52,21 @@ public class EnvarBasedValueSource
      *                      case-sensitive manner for lookups
      * @throws IOException in case of an error.
      */
-    public EnvarBasedValueSource( boolean caseSensitive ) throws IOException
-    {
-        super( false );
+    public EnvarBasedValueSource(boolean caseSensitive) throws IOException {
+        super(false);
         this.caseSensitive = caseSensitive;
-        this.envars = getEnvars( caseSensitive );
+        this.envars = getEnvars(caseSensitive);
     }
 
-    private static synchronized Properties getEnvars( boolean caseSensitive )
-        throws IOException
-    {
-        if ( caseSensitive )
-        {
-            if ( envarsCaseSensitive == null )
-            {
-                envarsCaseSensitive = OperatingSystemUtils.getSystemEnvVars( caseSensitive );
+    private static synchronized Properties getEnvars(boolean caseSensitive) throws IOException {
+        if (caseSensitive) {
+            if (envarsCaseSensitive == null) {
+                envarsCaseSensitive = OperatingSystemUtils.getSystemEnvVars(caseSensitive);
             }
             return envarsCaseSensitive;
-        }
-        else
-        {
-            if ( envarsCaseInsensitive == null )
-            {
-                envarsCaseInsensitive = OperatingSystemUtils.getSystemEnvVars( caseSensitive );
+        } else {
+            if (envarsCaseInsensitive == null) {
+                envarsCaseInsensitive = OperatingSystemUtils.getSystemEnvVars(caseSensitive);
             }
             return envarsCaseInsensitive;
         }
@@ -92,30 +81,25 @@ public class EnvarBasedValueSource
      * @param expression envar expression, like 'HOME' or 'env.HOME'
      * @return the environment variable value for the given expression
      */
-    public Object getValue( String expression )
-    {
+    public Object getValue(String expression) {
         String expr = expression;
 
-        if ( expr.startsWith( "env." ) )
-        {
-            expr = expr.substring( "env.".length() );
+        if (expr.startsWith("env.")) {
+            expr = expr.substring("env.".length());
         }
 
-        if ( !caseSensitive )
-        {
+        if (!caseSensitive) {
             expr = expr.toUpperCase();
         }
 
-        return envars.getProperty( expr );
+        return envars.getProperty(expr);
     }
- 
+
     /**
      * reset static variables acting as a cache for testing purposes only
      */
-    static void resetStatics()
-    {
+    static void resetStatics() {
         envarsCaseSensitive = null;
         envarsCaseInsensitive = null;
     }
-
 }

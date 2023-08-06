@@ -24,6 +24,12 @@ package org.codehaus.plexus.interpolation.multi;
  * SOFTWARE.
  */
 
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.MapBasedValueSource;
 import org.codehaus.plexus.interpolation.PrefixAwareRecursionInterceptor;
@@ -31,361 +37,309 @@ import org.codehaus.plexus.interpolation.RecursionInterceptor;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.junit.jupiter.api.Test;
 
-import java.io.StringReader;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * InterpolatorFilterReaderTest, heavily based on InterpolationFilterReaderTest. Heh, even the test strings remained the
  * same!
- * 
+ *
  * @author cstamas
- * 
+ *
  */
-public class MultiDelimiterInterpolatorFilterReaderTest
-{
+public class MultiDelimiterInterpolatorFilterReaderTest {
     /*
      * Added and commented by jdcasey@03-Feb-2005 because it is a bug in the InterpolationFilterReader.
      * kenneyw@15-04-2005 fixed the bug.
      */
     @Test
-    public void testShouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken()
-        throws Exception
-    {
+    public void testShouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
         Map m = new HashMap();
-        m.put( "test", "TestValue" );
+        m.put("test", "TestValue");
 
         String testStr = "This is a ${test";
 
-        assertEquals( "This is a ${test", interpolate( testStr, m ) );
+        assertEquals("This is a ${test", interpolate(testStr, m));
     }
 
     /*
      * kenneyw@14-04-2005 Added test to check above fix.
      */
     @Test
-    public void testShouldNotInterpolateExpressionWithMissingEndToken()
-        throws Exception
-    {
+    public void testShouldNotInterpolateExpressionWithMissingEndToken() throws Exception {
         Map m = new HashMap();
-        m.put( "test", "TestValue" );
+        m.put("test", "TestValue");
 
         String testStr = "This is a ${test, really";
 
-        assertEquals( "This is a ${test, really", interpolate( testStr, m ) );
+        assertEquals("This is a ${test, really", interpolate(testStr, m));
     }
 
     @Test
-    public void testShouldNotInterpolateWithMalformedStartToken()
-        throws Exception
-    {
+    public void testShouldNotInterpolateWithMalformedStartToken() throws Exception {
         Map m = new HashMap();
-        m.put( "test", "testValue" );
+        m.put("test", "testValue");
 
         String foo = "This is a $!test} again";
 
-        assertEquals( "This is a $!test} again", interpolate( foo, m ) );
+        assertEquals("This is a $!test} again", interpolate(foo, m));
     }
 
     @Test
-    public void testShouldNotInterpolateWithMalformedEndToken()
-        throws Exception
-    {
+    public void testShouldNotInterpolateWithMalformedEndToken() throws Exception {
         Map m = new HashMap();
-        m.put( "test", "testValue" );
+        m.put("test", "testValue");
 
         String foo = "This is a ${test!} again";
 
-        assertEquals( "This is a ${test!} again", interpolate( foo, m ) );
+        assertEquals("This is a ${test!} again", interpolate(foo, m));
     }
 
     @Test
-    public void testDefaultInterpolationWithNonInterpolatedValueAtEnd()
-        throws Exception
-    {
+    public void testDefaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "${name} is an ${noun}. ${not.interpolated}";
 
-        assertEquals( "jason is an asshole. ${not.interpolated}", interpolate( foo, m ) );
+        assertEquals("jason is an asshole. ${not.interpolated}", interpolate(foo, m));
     }
 
     @Test
-    public void testDefaultInterpolationWithInterpolatedValueAtEnd()
-        throws Exception
-    {
+    public void testDefaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "${name} is an ${noun}";
 
-        assertEquals( "jason is an asshole", interpolate( foo, m ) );
+        assertEquals("jason is an asshole", interpolate(foo, m));
     }
 
     @Test
-    public void testInterpolationWithInterpolatedValueAtEndWithCustomToken()
-        throws Exception
-    {
+    public void testInterpolationWithInterpolatedValueAtEndWithCustomToken() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "@{name} is an @{noun}";
 
-        assertEquals( "jason is an asshole", interpolate( foo, m, "@{", "}" ) );
+        assertEquals("jason is an asshole", interpolate(foo, m, "@{", "}"));
     }
 
     @Test
-    public void testInterpolationWithInterpolatedValueAtEndWithCustomTokenAndCustomString()
-        throws Exception
-    {
+    public void testInterpolationWithInterpolatedValueAtEndWithCustomTokenAndCustomString() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "@name@ is an @noun@";
 
-        assertEquals( "jason is an asshole", interpolate( foo, m, "@", "@" ) );
+        assertEquals("jason is an asshole", interpolate(foo, m, "@", "@"));
     }
 
     @Test
-    public void testEscape()
-        throws Exception
-    {
+    public void testEscape() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "${name} is an \\${noun}";
 
-        assertEquals( "jason is an ${noun}", interpolate( foo, m, "\\" ) );
+        assertEquals("jason is an ${noun}", interpolate(foo, m, "\\"));
     }
 
     @Test
-    public void testEscapeAtStart()
-        throws Exception
-    {
+    public void testEscapeAtStart() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "\\${name} is an \\${noun}";
 
-        assertEquals( "${name} is an ${noun}", interpolate( foo, m, "\\" ) );
+        assertEquals("${name} is an ${noun}", interpolate(foo, m, "\\"));
     }
 
     @Test
-    public void testEscapeOnlyAtStart()
-        throws Exception
-    {
+    public void testEscapeOnlyAtStart() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "\\@name@ is an @noun@";
 
-        String result = interpolate( foo, m, "@", "@" );
-        assertEquals( "@name@ is an asshole", result );
+        String result = interpolate(foo, m, "@", "@");
+        assertEquals("@name@ is an asshole", result);
     }
 
     @Test
-    public void testEscapeOnlyAtStartDefaultToken()
-        throws Exception
-    {
+    public void testEscapeOnlyAtStartDefaultToken() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "\\${name} is an ${noun}";
 
-        String result = interpolate( foo, m, "${", "}" );
-        assertEquals( "${name} is an asshole", result );
+        String result = interpolate(foo, m, "${", "}");
+        assertEquals("${name} is an asshole", result);
     }
 
     @Test
-    public void testShouldDetectRecursiveExpressionPassingThroughTwoPrefixes()
-        throws Exception
-    {
+    public void testShouldDetectRecursiveExpressionPassingThroughTwoPrefixes() throws Exception {
         List prefixes = new ArrayList();
 
-        prefixes.add( "prefix1" );
-        prefixes.add( "prefix2" );
+        prefixes.add("prefix1");
+        prefixes.add("prefix2");
 
-        RecursionInterceptor ri = new PrefixAwareRecursionInterceptor( prefixes, false );
+        RecursionInterceptor ri = new PrefixAwareRecursionInterceptor(prefixes, false);
 
         Map context = new HashMap();
-        context.put( "name", "${prefix2.name}" );
+        context.put("name", "${prefix2.name}");
 
         String input = "${prefix1.name}";
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
 
-        interpolator.addValueSource( new MapBasedValueSource( context ) );
+        interpolator.addValueSource(new MapBasedValueSource(context));
 
-        MultiDelimiterInterpolatorFilterReader r = new MultiDelimiterInterpolatorFilterReader( new StringReader( input ),
-                                                                                               interpolator, ri );
-        r.setInterpolateWithPrefixPattern( false );
-        r.setEscapeString( "\\" );
+        MultiDelimiterInterpolatorFilterReader r =
+                new MultiDelimiterInterpolatorFilterReader(new StringReader(input), interpolator, ri);
+        r.setInterpolateWithPrefixPattern(false);
+        r.setEscapeString("\\");
         StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
-        while ( ( read = r.read( cbuf ) ) > -1 )
-        {
-            buf.append( cbuf, 0, read );
+        while ((read = r.read(cbuf)) > -1) {
+            buf.append(cbuf, 0, read);
         }
 
-        assertEquals( input, buf.toString() );
+        assertEquals(input, buf.toString());
     }
 
     @Test
-    public void testShouldDetectRecursiveExpressionWithPrefixAndWithout()
-        throws Exception
-    {
+    public void testShouldDetectRecursiveExpressionWithPrefixAndWithout() throws Exception {
         List prefixes = new ArrayList();
 
-        prefixes.add( "prefix1" );
+        prefixes.add("prefix1");
 
-        RecursionInterceptor ri = new PrefixAwareRecursionInterceptor( prefixes, false );
+        RecursionInterceptor ri = new PrefixAwareRecursionInterceptor(prefixes, false);
 
         Map context = new HashMap();
-        context.put( "name", "${prefix1.name}" );
+        context.put("name", "${prefix1.name}");
 
         String input = "${name}";
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
 
-        interpolator.addValueSource( new MapBasedValueSource( context ) );
+        interpolator.addValueSource(new MapBasedValueSource(context));
 
-        MultiDelimiterInterpolatorFilterReader r = new MultiDelimiterInterpolatorFilterReader( new StringReader( input ),
-                                                                                               interpolator, ri );
-        r.setInterpolateWithPrefixPattern( false );
-        r.setEscapeString( "\\" );
+        MultiDelimiterInterpolatorFilterReader r =
+                new MultiDelimiterInterpolatorFilterReader(new StringReader(input), interpolator, ri);
+        r.setInterpolateWithPrefixPattern(false);
+        r.setEscapeString("\\");
         StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
-        while ( ( read = r.read( cbuf ) ) > -1 )
-        {
-            buf.append( cbuf, 0, read );
+        while ((read = r.read(cbuf)) > -1) {
+            buf.append(cbuf, 0, read);
         }
 
-        assertEquals( "${prefix1.name}", buf.toString() );
+        assertEquals("${prefix1.name}", buf.toString());
     }
 
     @Test
-    public void testInterpolationWithMultipleTokenTypes()
-        throws Exception
-    {
+    public void testInterpolationWithMultipleTokenTypes() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "otherName", "@name@" );
+        m.put("name", "jason");
+        m.put("otherName", "@name@");
 
         String foo = "${otherName}";
 
-        assertEquals( "jason", interpolateMulti( foo, m, new String[] { "${*}", "@*@" } ) );
+        assertEquals("jason", interpolateMulti(foo, m, new String[] {"${*}", "@*@"}));
     }
 
     @Test
-    public void testInterpolationWithMultipleTokenTypes_ReversedOrdering()
-        throws Exception
-    {
+    public void testInterpolationWithMultipleTokenTypes_ReversedOrdering() throws Exception {
         Map m = new HashMap();
-        m.put( "name", "jason" );
-        m.put( "otherName", "${name}" );
+        m.put("name", "jason");
+        m.put("otherName", "${name}");
 
         String foo = "@otherName@";
 
-        assertEquals( "jason", interpolateMulti( foo, m, new String[] { "${*}", "@*@" } ) );
+        assertEquals("jason", interpolateMulti(foo, m, new String[] {"${*}", "@*@"}));
     }
 
     // ----------------------------------------------------------------------
     //
     // ----------------------------------------------------------------------
 
-    private String interpolate( String input, Map context )
-        throws Exception
-    {
-        return interpolate( input, context, null );
+    private String interpolate(String input, Map context) throws Exception {
+        return interpolate(input, context, null);
     }
 
-    private String interpolate( String input, Map context, String escapeStr )
-        throws Exception
-    {
+    private String interpolate(String input, Map context, String escapeStr) throws Exception {
         Interpolator interpolator = new StringSearchInterpolator();
 
-        interpolator.addValueSource( new MapBasedValueSource( context ) );
+        interpolator.addValueSource(new MapBasedValueSource(context));
 
-        MultiDelimiterInterpolatorFilterReader r = new MultiDelimiterInterpolatorFilterReader( new StringReader( input ), interpolator );
-        r.setInterpolateWithPrefixPattern( false );
-        if ( escapeStr != null )
-        {
-            r.setEscapeString( escapeStr );
+        MultiDelimiterInterpolatorFilterReader r =
+                new MultiDelimiterInterpolatorFilterReader(new StringReader(input), interpolator);
+        r.setInterpolateWithPrefixPattern(false);
+        if (escapeStr != null) {
+            r.setEscapeString(escapeStr);
         }
         StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
-        while ( ( read = r.read( cbuf ) ) > -1 )
-        {
-            buf.append( cbuf, 0, read );
+        while ((read = r.read(cbuf)) > -1) {
+            buf.append(cbuf, 0, read);
         }
 
         return buf.toString();
     }
 
-    private String interpolate( String input, Map context, String beginToken, String endToken )
-        throws Exception
-    {
-        StringSearchInterpolator interpolator = new StringSearchInterpolator( beginToken, endToken );
+    private String interpolate(String input, Map context, String beginToken, String endToken) throws Exception {
+        StringSearchInterpolator interpolator = new StringSearchInterpolator(beginToken, endToken);
 
-        interpolator.addValueSource( new MapBasedValueSource( context ) );
+        interpolator.addValueSource(new MapBasedValueSource(context));
 
-        MultiDelimiterInterpolatorFilterReader r = new MultiDelimiterInterpolatorFilterReader( new StringReader( input ), interpolator );
-        r.addDelimiterSpec( beginToken + "*" + endToken );
+        MultiDelimiterInterpolatorFilterReader r =
+                new MultiDelimiterInterpolatorFilterReader(new StringReader(input), interpolator);
+        r.addDelimiterSpec(beginToken + "*" + endToken);
 
-        r.setInterpolateWithPrefixPattern( false );
-        r.setEscapeString( "\\" );
+        r.setInterpolateWithPrefixPattern(false);
+        r.setEscapeString("\\");
         StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
-        while ( ( read = r.read( cbuf ) ) > -1 )
-        {
-            buf.append( cbuf, 0, read );
+        while ((read = r.read(cbuf)) > -1) {
+            buf.append(cbuf, 0, read);
         }
 
         return buf.toString();
     }
 
-    private String interpolateMulti( String input, Map context, String[] specs )
-        throws Exception
-    {
+    private String interpolateMulti(String input, Map context, String[] specs) throws Exception {
         MultiDelimiterStringSearchInterpolator interp = new MultiDelimiterStringSearchInterpolator();
-        interp.addValueSource( new MapBasedValueSource( context ) );
+        interp.addValueSource(new MapBasedValueSource(context));
 
-        MultiDelimiterInterpolatorFilterReader r = new MultiDelimiterInterpolatorFilterReader( new StringReader( input ), interp );
+        MultiDelimiterInterpolatorFilterReader r =
+                new MultiDelimiterInterpolatorFilterReader(new StringReader(input), interp);
 
-        for ( String spec : specs )
-        {
-            interp.addDelimiterSpec( spec );
-            r.addDelimiterSpec( spec );
+        for (String spec : specs) {
+            interp.addDelimiterSpec(spec);
+            r.addDelimiterSpec(spec);
         }
 
-        r.setInterpolateWithPrefixPattern( false );
-        r.setEscapeString( "\\" );
+        r.setInterpolateWithPrefixPattern(false);
+        r.setEscapeString("\\");
         StringBuilder buf = new StringBuilder();
         int read = -1;
         char[] cbuf = new char[1024];
-        while ( ( read = r.read( cbuf ) ) > -1 )
-        {
-            buf.append( cbuf, 0, read );
+        while ((read = r.read(cbuf)) > -1) {
+            buf.append(cbuf, 0, read);
         }
 
         return buf.toString();
     }
-
 }

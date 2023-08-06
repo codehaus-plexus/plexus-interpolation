@@ -16,14 +16,12 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-public interface FixedValueSource
-{
+public interface FixedValueSource {
     /**
      * @param expression The expression.
      * @param interpolationState {@link InterpolationState}.
      * @return the value related to the expression, or null if not found (not available
      * from this source)
      */
-    public Object getValue( String expression, InterpolationState interpolationState );
-
+    public Object getValue(String expression, InterpolationState interpolationState);
 }

@@ -16,9 +16,9 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.interpolation.util.ValueSourceUtils;
-
 import java.util.List;
+
+import org.codehaus.plexus.interpolation.util.ValueSourceUtils;
 
 /**
  * {@link org.codehaus.plexus.interpolation.fixed.FixedValueSource} implementation which simply wraps another
@@ -28,8 +28,7 @@ import java.util.List;
  * @author jdcasey
  * @author krosenvold
  */
-public class PrefixedValueSourceWrapper implements FixedValueSource
-{
+public class PrefixedValueSourceWrapper implements FixedValueSource {
 
     private final FixedValueSource valueSource;
 
@@ -47,10 +46,9 @@ public class PrefixedValueSourceWrapper implements FixedValueSource
      * @param valueSource The {@link org.codehaus.plexus.interpolation.ValueSource} to wrap.
      * @param prefix      The expression prefix to trim.
      */
-    public PrefixedValueSourceWrapper( FixedValueSource valueSource, String prefix )
-    {
+    public PrefixedValueSourceWrapper(FixedValueSource valueSource, String prefix) {
         this.valueSource = valueSource;
-        possiblePrefixes = new String[]{ prefix };
+        possiblePrefixes = new String[] {prefix};
     }
 
     /**
@@ -66,10 +64,9 @@ public class PrefixedValueSourceWrapper implements FixedValueSource
      * @param allowUnprefixedExpressions Flag telling the wrapper whether to
      *                                   continue resolving expressions that don't start with the prefix it tracks.
      */
-    public PrefixedValueSourceWrapper( FixedValueSource valueSource, String prefix, boolean allowUnprefixedExpressions )
-    {
+    public PrefixedValueSourceWrapper(FixedValueSource valueSource, String prefix, boolean allowUnprefixedExpressions) {
         this.valueSource = valueSource;
-        possiblePrefixes = new String[]{ prefix };
+        possiblePrefixes = new String[] {prefix};
         this.allowUnprefixedExpressions = allowUnprefixedExpressions;
     }
 
@@ -81,10 +78,9 @@ public class PrefixedValueSourceWrapper implements FixedValueSource
      * @param valueSource      The {@link org.codehaus.plexus.interpolation.ValueSource} to wrap.
      * @param possiblePrefixes The List of expression prefixes to trim.
      */
-    public PrefixedValueSourceWrapper( FixedValueSource valueSource, List<String> possiblePrefixes )
-    {
+    public PrefixedValueSourceWrapper(FixedValueSource valueSource, List<String> possiblePrefixes) {
         this.valueSource = valueSource;
-        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()] );
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
     }
 
     /**
@@ -100,24 +96,20 @@ public class PrefixedValueSourceWrapper implements FixedValueSource
      * @param allowUnprefixedExpressions Flag telling the wrapper whether to
      *                                   continue resolving expressions that don't start with one of the prefixes it tracks.
      */
-    public PrefixedValueSourceWrapper( FixedValueSource valueSource, List<String> possiblePrefixes,
-                                       boolean allowUnprefixedExpressions )
-    {
+    public PrefixedValueSourceWrapper(
+            FixedValueSource valueSource, List<String> possiblePrefixes, boolean allowUnprefixedExpressions) {
         this.valueSource = valueSource;
-        this.possiblePrefixes = possiblePrefixes.toArray( new String[possiblePrefixes.size()] );
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
         this.allowUnprefixedExpressions = allowUnprefixedExpressions;
     }
 
+    public Object getValue(String expression, InterpolationState interpolationState) {
+        expression = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, allowUnprefixedExpressions);
 
-    public Object getValue( String expression, InterpolationState interpolationState )
-    {
-        expression = ValueSourceUtils.trimPrefix( expression, possiblePrefixes, allowUnprefixedExpressions );
-
-        if ( expression == null )
-        {
+        if (expression == null) {
             return null;
         }
 
-        return valueSource.getValue( expression, interpolationState );
+        return valueSource.getValue(expression, interpolationState);
     }
 }

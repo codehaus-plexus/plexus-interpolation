@@ -16,28 +16,23 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-public abstract class AbstractDelegatingValueSource
-    implements FixedValueSource
-{
-    
+public abstract class AbstractDelegatingValueSource implements FixedValueSource {
+
     private final FixedValueSource delegate;
 
-    protected AbstractDelegatingValueSource( FixedValueSource delegate )
-    {
-        if ( delegate == null )
-        {
-            throw new NullPointerException( "Delegate ValueSource cannot be null." );
+    protected AbstractDelegatingValueSource(FixedValueSource delegate) {
+        if (delegate == null) {
+            throw new NullPointerException("Delegate ValueSource cannot be null.");
         }
-        
+
         this.delegate = delegate;
     }
-    
-    protected FixedValueSource getDelegate()
-    {
+
+    protected FixedValueSource getDelegate() {
         return delegate;
     }
 
-    public Object getValue( String expression, InterpolationState interpolationState ){
-        return getDelegate().getValue( expression, interpolationState );
+    public Object getValue(String expression, InterpolationState interpolationState) {
+        return getDelegate().getValue(expression, interpolationState);
     }
 }

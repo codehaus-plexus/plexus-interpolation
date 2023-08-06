@@ -29,35 +29,30 @@ import java.util.Stack;
  *
  * @author jdcasey
  */
-public class SimpleRecursionInterceptor
-    implements RecursionInterceptor
-{
+public class SimpleRecursionInterceptor implements RecursionInterceptor {
 
     private Stack expressions = new Stack();
 
     /**
      * {@inheritDoc}
      */
-    public void expressionResolutionFinished( String expression )
-    {
+    public void expressionResolutionFinished(String expression) {
         expressions.pop();
     }
 
     /**
      * {@inheritDoc}
      */
-    public void expressionResolutionStarted( String expression )
-    {
-        expressions.push( expression );
+    public void expressionResolutionStarted(String expression) {
+        expressions.push(expression);
     }
 
     /**
      * Check whether the current expression is already present in the in-process
      * stack.
      */
-    public boolean hasRecursiveExpression( String expression )
-    {
-        return expressions.contains( expression );
+    public boolean hasRecursiveExpression(String expression) {
+        return expressions.contains(expression);
     }
 
     /**
@@ -66,20 +61,16 @@ public class SimpleRecursionInterceptor
      * Otherwise, if the expression isn't present in the in-process stack, return
      * {@link Collections#EMPTY_LIST}.
      */
-    public List getExpressionCycle( String expression )
-    {
-        int idx = expressions.indexOf( expression );
-        if ( idx < 0 )
-        {
+    public List getExpressionCycle(String expression) {
+        int idx = expressions.indexOf(expression);
+        if (idx < 0) {
             return Collections.EMPTY_LIST;
-        }
-        else
-        {
-            return expressions.subList( idx, expressions.size() );
+        } else {
+            return expressions.subList(idx, expressions.size());
         }
     }
 
-    public void clear(){
+    public void clear() {
         expressions.clear();
     }
 }

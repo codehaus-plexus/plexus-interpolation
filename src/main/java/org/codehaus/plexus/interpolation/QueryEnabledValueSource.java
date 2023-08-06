@@ -21,13 +21,10 @@ package org.codehaus.plexus.interpolation;
  * This can be useful if the most recent expression is meant to modify the current
  * one.
  */
-public interface QueryEnabledValueSource
-    extends ValueSource
-{
+public interface QueryEnabledValueSource extends ValueSource {
 
     /**
      * @return the most recent expression processed by this value source, or null.
      */
     String getLastExpression();
-
 }

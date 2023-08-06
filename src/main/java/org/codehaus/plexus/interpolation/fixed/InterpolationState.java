@@ -16,42 +16,39 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.interpolation.RecursionInterceptor;
-import org.codehaus.plexus.interpolation.SimpleRecursionInterceptor;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.codehaus.plexus.interpolation.RecursionInterceptor;
+import org.codehaus.plexus.interpolation.SimpleRecursionInterceptor;
+
 /**
  * AN error collector contains the errors accumulated during an interpolation.
  * It is stateful.
  */
-public class InterpolationState
-{
-    private final List<String> messages = new ArrayList<String>(  );
-    private final List<Throwable> causes = new ArrayList<Throwable>(  );
+public class InterpolationState {
+    private final List<String> messages = new ArrayList<String>();
+    private final List<Throwable> causes = new ArrayList<Throwable>();
 
-    public void addFeedback( String message, Throwable cause )
-    {
-        messages.add( message);
+    public void addFeedback(String message, Throwable cause) {
+        messages.add(message);
         causes.add(cause);
     }
 
-    public List asList(){
-        ArrayList<Object> items = new ArrayList<Object>(  );
-        for (int i = 0; i < messages.size(); i++){
+    public List asList() {
+        ArrayList<Object> items = new ArrayList<Object>();
+        for (int i = 0; i < messages.size(); i++) {
             String msg = messages.get(i);
-            if (msg != null ) items.add( msg);
+            if (msg != null) items.add(msg);
             Throwable cause = causes.get(i);
             if (cause != null) items.add(cause);
         }
-        return items.size() > 0 ? items: null;
+        return items.size() > 0 ? items : null;
     }
 
-    public void clear()
-    {
+    public void clear() {
         messages.clear();
         causes.clear();
         unresolvable.clear();
@@ -59,11 +56,10 @@ public class InterpolationState
         root = null;
     }
 
-    final Set<String> unresolvable = new HashSet<String>(  );
+    final Set<String> unresolvable = new HashSet<String>();
     RecursionInterceptor recursionInterceptor = new SimpleRecursionInterceptor();
 
-    public void setRecursionInterceptor( RecursionInterceptor recursionInterceptor )
-    {
+    public void setRecursionInterceptor(RecursionInterceptor recursionInterceptor) {
         this.recursionInterceptor = recursionInterceptor;
     }
 

@@ -16,21 +16,18 @@ package org.codehaus.plexus.interpolation.util;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.interpolation.ValueSource;
-
 import java.util.Collection;
+
+import org.codehaus.plexus.interpolation.ValueSource;
 
 /**
  * Utility methods shared by multiple {@link ValueSource} implementations.
  *
  * @author jdcasey
  */
-public final class ValueSourceUtils
-{
+public final class ValueSourceUtils {
 
-    private ValueSourceUtils()
-    {
-    }
+    private ValueSourceUtils() {}
 
     /**
      * If the expression starts with one of the provided prefixes, trim that prefix
@@ -47,63 +44,50 @@ public final class ValueSourceUtils
      * @return The trimmed expression, or null. See the behavior of
      *         allowUnprefixedExpressions in this method for more detail.
      */
-    public static String trimPrefix( String expression, Collection<String> possiblePrefixes,
-                                     boolean allowUnprefixedExpressions )
-    {
-        if ( expression == null )
-        {
+    public static String trimPrefix(
+            String expression, Collection<String> possiblePrefixes, boolean allowUnprefixedExpressions) {
+        if (expression == null) {
             return null;
         }
 
         String realExpr = null;
-        for ( String prefix : possiblePrefixes )
-        {
-            if ( expression.startsWith( prefix ) )
-            {
-                realExpr = expression.substring( prefix.length() );
-                if ( realExpr.startsWith( "." ) )
-                {
-                    realExpr = realExpr.substring( 1 );
+        for (String prefix : possiblePrefixes) {
+            if (expression.startsWith(prefix)) {
+                realExpr = expression.substring(prefix.length());
+                if (realExpr.startsWith(".")) {
+                    realExpr = realExpr.substring(1);
                 }
                 break;
             }
         }
 
-        if ( realExpr == null && allowUnprefixedExpressions )
-        {
+        if (realExpr == null && allowUnprefixedExpressions) {
             realExpr = expression;
         }
 
         return realExpr;
     }
 
-    public static String trimPrefix( String expression, String[] possiblePrefixes, boolean allowUnprefixedExpressions )
-    {
-        if ( expression == null )
-        {
+    public static String trimPrefix(String expression, String[] possiblePrefixes, boolean allowUnprefixedExpressions) {
+        if (expression == null) {
             return null;
         }
 
         String realExpr = null;
-        for ( String prefix : possiblePrefixes )
-        {
-            if ( expression.startsWith( prefix ) )
-            {
-                realExpr = expression.substring( prefix.length() );
-                if ( realExpr.startsWith( "." ) )
-                {
-                    realExpr = realExpr.substring( 1 );
+        for (String prefix : possiblePrefixes) {
+            if (expression.startsWith(prefix)) {
+                realExpr = expression.substring(prefix.length());
+                if (realExpr.startsWith(".")) {
+                    realExpr = realExpr.substring(1);
                 }
                 break;
             }
         }
 
-        if ( realExpr == null && allowUnprefixedExpressions )
-        {
+        if (realExpr == null && allowUnprefixedExpressions) {
             realExpr = expression;
         }
 
         return realExpr;
     }
-
 }

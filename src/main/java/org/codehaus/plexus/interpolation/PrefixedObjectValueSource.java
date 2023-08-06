@@ -27,19 +27,15 @@ import java.util.List;
  * this class delegates all of its calls.
  *
  */
-public class PrefixedObjectValueSource
-    extends AbstractDelegatingValueSource
-    implements QueryEnabledValueSource
-{
+public class PrefixedObjectValueSource extends AbstractDelegatingValueSource implements QueryEnabledValueSource {
 
     /**
      * Wrap the specified root object, allowing the specified expression prefix.
      * @param prefix the prefix.
      * @param root the root of the graph.
      */
-    public PrefixedObjectValueSource( String prefix, Object root )
-    {
-        super( new PrefixedValueSourceWrapper( new ObjectBasedValueSource( root ), prefix ) );
+    public PrefixedObjectValueSource(String prefix, Object root) {
+        super(new PrefixedValueSourceWrapper(new ObjectBasedValueSource(root), prefix));
     }
 
     /**
@@ -50,17 +46,15 @@ public class PrefixedObjectValueSource
      * @param root The root of the graph.
      * @param allowUnprefixedExpressions if we allow undefined expressions or not.
      */
-    public PrefixedObjectValueSource( List<String> possiblePrefixes, Object root, boolean allowUnprefixedExpressions )
-    {
-        super( new PrefixedValueSourceWrapper( new ObjectBasedValueSource( root ), possiblePrefixes,
-                                               allowUnprefixedExpressions ) );
+    public PrefixedObjectValueSource(List<String> possiblePrefixes, Object root, boolean allowUnprefixedExpressions) {
+        super(new PrefixedValueSourceWrapper(
+                new ObjectBasedValueSource(root), possiblePrefixes, allowUnprefixedExpressions));
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getLastExpression()
-    {
-        return ( (QueryEnabledValueSource) getDelegate() ).getLastExpression();
+    public String getLastExpression() {
+        return ((QueryEnabledValueSource) getDelegate()).getLastExpression();
     }
 }
