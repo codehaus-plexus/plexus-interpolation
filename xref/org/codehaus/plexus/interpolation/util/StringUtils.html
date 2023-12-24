@@ -27,7 +27,7 @@
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_comment"> * 3. The end-user documentation included with the redistribution, if</em>
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_comment"> *    any, must include the following acknowlegement:</em>
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_comment"> *       "This product includes software developed by the</em>
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_comment"> *        Apache Software Foundation (<a href="http://www.codehaus.org/)." target="alexandria_uri">http://www.codehaus.org/).</a>"</em>
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_comment"> *        Apache Software Foundation (<a href="http://www.codehaus.org/)."" target="alexandria_uri">http://www.codehaus.org/)."</a></em>
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_comment"> *    Alternately, this acknowlegement may appear in the software itself,</em>
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_comment"> *    if and wherever such third-party acknowlegements normally appear.</em>
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_comment"> *</em>
@@ -57,7 +57,7 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_comment"> * This software consists of voluntary contributions made by many</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_comment"> * individuals on behalf of the Apache Software Foundation.  For more</em>
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_comment"> * information on the Apache Software Foundation, please see</em>
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_comment"> * &lt;<a href="http://www.codehaus.org/&gt;" target="alexandria_uri">http://www.codehaus.org/&gt;</a>.</em>
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_comment"> * &lt;<a href="http://www.codehaus.org/&gt;." target="alexandria_uri">http://www.codehaus.org/&gt;.</a></em>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <strong class="jxr_keyword">package</strong> org.codehaus.plexus.interpolation.util;
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  
@@ -67,77 +67,68 @@
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment"> * @author jdcasey</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/codehaus/plexus/interpolation/util/StringUtils.html">StringUtils</a>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  {
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Replace all occurrences of a String within another String.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;A &lt;code&gt;null&lt;/code&gt; reference passed to this method is a no-op.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     * @see #replace(String text, String repl, String with, int max)</em>
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * @param text text to search and replace in</em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * @param repl String to search for</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * @param with String to replace with</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * @return the text with any replacements processed</em>
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String replace( String text, String repl, String with )
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      {
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <strong class="jxr_keyword">return</strong> replace( text, repl, with, -1 );
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>      }
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>  
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Replace a String with another String inside a larger String,</em>
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">     * for the first &lt;code&gt;max&lt;/code&gt; values of the search String.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="StringUtils" href="../../../../../org/codehaus/plexus/interpolation/util/StringUtils.html#StringUtils">StringUtils</a> {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Replace all occurrences of a String within another String.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;A &lt;code&gt;null&lt;/code&gt; reference passed to this method is a no-op.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * @see #replace(String text, String repl, String with, int max)</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     * @param text text to search and replace in</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * @param repl String to search for</em>
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * @param with String to replace with</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * @return the text with any replacements processed</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String replace(String text, String repl, String with) {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">return</strong> replace(text, repl, with, -1);
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      }
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Replace a String with another String inside a larger String,</em>
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * for the first &lt;code&gt;max&lt;/code&gt; values of the search String.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;A &lt;code&gt;null&lt;/code&gt; reference passed to this method is a no-op.&lt;/p&gt;</em>
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;A &lt;code&gt;null&lt;/code&gt; reference passed to this method is a no-op.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">     * @param text text to search and replace in</em>
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_javadoccomment">     * @param repl String to search for</em>
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>  <em class="jxr_javadoccomment">     * @param with String to replace with</em>
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment">     * @param max maximum number of values to replace, or &lt;code&gt;-1&lt;/code&gt; if no maximum</em>
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">     * @return the text with any replacements processed</em>
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String replace( String text, String repl, String with, <strong class="jxr_keyword">int</strong> max )
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>      {
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <strong class="jxr_keyword">if</strong> ( ( text == <strong class="jxr_keyword">null</strong> ) || ( repl == <strong class="jxr_keyword">null</strong> ) || ( with == <strong class="jxr_keyword">null</strong> ) || ( repl.length() == 0 ) )
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          {
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>              <strong class="jxr_keyword">return</strong> text;
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          }
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>  
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>         StringBuilder buf = <strong class="jxr_keyword">new</strong> StringBuilder( text.length() );
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>         <strong class="jxr_keyword">int</strong> start = 0, end;
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>         <strong class="jxr_keyword">while</strong> ( ( end = text.indexOf( repl, start ) ) != -1 )
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>         {
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>             buf.append( text, start, end ).append( with );
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>             start = end + repl.length();
-<a class="jxr_linenumber" name="L106" href="#L106">106</a> 
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>             <strong class="jxr_keyword">if</strong> ( --max == 0 )
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>             {
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>             }
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>         }
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>         buf.append( text, start, text.length());
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>         <strong class="jxr_keyword">return</strong> buf.toString();
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>     }
-<a class="jxr_linenumber" name="L115" href="#L115">115</a> 
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String capitalizeFirstLetter( String data )
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>     {
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>         <strong class="jxr_keyword">char</strong> firstChar = data.charAt( 0 );
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         <strong class="jxr_keyword">char</strong> titleCase = Character.toTitleCase( firstChar );
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>         <strong class="jxr_keyword">if</strong> (firstChar == titleCase)
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>         {
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>             <strong class="jxr_keyword">return</strong> data;
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>         }
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>         StringBuilder result = <strong class="jxr_keyword">new</strong> StringBuilder( data.length() );
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>         result.append( titleCase );
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>         result.append(  data, 1, data.length() );
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>         <strong class="jxr_keyword">return</strong> result.toString();
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>     }
-<a class="jxr_linenumber" name="L129" href="#L129">129</a> 
-<a class="jxr_linenumber" name="L130" href="#L130">130</a> }
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     * @param text text to search and replace in</em>
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * @param repl String to search for</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">     * @param with String to replace with</em>
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_javadoccomment">     * @param max maximum number of values to replace, or &lt;code&gt;-1&lt;/code&gt; if no maximum</em>
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  <em class="jxr_javadoccomment">     * @return the text with any replacements processed</em>
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String replace(String text, String repl, String with, <strong class="jxr_keyword">int</strong> max) {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          <strong class="jxr_keyword">if</strong> ((text == <strong class="jxr_keyword">null</strong>) || (repl == <strong class="jxr_keyword">null</strong>) || (with == <strong class="jxr_keyword">null</strong>) || (repl.length() == 0)) {
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>              <strong class="jxr_keyword">return</strong> text;
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          }
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>  
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          StringBuilder buf = <strong class="jxr_keyword">new</strong> StringBuilder(text.length());
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">int</strong> start = 0, end;
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          <strong class="jxr_keyword">while</strong> ((end = text.indexOf(repl, start)) != -1) {
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>              buf.append(text, start, end).append(with);
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>             start = end + repl.length();
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>             <strong class="jxr_keyword">if</strong> (--max == 0) {
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>                 <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>             }
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>         }
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         buf.append(text, start, text.length());
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         <strong class="jxr_keyword">return</strong> buf.toString();
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     }
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> 
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String capitalizeFirstLetter(String data) {
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         <strong class="jxr_keyword">char</strong> firstChar = data.charAt(0);
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         <strong class="jxr_keyword">char</strong> titleCase = Character.toTitleCase(firstChar);
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         <strong class="jxr_keyword">if</strong> (firstChar == titleCase) {
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             <strong class="jxr_keyword">return</strong> data;
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         }
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         StringBuilder result = <strong class="jxr_keyword">new</strong> StringBuilder(data.length());
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         result.append(titleCase);
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         result.append(data, 1, data.length());
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>         <strong class="jxr_keyword">return</strong> result.toString();
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>     }
+<a class="jxr_linenumber" name="L121" href="#L121">121</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2021 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2023 <a href="https://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>
