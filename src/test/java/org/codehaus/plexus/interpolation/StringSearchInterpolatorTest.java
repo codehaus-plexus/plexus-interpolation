@@ -406,6 +406,7 @@ public class StringSearchInterpolatorTest {
                 "should not believe there is a cycle here");
     }
 
+    @Test
     public void testCacheAnswersTrue() throws InterpolationException {
         Properties p = new Properties();
         p.setProperty("key", "value");
@@ -444,6 +445,7 @@ public class StringSearchInterpolatorTest {
         assertEquals(3 + 4, interpolator.getExistingCallCount());
     }
 
+    @Test
     public void testCacheAnswersFalse() throws InterpolationException {
         Properties p = new Properties();
         p.setProperty("key", "value");
