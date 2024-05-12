@@ -16,47 +16,48 @@ package org.codehaus.plexus.interpolation;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.singletonMap;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FeedbackingValueSourceTest
-    extends TestCase
-{
+public class FeedbackingValueSourceTest {
 
-    public void testStandalone()
-    {
+    @Test
+    public void testStandalone() {
         ValueSource valueSource = new FeedbackingValueSource();
-        assertNull( valueSource.getValue( "test" ) );
-        assertEquals( 1, valueSource.getFeedback().size() );
-        assertEquals( "'test' not resolved", valueSource.getFeedback().iterator().next() );
+        assertNull(valueSource.getValue("test"));
+        assertEquals(1, valueSource.getFeedback().size());
+        assertEquals("'test' not resolved", valueSource.getFeedback().iterator().next());
     }
 
-    public void testAfterResolvedExpression() throws InterpolationException
-    {
+    @Test
+    public void testAfterResolvedExpression() throws InterpolationException {
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new MapBasedValueSource( singletonMap( "key", "val" ) ) );
-        interpolator.addValueSource( new FeedbackingValueSource() );
-        assertEquals( "val", interpolator.interpolate( "${key}" ) );
-        assertTrue( interpolator.getFeedback().isEmpty() );
+        interpolator.addValueSource(new MapBasedValueSource(singletonMap("key", "val")));
+        interpolator.addValueSource(new FeedbackingValueSource());
+        assertEquals("val", interpolator.interpolate("${key}"));
+        assertTrue(interpolator.getFeedback().isEmpty());
     }
 
-    public void testBeforeResolvedExpression() throws InterpolationException
-    {
+    @Test
+    public void testBeforeResolvedExpression() throws InterpolationException {
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new FeedbackingValueSource("Resolving ${expression}") );
-        interpolator.addValueSource( new MapBasedValueSource( singletonMap( "key", "val" ) ) );
-        assertEquals( "val", interpolator.interpolate( "${key}" ) );
-        assertEquals( 1, interpolator.getFeedback().size() );
-        assertEquals( "Resolving key", interpolator.getFeedback().iterator().next() );
+        interpolator.addValueSource(new FeedbackingValueSource("Resolving ${expression}"));
+        interpolator.addValueSource(new MapBasedValueSource(singletonMap("key", "val")));
+        assertEquals("val", interpolator.interpolate("${key}"));
+        assertEquals(1, interpolator.getFeedback().size());
+        assertEquals("Resolving key", interpolator.getFeedback().iterator().next());
     }
 
-    public void testAfterNotResolvedExpression() throws InterpolationException
-    {
+    @Test
+    public void testAfterNotResolvedExpression() throws InterpolationException {
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
-        interpolator.addValueSource( new MapBasedValueSource( singletonMap( "key", "val" ) ) );
-        interpolator.addValueSource( new FeedbackingValueSource() );
-        assertEquals( "${other-key}", interpolator.interpolate( "${other-key}" ) );
-        assertEquals( 1, interpolator.getFeedback().size() );
+        interpolator.addValueSource(new MapBasedValueSource(singletonMap("key", "val")));
+        interpolator.addValueSource(new FeedbackingValueSource());
+        assertEquals("${other-key}", interpolator.interpolate("${other-key}"));
+        assertEquals(1, interpolator.getFeedback().size());
     }
 }

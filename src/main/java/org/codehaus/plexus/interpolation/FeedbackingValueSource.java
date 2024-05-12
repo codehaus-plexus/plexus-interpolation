@@ -21,28 +21,24 @@ package org.codehaus.plexus.interpolation;
  * <p>One of the obvious usages is to add FeedbackingValueSource as last value source to {@link Interpolator}
  * to add feedback messages indicating not resolved expressions.</p>
  */
-public class FeedbackingValueSource extends AbstractValueSource
-{
+public class FeedbackingValueSource extends AbstractValueSource {
     private final String messagePattern;
 
-    public FeedbackingValueSource()
-    {
-        this( "'${expression}' not resolved" );
+    public FeedbackingValueSource() {
+        this("'${expression}' not resolved");
     }
 
     /**
      * @param messagePattern could contain <code>${expression}</code> placeholder
      */
-    public FeedbackingValueSource( String messagePattern )
-    {
-        super( true );
+    public FeedbackingValueSource(String messagePattern) {
+        super(true);
         this.messagePattern = messagePattern;
     }
 
     @Override
-    public Object getValue( String expression )
-    {
-        addFeedback( messagePattern.replace( "${expression}", expression ) );
+    public Object getValue(String expression) {
+        addFeedback(messagePattern.replace("${expression}", expression));
         return null;
     }
 }
