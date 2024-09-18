@@ -81,6 +81,28 @@ public class RegexBasedInterpolatorTest {
     }
 
     @Test
+    public void testDelimitersPassedToValueSource() throws InterpolationException {
+        RegexBasedInterpolator interpolator = new RegexBasedInterpolator();
+        interpolator.addValueSource(new AbstractValueSource(false) {
+
+            @Override
+            public Object getValue(String expression, String expressionStartDelimiter, String expressionEndDelimiter) {
+                assertEquals("${", expressionStartDelimiter);
+                assertEquals("}", expressionEndDelimiter);
+                return expression;
+            }
+
+            @Override
+            public Object getValue(String expression) {
+                fail("This method is not supposed to be called");
+                return null;
+            }
+        });
+
+        assertEquals("test", interpolator.interpolate("${test}"));
+    }
+
+    @Test
     public void testShouldResolveByEnvar() throws IOException, InterpolationException {
         OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
             public Map<String, String> getEnvMap() {

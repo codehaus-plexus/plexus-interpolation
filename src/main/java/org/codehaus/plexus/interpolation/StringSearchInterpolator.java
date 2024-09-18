@@ -163,7 +163,7 @@ public class StringSearchInterpolator implements Interpolator {
                             if (value != null) {
                                 break;
                             }
-                            value = valueSource.getValue(realExpr);
+                            value = valueSource.getValue(realExpr, startExpr, endExpr);
 
                             if (value != null && value.toString().contains(wholeExpr)) {
                                 bestAnswer = value;

@@ -34,14 +34,22 @@ public abstract class AbstractDelegatingValueSource implements ValueSource {
         return delegate;
     }
 
+    @Override
+    public Object getValue(String expression, String delimiterStart, String delimiterEnd) {
+        return getDelegate().getValue(expression, delimiterStart, delimiterEnd);
+    }
+
+    @Override
     public Object getValue(String expression) {
         return getDelegate().getValue(expression);
     }
 
+    @Override
     public void clearFeedback() {
         delegate.clearFeedback();
     }
 
+    @Override
     public List getFeedback() {
         return delegate.getFeedback();
     }

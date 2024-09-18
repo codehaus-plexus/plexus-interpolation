@@ -25,8 +25,21 @@ import java.util.List;
 public interface ValueSource {
 
     /**
+     * Returns a value resolved from an expression. The return value is recursively resolved via {@link Interpolator#interpolate(String)}, i.e. might contain expressions as well.
      * @param expression The string expression.
-     * @return the value related to the expression, or null if not found.
+     * @param expressionStartDelimiter A valid start delimiter of the expression to be used with the calling {@link Interpolator} (by default <code>${</code>).
+     * @param expressionEndDelimiter   A valid end delimiter of the expression to be used with the calling {@link Interpolator} (by default <code>}</code>).
+     * @return the value related to the expression, or {@code null} if not found. This value might contain other expressions separated by {@code expressionStartDelimiter} and {@code expressionEndDelimiter}
+     * @since 1.28
+     */
+    default Object getValue(String expression, String expressionStartDelimiter, String expressionEndDelimiter) {
+        return getValue(expression);
+    }
+
+    /**
+     * @param expression The string expression.
+     * @return the value related to the expression, or {@code null} if not found.
+     * @see #getValue(String, String, String)
      */
     public Object getValue(String expression);
 

@@ -177,6 +177,8 @@ public class RegexBasedInterpolator implements Interpolator {
 
         int realExprGroup = 2;
         Pattern expressionPattern;
+        final String expressionDelimiterStart;
+        final String expressionDelimiterEnd;
         if (startRegex != null || endRegex != null) {
             if (thisPrefixPattern == null) {
                 expressionPattern = getPattern(startRegex + endRegex);
@@ -184,16 +186,27 @@ public class RegexBasedInterpolator implements Interpolator {
             } else {
                 expressionPattern = getPattern(startRegex + thisPrefixPattern + endRegex);
             }
+            expressionDelimiterStart = startRegex;
+            expressionDelimiterEnd = endRegex;
 
-        } else if (thisPrefixPattern != null) {
-            expressionPattern = getPattern("\\$\\{(" + thisPrefixPattern + ")?(.+?)\\}");
         } else {
-            expressionPattern = getPattern(DEFAULT_REGEXP);
-            realExprGroup = 1;
+            expressionDelimiterStart = "${";
+            expressionDelimiterEnd = "}";
+            if (thisPrefixPattern != null) {
+                expressionPattern = getPattern("\\$\\{(" + thisPrefixPattern + ")?(.+?)\\}");
+            } else {
+                expressionPattern = getPattern(DEFAULT_REGEXP);
+                realExprGroup = 1;
+            }
         }
-
         try {
-            return interpolate(input, recursionInterceptor, expressionPattern, realExprGroup);
+            return interpolate(
+                    input,
+                    recursionInterceptor,
+                    expressionPattern,
+                    expressionDelimiterStart,
+                    expressionDelimiterEnd,
+                    realExprGroup);
         } finally {
             if (!cacheAnswers) {
                 clearAnswers();
@@ -228,7 +241,12 @@ public class RegexBasedInterpolator implements Interpolator {
      * @todo Ensure unresolvable expressions don't trigger infinite recursion.
      */
     private String interpolate(
-            String input, RecursionInterceptor recursionInterceptor, Pattern expressionPattern, int realExprGroup)
+            String input,
+            RecursionInterceptor recursionInterceptor,
+            Pattern expressionPattern,
+            String expressionDelimiterStart,
+            String expressionDelimiterEnd,
+            int realExprGroup)
             throws InterpolationException {
         if (input == null) {
             // return empty String to prevent NPE too
@@ -256,11 +274,17 @@ public class RegexBasedInterpolator implements Interpolator {
                 for (ValueSource vs : valueSources) {
                     if (value != null) break;
 
-                    value = vs.getValue(realExpr);
+                    value = vs.getValue(realExpr, expressionDelimiterStart, expressionDelimiterEnd);
                 }
 
                 if (value != null) {
-                    value = interpolate(String.valueOf(value), recursionInterceptor, expressionPattern, realExprGroup);
+                    value = interpolate(
+                            String.valueOf(value),
+                            recursionInterceptor,
+                            expressionPattern,
+                            expressionDelimiterStart,
+                            expressionDelimiterEnd,
+                            realExprGroup);
 
                     if (postProcessors != null && !postProcessors.isEmpty()) {
                         for (InterpolationPostProcessor postProcessor : postProcessors) {
