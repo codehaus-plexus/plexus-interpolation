@@ -19,12 +19,14 @@ package org.codehaus.plexus.interpolation.multi;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.MapBasedValueSource;
 import org.codehaus.plexus.interpolation.ValueSource;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class MultiDelimiterStringSearchInterpolatorTest {
 
@@ -118,5 +120,30 @@ public class MultiDelimiterStringSearchInterpolatorTest {
         String result = interpolator.interpolate(input);
 
         assertEquals("##${first} and #${second} and beer", result);
+    }
+
+    @Test
+    public void testDelimitersPassedToValueSource() throws InterpolationException {
+        ValueSource vs = new AbstractValueSource(false) {
+
+            @Override
+            public Object getValue(String expression, String expressionStartDelimiter, String expressionEndDelimiter) {
+                assertEquals("#(", expressionStartDelimiter);
+                assertEquals(")", expressionEndDelimiter);
+                return expression;
+            }
+
+            @Override
+            public Object getValue(String expression) {
+                fail("This method is not supposed to be called");
+                return null;
+            }
+        };
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator() //
+                .withValueSource(vs) //
+                .escapeString("#");
+        interpolator.addDelimiterSpec("#(*)");
+
+        assertEquals("test", interpolator.interpolate("#(test)"));
     }
 }

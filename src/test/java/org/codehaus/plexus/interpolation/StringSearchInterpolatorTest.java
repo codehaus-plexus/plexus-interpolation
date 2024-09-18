@@ -95,6 +95,30 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
+    public void testLongDelimitersPassedToValueSource() throws InterpolationException {
+        String src = "<expression>test</expression>";
+
+        StringSearchInterpolator interpolator = new StringSearchInterpolator("<expression>", "</expression>");
+        interpolator.addValueSource(new AbstractValueSource(false) {
+
+            @Override
+            public Object getValue(String expression, String expressionStartDelimiter, String expressionEndDelimiter) {
+                assertEquals("<expression>", expressionStartDelimiter);
+                assertEquals("</expression>", expressionEndDelimiter);
+                return expression;
+            }
+
+            @Override
+            public Object getValue(String expression) {
+                fail("This method is not supposed to be called");
+                return null;
+            }
+        });
+
+        assertEquals("test", interpolator.interpolate(src));
+    }
+
+    @Test
     public void testSimpleSubstitution() throws InterpolationException {
         Properties p = new Properties();
         p.setProperty("key", "value");

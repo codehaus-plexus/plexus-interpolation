@@ -201,7 +201,7 @@ public class MultiDelimiterStringSearchInterpolator implements Interpolator {
                     for (ValueSource vs : valueSources) {
                         if (value != null) break;
 
-                        value = vs.getValue(realExpr);
+                        value = vs.getValue(realExpr, startExpr, endExpr);
 
                         if (value != null && value.toString().contains(wholeExpr)) {
                             bestAnswer = value;
