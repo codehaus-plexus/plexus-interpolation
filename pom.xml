@@ -22,7 +22,7 @@
   </scm>
 
   <issueManagement>
-    <system>JIRA</system>
+    <system>Github</system>
     <url>https://github.com/codehaus-plexus/plexus-interpolation/issues</url>
   </issueManagement>
   <distributionManagement>
