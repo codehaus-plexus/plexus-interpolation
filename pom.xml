@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>plexus-interpolation</artifactId>
-  <version>1.28-SNAPSHOT</version>
+  <version>1.28</version>
   <packaging>bundle</packaging>
 
   <name>Plexus Interpolation API</name>
@@ -17,7 +17,7 @@
   <scm>
     <connection>scm:git:https://github.com/codehaus-plexus/plexus-interpolation.git</connection>
     <developerConnection>scm:git:https://github.com/codehaus-plexus/plexus-interpolation.git</developerConnection>
-    <tag>master</tag>
+    <tag>plexus-interpolation-1.28</tag>
     <url>http://github.com/codehaus-plexus/plexus-interpolation/tree/${project.scm.tag}/</url>
   </scm>
 
@@ -33,7 +33,7 @@
   </distributionManagement>
 
   <properties>
-    <project.build.outputTimestamp>2023-12-24T00:37:56Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2025-04-05T08:27:19Z</project.build.outputTimestamp>
   </properties>
 
   <dependencies>
