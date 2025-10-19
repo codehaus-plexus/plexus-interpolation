@@ -223,4 +223,73 @@ public class RegexBasedInterpolatorTest {
 
         System.out.println("time with pattern reuse and RegexBasedInterpolator instance reuse " + (end - start));
     }
+
+    @Test
+    public void testCacheAnswersTrue() throws InterpolationException {
+        Map ctx = new HashMap();
+        ctx.put("key", "value");
+
+        final int[] valueSourceCallCount = {0};
+
+        ValueSource vs = new AbstractValueSource(false) {
+            @Override
+            public Object getValue(String expression) {
+                valueSourceCallCount[0]++;
+                return ctx.get(expression);
+            }
+        };
+
+        RegexBasedInterpolator interpolator = new RegexBasedInterpolator();
+        interpolator.setCacheAnswers(true);
+        interpolator.addValueSource(vs);
+
+        // First interpolation
+        String result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+        assertEquals("value-value-value-value", result);
+        assertEquals(1, valueSourceCallCount[0]);
+
+        // Second interpolation - cache should be used, no new ValueSource calls
+        result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+        assertEquals("value-value-value-value", result);
+        assertEquals(1, valueSourceCallCount[0]); // still 1, cache was used
+
+        // Third interpolation with different expression that also uses cached value
+        result = interpolator.interpolate("The value is ${key}");
+        assertEquals("The value is value", result);
+        assertEquals(1, valueSourceCallCount[0]); // still 1, cache was used
+    }
+
+    @Test
+    public void testCacheAnswersFalse() throws InterpolationException {
+        Map ctx = new HashMap();
+        ctx.put("key", "value");
+
+        final int[] valueSourceCallCount = {0};
+
+        ValueSource vs = new AbstractValueSource(false) {
+            @Override
+            public Object getValue(String expression) {
+                valueSourceCallCount[0]++;
+                return ctx.get(expression);
+            }
+        };
+
+        RegexBasedInterpolator interpolator = new RegexBasedInterpolator();
+        interpolator.addValueSource(vs);
+
+        // First interpolation
+        String result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+        assertEquals("value-value-value-value", result);
+        assertEquals(1, valueSourceCallCount[0]);
+
+        // Second interpolation - without caching, ValueSource is called again
+        result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+        assertEquals("value-value-value-value", result);
+        assertEquals(2, valueSourceCallCount[0]); // incremented to 2
+
+        // Third interpolation
+        result = interpolator.interpolate("The value is ${key}");
+        assertEquals("The value is value", result);
+        assertEquals(3, valueSourceCallCount[0]); // incremented to 3
+    }
 }
