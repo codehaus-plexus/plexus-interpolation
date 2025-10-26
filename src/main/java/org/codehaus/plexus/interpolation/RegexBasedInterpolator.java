@@ -301,6 +301,10 @@ public class RegexBasedInterpolator implements Interpolator {
                     // but this could result in multiple lookups of stringValue, and replaceAll is not correct behaviour
                     result = StringUtils.replace(result, wholeExpr, String.valueOf(value));
 
+                    if (cacheAnswers) {
+                        existingAnswers.put(realExpr, value);
+                    }
+
                     matcher.reset(result);
                 }
             } finally {

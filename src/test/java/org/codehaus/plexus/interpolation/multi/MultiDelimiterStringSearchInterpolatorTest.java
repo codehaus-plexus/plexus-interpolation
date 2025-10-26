@@ -146,4 +146,62 @@ public class MultiDelimiterStringSearchInterpolatorTest {
 
         assertEquals("test", interpolator.interpolate("#(test)"));
     }
+
+    @Test
+    public void testCacheAnswersTrue() throws InterpolationException {
+        Map ctx = new HashMap();
+        ctx.put("key", "value");
+
+        final int[] valueSourceCallCount = {0};
+
+        ValueSource vs = new AbstractValueSource(false) {
+            @Override
+            public Object getValue(String expression) {
+                valueSourceCallCount[0]++;
+                return ctx.get(expression);
+            }
+        };
+
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator();
+        interpolator.setCacheAnswers(true);
+        interpolator.addValueSource(vs);
+
+        String result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+
+        assertEquals("value-value-value-value", result);
+        // first value is interpolated and saved, then the 3 next answers came from existing answer Map
+        assertEquals(1, valueSourceCallCount[0]);
+
+        // answers are preserved between calls:
+        result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+        assertEquals("value-value-value-value", result);
+        // still 1 from first call as cache is preserved
+        assertEquals(1, valueSourceCallCount[0]);
+    }
+
+    @Test
+    public void testCacheAnswersFalse() throws InterpolationException {
+        Map ctx = new HashMap();
+        ctx.put("key", "value");
+
+        final int[] valueSourceCallCount = {0};
+
+        ValueSource vs = new AbstractValueSource(false) {
+            @Override
+            public Object getValue(String expression) {
+                valueSourceCallCount[0]++;
+                return ctx.get(expression);
+            }
+        };
+
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator();
+        interpolator.addValueSource(vs);
+
+        String result = interpolator.interpolate("${key}-${key}-${key}-${key}");
+
+        assertEquals("value-value-value-value", result);
+        // Without caching, expressions are evaluated multiple times due to multi-pass resolution
+        // In this case: 4 expressions evaluated in 2 passes = 8 calls
+        assertEquals(8, valueSourceCallCount[0]);
+    }
 }

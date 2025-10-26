@@ -236,6 +236,10 @@ public class MultiDelimiterStringSearchInterpolator implements Interpolator {
                         // behaviour
                         result.append(String.valueOf(value));
                         resolved = true;
+
+                        if (cacheAnswers) {
+                            existingAnswers.put(realExpr, value);
+                        }
                     } else {
                         unresolvable.add(wholeExpr);
                     }
