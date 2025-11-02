@@ -29,10 +29,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FieldBasedObjectInterpolatorTest {
+class FieldBasedObjectInterpolatorTest {
 
     @Test
-    public void testInterpolateStringArray() throws Exception {
+    void interpolateStringArray() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -49,7 +49,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringArrayField() throws Exception {
+    void interpolateObjectWithStringArrayField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -68,12 +68,12 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringListField() throws Exception {
+    void interpolateObjectWithStringListField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
 
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>();
         values.add("${key}");
         values.add("${key2}");
 
@@ -89,12 +89,12 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringListFieldAndOneLiteralValue() throws Exception {
+    void interpolateObjectWithStringListFieldAndOneLiteralValue() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
 
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>();
         values.add("key");
         values.add("${key2}");
 
@@ -110,12 +110,12 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithUnmodifiableStringListField() throws Exception {
+    void interpolateObjectWithUnmodifiableStringListField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
 
-        List values = Collections.unmodifiableList(Collections.singletonList("${key}"));
+        List<String> values = Collections.singletonList("${key}");
 
         ObjectWithListField obj = new ObjectWithListField(values);
 
@@ -128,14 +128,14 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringArrayListField() throws Exception {
+    void interpolateObjectWithStringArrayListField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
         p.setProperty("key3", "value3");
         p.setProperty("key4", "value4");
 
-        List<String[]> values = new ArrayList<String[]>();
+        List<String[]> values = new ArrayList<>();
         values.add(new String[] {"${key}", "${key2}"});
         values.add(new String[] {"${key3}", "${key4}"});
 
@@ -153,12 +153,12 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringMapField() throws Exception {
+    void interpolateObjectWithStringToStringMapField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
 
-        Map<String, String> values = new HashMap<String, String>();
+        Map<String, String> values = new HashMap<>();
         values.put("key", "${key}");
         values.put("key2", "${key2}");
 
@@ -174,12 +174,12 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringMapFieldAndOneLiteralValue() throws Exception {
+    void interpolateObjectWithStringToStringMapFieldAndOneLiteralValue() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
 
-        Map<String, String> values = new HashMap<String, String>();
+        Map<String, String> values = new HashMap<>();
         values.put("key", "val");
         values.put("key2", "${key2}");
 
@@ -195,12 +195,12 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithUnmodifiableStringToStringMapField() throws Exception {
+    void interpolateObjectWithUnmodifiableStringToStringMapField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
 
-        Map values = Collections.unmodifiableMap(Collections.singletonMap("key", "${key}"));
+        Map<String, String> values = Collections.singletonMap("key", "${key}");
 
         ObjectWithMapField obj = new ObjectWithMapField(values);
 
@@ -213,14 +213,14 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringArrayMapField() throws Exception {
+    void interpolateObjectWithStringToStringArrayMapField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
         p.setProperty("key3", "value3");
         p.setProperty("key4", "value4");
 
-        Map<String, String[]> values = new HashMap<String, String[]>();
+        Map<String, String[]> values = new HashMap<>();
         values.put("key", new String[] {"${key}", "${key2}"});
         values.put("key2", new String[] {"${key3}", "${key4}"});
 

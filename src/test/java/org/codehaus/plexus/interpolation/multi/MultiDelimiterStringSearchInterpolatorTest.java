@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.codehaus.plexus.interpolation.AbstractValueSource;
-import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.MapBasedValueSource;
 import org.codehaus.plexus.interpolation.ValueSource;
 import org.junit.jupiter.api.Test;
@@ -28,11 +27,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class MultiDelimiterStringSearchInterpolatorTest {
+class MultiDelimiterStringSearchInterpolatorTest {
 
     @Test
-    public void testInterpolationWithDifferentDelimiters() throws InterpolationException {
-        Map ctx = new HashMap();
+    void interpolationWithDifferentDelimiters() throws Exception {
+        Map<String, String> ctx = new HashMap<>();
         ctx.put("name", "User");
         ctx.put("otherName", "@name@");
 
@@ -49,9 +48,8 @@ public class MultiDelimiterStringSearchInterpolatorTest {
     }
 
     @Test
-    public void testSuccessiveInterpolationWithDifferentDelimiters_ReversedDelimiterSequence()
-            throws InterpolationException {
-        Map ctx = new HashMap();
+    void successiveInterpolationWithDifferentDelimitersReversedDelimiterSequence() throws Exception {
+        Map<String, String> ctx = new HashMap<>();
         ctx.put("name", "User");
         ctx.put("otherName", "${name}");
 
@@ -68,8 +66,8 @@ public class MultiDelimiterStringSearchInterpolatorTest {
     }
 
     @Test
-    public void testInterpolationWithMultipleEscapes() throws InterpolationException {
-        Map ctx = new HashMap();
+    void interpolationWithMultipleEscapes() throws Exception {
+        Map<String, String> ctx = new HashMap<>();
         ctx.put("name", "User");
         ctx.put("otherName", "##${first} and #${last}");
 
@@ -86,8 +84,8 @@ public class MultiDelimiterStringSearchInterpolatorTest {
     }
 
     @Test
-    public void testInterpolationWithMultipleEscapes2() throws InterpolationException {
-        Map ctx = new HashMap();
+    void interpolationWithMultipleEscapes2() throws Exception {
+        Map<String, String> ctx = new HashMap<>();
         ctx.put("name", "User");
         ctx.put("otherName", "#${first} and ##${last}");
 
@@ -104,8 +102,8 @@ public class MultiDelimiterStringSearchInterpolatorTest {
     }
 
     @Test
-    public void testInterpolationWithMultipleEscapes3() throws InterpolationException {
-        Map ctx = new HashMap();
+    void interpolationWithMultipleEscapes3() throws Exception {
+        Map<String, String> ctx = new HashMap<>();
         ctx.put("name", "User");
         ctx.put("last", "beer");
         ctx.put("otherName", "###${first} and ##${second} and ${last}");
@@ -123,7 +121,7 @@ public class MultiDelimiterStringSearchInterpolatorTest {
     }
 
     @Test
-    public void testDelimitersPassedToValueSource() throws InterpolationException {
+    void delimitersPassedToValueSource() throws Exception {
         ValueSource vs = new AbstractValueSource(false) {
 
             @Override
@@ -148,8 +146,8 @@ public class MultiDelimiterStringSearchInterpolatorTest {
     }
 
     @Test
-    public void testCacheAnswersTrue() throws InterpolationException {
-        Map ctx = new HashMap();
+    void cacheAnswersTrue() throws Exception {
+        Map<String, String> ctx = new HashMap<>();
         ctx.put("key", "value");
 
         final int[] valueSourceCallCount = {0};
@@ -180,8 +178,8 @@ public class MultiDelimiterStringSearchInterpolatorTest {
     }
 
     @Test
-    public void testCacheAnswersFalse() throws InterpolationException {
-        Map ctx = new HashMap();
+    void cacheAnswersFalse() throws Exception {
+        Map<String, String> ctx = new HashMap<>();
         ctx.put("key", "value");
 
         final int[] valueSourceCallCount = {0};

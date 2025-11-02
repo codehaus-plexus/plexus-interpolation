@@ -16,9 +16,7 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,21 +26,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class EnvarBasedValueSourceTest {
+class EnvarBasedValueSourceTest {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         EnvarBasedValueSource.resetStatics();
     }
 
     @Test
-    void testNoArgConstructorIsCaseSensitive() throws IOException {
-        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
-            public Map<String, String> getEnvMap() {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("aVariable", "variable");
-                return map;
-            }
+    void noArgConstructorIsCaseSensitive() throws Exception {
+        OperatingSystemUtils.setEnvVarSource(() -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("aVariable", "variable");
+            return map;
         });
 
         EnvarBasedValueSource source = new EnvarBasedValueSource();
@@ -54,13 +50,11 @@ public class EnvarBasedValueSourceTest {
     }
 
     @Test
-    void testCaseInsensitive() throws IOException {
-        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
-            public Map<String, String> getEnvMap() {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("aVariable", "variable");
-                return map;
-            }
+    void caseInsensitive() throws Exception {
+        OperatingSystemUtils.setEnvVarSource(() -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("aVariable", "variable");
+            return map;
         });
 
         EnvarBasedValueSource source = new EnvarBasedValueSource(false);
@@ -72,7 +66,7 @@ public class EnvarBasedValueSourceTest {
     }
 
     @Test
-    void testGetRealEnvironmentVariable() throws IOException {
+    void getRealEnvironmentVariable() throws Exception {
         OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.DefaultEnvVarSource());
 
         EnvarBasedValueSource source = new EnvarBasedValueSource();

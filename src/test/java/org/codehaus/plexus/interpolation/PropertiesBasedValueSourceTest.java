@@ -23,10 +23,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class PropertiesBasedValueSourceTest {
+class PropertiesBasedValueSourceTest {
 
     @Test
-    public void testPropertyShouldReturnValueFromProperties() {
+    void propertyShouldReturnValueFromProperties() {
         Properties props = new Properties();
 
         String key = "key";
@@ -40,7 +40,7 @@ public class PropertiesBasedValueSourceTest {
     }
 
     @Test
-    public void testPropertyShouldReturnNullWhenPropertyMissing() {
+    void propertyShouldReturnNullWhenPropertyMissing() {
         Properties props = new Properties();
 
         String key = "key";

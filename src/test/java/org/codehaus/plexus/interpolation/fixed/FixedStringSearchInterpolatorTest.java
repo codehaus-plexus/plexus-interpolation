@@ -15,7 +15,6 @@ package org.codehaus.plexus.interpolation.fixed;
  * limitations under the License.
  */
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.codehaus.plexus.interpolation.FixedInterpolatorValueSource;
-import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.InterpolationPostProcessor;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
@@ -37,12 +35,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class FixedStringSearchInterpolatorTest {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         EnvarBasedValueSource.resetStatics();
     }
 
     @Test
-    void testLongDelimitersInContext() {
+    void longDelimitersInContext() {
         String src = "This is a <expression>test.label</expression> for long delimiters in context.";
         String result = "This is a test for long delimiters in context.";
 
@@ -56,7 +54,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testLongDelimitersWithNoStartContext() {
+    void longDelimitersWithNoStartContext() {
         String src = "<expression>test.label</expression> for long delimiters in context.";
         String result = "test for long delimiters in context.";
 
@@ -70,7 +68,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testLongDelimitersWithNoEndContext() {
+    void longDelimitersWithNoEndContext() {
         String src = "This is a <expression>test.label</expression>";
         String result = "This is a test";
 
@@ -84,7 +82,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testLongDelimitersWithNoContext() {
+    void longDelimitersWithNoContext() {
         String src = "<expression>test.label</expression>";
         String result = "test";
 
@@ -98,7 +96,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testSimpleSubstitution() {
+    void simpleSubstitution() {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -108,7 +106,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testSimpleSubstitution_TwoExpressions() {
+    void simpleSubstitutionTwoExpressions() {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -119,7 +117,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testBrokenExpression_LeaveItAlone() {
+    void brokenExpressionLeaveItAlone() {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -129,7 +127,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testShouldFailOnExpressionCycle() {
+    void shouldFailOnExpressionCycle() {
         Properties props = new Properties();
         props.setProperty("key1", "${key2}");
         props.setProperty("key2", "${key1}");
@@ -143,7 +141,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testShouldResolveByUsingObject_List_Map() throws InterpolationException {
+    void shouldResolveByUsingObjectListMap() throws Exception {
         FixedStringSearchInterpolator rbi = create(new ObjectBasedValueSource(this));
         String result =
                 rbi.interpolate("this is a ${var} ${list[1].name} ${anArray[2].name} ${map(Key with spaces).name}");
@@ -152,9 +150,9 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testShouldResolveByContextValue() throws InterpolationException {
+    void shouldResolveByContextValue() throws Exception {
 
-        Map<String, String> context = new HashMap<String, String>();
+        Map<String, String> context = new HashMap<>();
         context.put("var", "testVar");
 
         FixedStringSearchInterpolator rbi = create(new MapBasedValueSource(context));
@@ -165,14 +163,12 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testShouldResolveByEnvar() throws IOException, InterpolationException {
-        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
-            public Map<String, String> getEnvMap() {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("SOME_ENV", "variable");
-                map.put("OTHER_ENV", "other variable");
-                return map;
-            }
+    void shouldResolveByEnvar() throws Exception {
+        OperatingSystemUtils.setEnvVarSource(() -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("SOME_ENV", "variable");
+            map.put("OTHER_ENV", "other variable");
+            return map;
         });
 
         FixedStringSearchInterpolator rbi = create(new EnvarBasedValueSource(false));
@@ -183,16 +179,12 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testUsePostProcessor_DoesNotChangeValue() throws InterpolationException {
+    void usePostProcessorDoesNotChangeValue() throws Exception {
 
-        Map<String, String> context = new HashMap<String, String>();
+        Map<String, String> context = new HashMap<>();
         context.put("test.var", "testVar");
 
-        final InterpolationPostProcessor postProcessor = new InterpolationPostProcessor() {
-            public Object execute(String expression, Object value) {
-                return null;
-            }
-        };
+        InterpolationPostProcessor postProcessor = (expression, value) -> null;
         FixedStringSearchInterpolator rbi =
                 create(new MapBasedValueSource(context)).withPostProcessor(postProcessor);
 
@@ -202,16 +194,12 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testUsePostProcessor_ChangesValue() throws InterpolationException {
+    void usePostProcessorChangesValue() throws Exception {
 
-        Map context = new HashMap();
+        Map<String, String> context = new HashMap<>();
         context.put("test.var", "testVar");
 
-        final InterpolationPostProcessor postProcessor = new InterpolationPostProcessor() {
-            public Object execute(String expression, Object value) {
-                return value + "2";
-            }
-        };
+        InterpolationPostProcessor postProcessor = (expression, value) -> value + "2";
 
         FixedStringSearchInterpolator rbi =
                 create(new MapBasedValueSource(context)).withPostProcessor(postProcessor);
@@ -222,7 +210,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testSimpleSubstitutionWithDefinedExpr() throws InterpolationException {
+    void simpleSubstitutionWithDefinedExpr() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -232,7 +220,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testEscape() throws InterpolationException {
+    void escape() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -246,7 +234,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testEscapeWithLongEscapeStr() throws InterpolationException {
+    void escapeWithLongEscapeStr() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -260,7 +248,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testEscapeWithLongEscapeStrAtStart() throws InterpolationException {
+    void escapeWithLongEscapeStrAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -274,7 +262,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testNotEscapeWithLongEscapeStrAtStart() throws InterpolationException {
+    void notEscapeWithLongEscapeStrAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -288,7 +276,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testEscapeNotFailWithNullEscapeStr() throws InterpolationException {
+    void escapeNotFailWithNullEscapeStr() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -302,7 +290,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testOnlyEscapeExprAtStart() throws InterpolationException {
+    void onlyEscapeExprAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -316,7 +304,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testNotEscapeExprAtStart() throws InterpolationException {
+    void notEscapeExprAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -330,7 +318,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testEscapeExprAtStart() throws InterpolationException {
+    void escapeExprAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -344,7 +332,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testNPEFree() throws InterpolationException {
+    void npeFree() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -358,18 +346,16 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testInterruptedInterpolate() throws InterpolationException {
+    void interruptedInterpolate() throws Exception {
         final boolean[] error = new boolean[] {false};
-        FixedValueSource valueSource = new FixedValueSource() {
-            public Object getValue(String expression, InterpolationState errorCollector) {
-                if (expression.equals("key")) {
-                    if (error[0]) {
-                        throw new IllegalStateException("broken");
-                    }
-                    return "val";
-                } else {
-                    return null;
+        FixedValueSource valueSource = (expression, errorCollector) -> {
+            if (expression.equals("key")) {
+                if (error[0]) {
+                    throw new IllegalStateException("broken");
                 }
+                return "val";
+            } else {
+                return null;
             }
         };
 
@@ -400,7 +386,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     public List<Person> getList() {
-        List<Person> list = new ArrayList<Person>();
+        List<Person> list = new ArrayList<>();
         list.add(new Person("Gabriel"));
         list.add(new Person("testIndexedWithList"));
         list.add(new Person("Daniela"));
@@ -408,13 +394,13 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     public Map<String, Person> getMap() {
-        Map<String, Person> map = new HashMap<String, Person>();
+        Map<String, Person> map = new HashMap<>();
         map.put("Key with spaces", new Person("testMap"));
         return map;
     }
 
     public static class Person {
-        private String name;
+        private final String name;
 
         public Person(String name) {
             this.name = name;
@@ -426,7 +412,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testLinkedInterpolators() {
+    void linkedInterpolators() {
         final String EXPR = "${test.label}AND${test2}";
         final String EXPR2 = "${test.label}${test2.label}AND${test2}";
 
@@ -439,7 +425,7 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testDominance() {
+    void dominance() {
         final String EXPR = "${test.label}AND${test2}";
         final String EXPR2 = "${test.label}${test2.label}AND${test2}";
 
@@ -463,25 +449,21 @@ public class FixedStringSearchInterpolatorTest {
     }
 
     @Test
-    void testCyclesWithLinked() {
-        assertThrows(InterpolationCycleException.class, () -> {
-            FixedStringSearchInterpolator first = create(properttyBasedValueSource("key1", "${key2}"));
-            FixedStringSearchInterpolator second = create(first, properttyBasedValueSource("key2", "${key1}"));
-            second.interpolate("${key2}");
-        });
+    void cyclesWithLinked() {
+        FixedStringSearchInterpolator first = create(properttyBasedValueSource("key1", "${key2}"));
+        FixedStringSearchInterpolator second = create(first, properttyBasedValueSource("key2", "${key1}"));
+        assertThrows(InterpolationCycleException.class, () -> second.interpolate("${key2}"));
     }
 
     @Test
-    void testCyclesWithLinked_betweenRootAndOther() {
-        assertThrows(InterpolationCycleException.class, () -> {
-            FixedStringSearchInterpolator first = create(properttyBasedValueSource("key1", "${key2}"));
-            FixedStringSearchInterpolator second = create(first, properttyBasedValueSource("key2", "${key1}"));
-            second.interpolate("${key1}");
-        });
+    void cyclesWithLinkedBetweenRootAndOther() {
+        FixedStringSearchInterpolator first = create(properttyBasedValueSource("key1", "${key2}"));
+        FixedStringSearchInterpolator second = create(first, properttyBasedValueSource("key2", "${key1}"));
+        assertThrows(InterpolationCycleException.class, () -> second.interpolate("${key1}"));
     }
 
     @Test
-    void fixedInjectedIntoRegular() throws InterpolationException {
+    void fixedInjectedIntoRegular() throws Exception {
         FixedStringSearchInterpolator first = create(properttyBasedValueSource("key1", "v1"));
 
         Properties p = new Properties();
