@@ -19,9 +19,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StringUtilsTest {
+class StringUtilsTest {
     @Test
-    public void testCapitalizeFirstLetter() throws Exception {
+    void capitalizeFirstLetter() throws Exception {
         assertEquals("Abc", StringUtils.capitalizeFirstLetter("abc"));
         assertEquals("\u00cdce", StringUtils.capitalizeFirstLetter("\u00edce"));
         assertEquals("X", StringUtils.capitalizeFirstLetter("x"));

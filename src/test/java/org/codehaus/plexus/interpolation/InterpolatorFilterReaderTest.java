@@ -41,13 +41,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author cstamas
  *
  */
-public class InterpolatorFilterReaderTest {
+class InterpolatorFilterReaderTest {
     /*
      * Added and commented by jdcasey@03-Feb-2005 because it is a bug in the InterpolationFilterReader.
      * kenneyw@15-04-2005 fixed the bug.
      */
     @Test
-    public void testShouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
+    void shouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
         Map m = new HashMap();
         m.put("test", "TestValue");
 
@@ -60,7 +60,7 @@ public class InterpolatorFilterReaderTest {
      * kenneyw@14-04-2005 Added test to check above fix.
      */
     @Test
-    public void testShouldNotInterpolateExpressionWithMissingEndToken() throws Exception {
+    void shouldNotInterpolateExpressionWithMissingEndToken() throws Exception {
         Map m = new HashMap();
         m.put("test", "TestValue");
 
@@ -70,7 +70,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testShouldNotInterpolateWithMalformedStartToken() throws Exception {
+    void shouldNotInterpolateWithMalformedStartToken() throws Exception {
         Map m = new HashMap();
         m.put("test", "testValue");
 
@@ -80,7 +80,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testShouldNotInterpolateWithMalformedEndToken() throws Exception {
+    void shouldNotInterpolateWithMalformedEndToken() throws Exception {
         Map m = new HashMap();
         m.put("test", "testValue");
 
@@ -90,7 +90,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testDefaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
+    void defaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -101,7 +101,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testDefaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
+    void defaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -112,7 +112,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testInterpolationWithInterpolatedValueAtEndWithCustomToken() throws Exception {
+    void interpolationWithInterpolatedValueAtEndWithCustomToken() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -123,7 +123,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testInterpolationWithInterpolatedValueAtEndWithCustomTokenAndCustomString() throws Exception {
+    void interpolationWithInterpolatedValueAtEndWithCustomTokenAndCustomString() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -134,7 +134,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testEscape() throws Exception {
+    void escape() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -145,7 +145,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testEscapeAtStart() throws Exception {
+    void escapeAtStart() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -156,7 +156,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testEscapeOnlyAtStart() throws Exception {
+    void escapeOnlyAtStart() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -168,7 +168,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testEscapeOnlyAtStartDefaultToken() throws Exception {
+    void escapeOnlyAtStartDefaultToken() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -180,7 +180,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testShouldDetectRecursiveExpressionPassingThroughTwoPrefixes() throws Exception {
+    void shouldDetectRecursiveExpressionPassingThroughTwoPrefixes() throws Exception {
         List prefixes = new ArrayList();
 
         prefixes.add("prefix1");
@@ -211,7 +211,7 @@ public class InterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testShouldDetectRecursiveExpressionWithPrefixAndWithout() throws Exception {
+    void shouldDetectRecursiveExpressionWithPrefixAndWithout() throws Exception {
         List prefixes = new ArrayList();
 
         prefixes.add("prefix1");

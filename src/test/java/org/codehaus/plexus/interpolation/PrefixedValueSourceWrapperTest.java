@@ -23,10 +23,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class PrefixedValueSourceWrapperTest {
+class PrefixedValueSourceWrapperTest {
 
     @Test
-    public void testShouldReturnValueForPropertyVSWRappedWithSinglePrefix() {
+    void shouldReturnValueForPropertyVSWRappedWithSinglePrefix() {
         String prefix = "prefix.";
         String key = "key";
         String value = "value";
@@ -41,7 +41,7 @@ public class PrefixedValueSourceWrapperTest {
     }
 
     @Test
-    public void testShouldReturnNullForIncorrectPrefixUsingPropertyVSWRappedWithSinglePrefix() {
+    void shouldReturnNullForIncorrectPrefixUsingPropertyVSWRappedWithSinglePrefix() {
         String prefix = "prefix.";
         String otherPrefix = "other.";
         String key = "key";
@@ -57,7 +57,7 @@ public class PrefixedValueSourceWrapperTest {
     }
 
     @Test
-    public void testShouldNullForMissingValueInPropertyVSWRappedWithSinglePrefix() {
+    void shouldNullForMissingValueInPropertyVSWRappedWithSinglePrefix() {
         String prefix = "prefix.";
         String key = "key";
 

@@ -25,10 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PrefixAwareRecursionInterceptorTest {
+class PrefixAwareRecursionInterceptorTest {
 
     @Test
-    public void testFindExpression() {
+    void findExpression() {
         PrefixAwareRecursionInterceptor receptor =
                 new PrefixAwareRecursionInterceptor(Collections.singleton("prefix."));
 
@@ -45,7 +45,7 @@ public class PrefixAwareRecursionInterceptorTest {
     }
 
     @Test
-    public void testFindExpressionWithDifferentPrefix() {
+    void findExpressionWithDifferentPrefix() {
         PrefixAwareRecursionInterceptor receptor =
                 new PrefixAwareRecursionInterceptor(Arrays.asList(new String[] {"prefix.", "other."}));
 
@@ -61,7 +61,7 @@ public class PrefixAwareRecursionInterceptorTest {
     }
 
     @Test
-    public void testFindExpressionWithoutPrefix() {
+    void findExpressionWithoutPrefix() {
         PrefixAwareRecursionInterceptor receptor =
                 new PrefixAwareRecursionInterceptor(Arrays.asList(new String[] {"prefix.", "other."}));
 

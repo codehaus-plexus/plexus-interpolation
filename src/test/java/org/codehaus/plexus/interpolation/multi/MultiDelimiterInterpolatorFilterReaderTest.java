@@ -46,13 +46,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author cstamas
  *
  */
-public class MultiDelimiterInterpolatorFilterReaderTest {
+class MultiDelimiterInterpolatorFilterReaderTest {
     /*
      * Added and commented by jdcasey@03-Feb-2005 because it is a bug in the InterpolationFilterReader.
      * kenneyw@15-04-2005 fixed the bug.
      */
     @Test
-    public void testShouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
+    void shouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
         Map m = new HashMap();
         m.put("test", "TestValue");
 
@@ -65,7 +65,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
      * kenneyw@14-04-2005 Added test to check above fix.
      */
     @Test
-    public void testShouldNotInterpolateExpressionWithMissingEndToken() throws Exception {
+    void shouldNotInterpolateExpressionWithMissingEndToken() throws Exception {
         Map m = new HashMap();
         m.put("test", "TestValue");
 
@@ -75,7 +75,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testShouldNotInterpolateWithMalformedStartToken() throws Exception {
+    void shouldNotInterpolateWithMalformedStartToken() throws Exception {
         Map m = new HashMap();
         m.put("test", "testValue");
 
@@ -85,7 +85,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testShouldNotInterpolateWithMalformedEndToken() throws Exception {
+    void shouldNotInterpolateWithMalformedEndToken() throws Exception {
         Map m = new HashMap();
         m.put("test", "testValue");
 
@@ -95,7 +95,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testDefaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
+    void defaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -106,7 +106,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testDefaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
+    void defaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -117,7 +117,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testInterpolationWithInterpolatedValueAtEndWithCustomToken() throws Exception {
+    void interpolationWithInterpolatedValueAtEndWithCustomToken() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -128,7 +128,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testInterpolationWithInterpolatedValueAtEndWithCustomTokenAndCustomString() throws Exception {
+    void interpolationWithInterpolatedValueAtEndWithCustomTokenAndCustomString() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -139,7 +139,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testEscape() throws Exception {
+    void escape() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -150,7 +150,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testEscapeAtStart() throws Exception {
+    void escapeAtStart() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -161,7 +161,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testEscapeOnlyAtStart() throws Exception {
+    void escapeOnlyAtStart() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -173,7 +173,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testEscapeOnlyAtStartDefaultToken() throws Exception {
+    void escapeOnlyAtStartDefaultToken() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("noun", "asshole");
@@ -185,7 +185,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testShouldDetectRecursiveExpressionPassingThroughTwoPrefixes() throws Exception {
+    void shouldDetectRecursiveExpressionPassingThroughTwoPrefixes() throws Exception {
         List prefixes = new ArrayList();
 
         prefixes.add("prefix1");
@@ -217,7 +217,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testShouldDetectRecursiveExpressionWithPrefixAndWithout() throws Exception {
+    void shouldDetectRecursiveExpressionWithPrefixAndWithout() throws Exception {
         List prefixes = new ArrayList();
 
         prefixes.add("prefix1");
@@ -248,7 +248,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testInterpolationWithMultipleTokenTypes() throws Exception {
+    void interpolationWithMultipleTokenTypes() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("otherName", "@name@");
@@ -259,7 +259,7 @@ public class MultiDelimiterInterpolatorFilterReaderTest {
     }
 
     @Test
-    public void testInterpolationWithMultipleTokenTypes_ReversedOrdering() throws Exception {
+    void interpolationWithMultipleTokenTypesReversedOrdering() throws Exception {
         Map m = new HashMap();
         m.put("name", "jason");
         m.put("otherName", "${name}");

@@ -29,10 +29,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FieldBasedObjectInterpolatorTest {
+class FieldBasedObjectInterpolatorTest {
 
     @Test
-    public void testInterpolateStringArray() throws Exception {
+    void interpolateStringArray() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -49,7 +49,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringArrayField() throws Exception {
+    void interpolateObjectWithStringArrayField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -68,7 +68,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringListField() throws Exception {
+    void interpolateObjectWithStringListField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -89,7 +89,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringListFieldAndOneLiteralValue() throws Exception {
+    void interpolateObjectWithStringListFieldAndOneLiteralValue() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -110,7 +110,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithUnmodifiableStringListField() throws Exception {
+    void interpolateObjectWithUnmodifiableStringListField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -128,7 +128,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringArrayListField() throws Exception {
+    void interpolateObjectWithStringArrayListField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -153,7 +153,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringMapField() throws Exception {
+    void interpolateObjectWithStringToStringMapField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -174,7 +174,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringMapFieldAndOneLiteralValue() throws Exception {
+    void interpolateObjectWithStringToStringMapFieldAndOneLiteralValue() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -195,7 +195,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithUnmodifiableStringToStringMapField() throws Exception {
+    void interpolateObjectWithUnmodifiableStringToStringMapField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -213,7 +213,7 @@ public class FieldBasedObjectInterpolatorTest {
     }
 
     @Test
-    public void testInterpolateObjectWithStringToStringArrayMapField() throws Exception {
+    void interpolateObjectWithStringToStringArrayMapField() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");

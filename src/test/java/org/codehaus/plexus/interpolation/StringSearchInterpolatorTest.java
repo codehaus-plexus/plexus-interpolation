@@ -1,22 +1,5 @@
 package org.codehaus.plexus.interpolation;
 
-/*
- * Copyright 2001-2008 Codehaus Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class StringSearchInterpolatorTest {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         EnvarBasedValueSource.resetStatics();
     }
 
     @Test
-    public void testLongDelimitersInContext() throws InterpolationException {
+    void longDelimitersInContext() throws Exception {
         String src = "This is a <expression>test.label</expression> for long delimiters in context.";
         String result = "This is a test for long delimiters in context.";
 
@@ -53,7 +36,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testLongDelimitersWithNoStartContext() throws InterpolationException {
+    void longDelimitersWithNoStartContext() throws Exception {
         String src = "<expression>test.label</expression> for long delimiters in context.";
         String result = "test for long delimiters in context.";
 
@@ -67,7 +50,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testLongDelimitersWithNoEndContext() throws InterpolationException {
+    void longDelimitersWithNoEndContext() throws Exception {
         String src = "This is a <expression>test.label</expression>";
         String result = "This is a test";
 
@@ -81,7 +64,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testLongDelimitersWithNoContext() throws InterpolationException {
+    void longDelimitersWithNoContext() throws Exception {
         String src = "<expression>test.label</expression>";
         String result = "test";
 
@@ -95,7 +78,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testLongDelimitersPassedToValueSource() throws InterpolationException {
+    void longDelimitersPassedToValueSource() throws Exception {
         String src = "<expression>test</expression>";
 
         StringSearchInterpolator interpolator = new StringSearchInterpolator("<expression>", "</expression>");
@@ -119,7 +102,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testSimpleSubstitution() throws InterpolationException {
+    void simpleSubstitution() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -130,7 +113,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testSimpleSubstitution_TwoExpressions() throws InterpolationException {
+    void simpleSubstitutionTwoExpressions() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
         p.setProperty("key2", "value2");
@@ -142,7 +125,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testBrokenExpression_LeaveItAlone() throws InterpolationException {
+    void brokenExpressionLeaveItAlone() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -153,7 +136,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testShouldFailOnExpressionCycle() {
+    void shouldFailOnExpressionCycle() {
         Properties props = new Properties();
         props.setProperty("key1", "${key2}");
         props.setProperty("key2", "${key1}");
@@ -171,7 +154,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testShouldResolveByUsingObject_List_Map() throws InterpolationException {
+    void shouldResolveByUsingObjectListMap() throws Exception {
         StringSearchInterpolator rbi = new StringSearchInterpolator();
         rbi.addValueSource(new ObjectBasedValueSource(this));
         String result =
@@ -181,7 +164,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testShouldResolveByContextValue() throws InterpolationException {
+    void shouldResolveByContextValue() throws Exception {
         StringSearchInterpolator rbi = new StringSearchInterpolator();
 
         Map context = new HashMap();
@@ -195,7 +178,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testShouldResolveByEnvar() throws IOException, InterpolationException {
+    void shouldResolveByEnvar() throws Exception {
         OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
             public Map<String, String> getEnvMap() {
                 HashMap<String, String> map = new HashMap<String, String>();
@@ -215,7 +198,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testUsePostProcessor_DoesNotChangeValue() throws InterpolationException {
+    void usePostProcessorDoesNotChangeValue() throws Exception {
         StringSearchInterpolator rbi = new StringSearchInterpolator();
 
         Map context = new HashMap();
@@ -235,7 +218,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testUsePostProcessor_ChangesValue() throws InterpolationException {
+    void usePostProcessorChangesValue() throws Exception {
 
         StringSearchInterpolator rbi = new StringSearchInterpolator();
 
@@ -256,7 +239,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testSimpleSubstitutionWithDefinedExpr() throws InterpolationException {
+    void simpleSubstitutionWithDefinedExpr() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -267,7 +250,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testEscape() throws InterpolationException {
+    void escape() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -281,7 +264,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testEscapeWithLongEscapeStr() throws InterpolationException {
+    void escapeWithLongEscapeStr() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -295,7 +278,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testEscapeWithLongEscapeStrAtStart() throws InterpolationException {
+    void escapeWithLongEscapeStrAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -309,7 +292,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testNotEscapeWithLongEscapeStrAtStart() throws InterpolationException {
+    void notEscapeWithLongEscapeStrAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -323,7 +306,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testEscapeNotFailWithNullEscapeStr() throws InterpolationException {
+    void escapeNotFailWithNullEscapeStr() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -337,7 +320,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testOnlyEscapeExprAtStart() throws InterpolationException {
+    void onlyEscapeExprAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -351,7 +334,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testNotEscapeExprAtStart() throws InterpolationException {
+    void notEscapeExprAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -365,7 +348,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testEscapeExprAtStart() throws InterpolationException {
+    void escapeExprAtStart() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -379,7 +362,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testNPEFree() throws InterpolationException {
+    void npeFree() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -393,7 +376,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testInterruptedInterpolate() throws InterpolationException {
+    void interruptedInterpolate() throws Exception {
         Interpolator interpolator = new StringSearchInterpolator();
         RecursionInterceptor recursionInterceptor = new SimpleRecursionInterceptor();
         final boolean[] error = new boolean[] {false};
@@ -431,7 +414,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testCacheAnswersTrue() throws InterpolationException {
+    void cacheAnswersTrue() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
@@ -470,7 +453,7 @@ public class StringSearchInterpolatorTest {
     }
 
     @Test
-    public void testCacheAnswersFalse() throws InterpolationException {
+    void cacheAnswersFalse() throws Exception {
         Properties p = new Properties();
         p.setProperty("key", "value");
 
