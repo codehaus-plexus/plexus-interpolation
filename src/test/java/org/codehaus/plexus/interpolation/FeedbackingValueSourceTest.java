@@ -23,10 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FeedbackingValueSourceTest {
+class FeedbackingValueSourceTest {
 
     @Test
-    public void testStandalone() {
+    void standalone() {
         ValueSource valueSource = new FeedbackingValueSource();
         assertNull(valueSource.getValue("test"));
         assertEquals(1, valueSource.getFeedback().size());
@@ -34,7 +34,7 @@ public class FeedbackingValueSourceTest {
     }
 
     @Test
-    public void testAfterResolvedExpression() throws InterpolationException {
+    void afterResolvedExpression() throws Exception {
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
         interpolator.addValueSource(new MapBasedValueSource(singletonMap("key", "val")));
         interpolator.addValueSource(new FeedbackingValueSource());
@@ -43,7 +43,7 @@ public class FeedbackingValueSourceTest {
     }
 
     @Test
-    public void testBeforeResolvedExpression() throws InterpolationException {
+    void beforeResolvedExpression() throws Exception {
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
         interpolator.addValueSource(new FeedbackingValueSource("Resolving ${expression}"));
         interpolator.addValueSource(new MapBasedValueSource(singletonMap("key", "val")));
@@ -53,7 +53,7 @@ public class FeedbackingValueSourceTest {
     }
 
     @Test
-    public void testAfterNotResolvedExpression() throws InterpolationException {
+    void afterNotResolvedExpression() throws Exception {
         StringSearchInterpolator interpolator = new StringSearchInterpolator();
         interpolator.addValueSource(new MapBasedValueSource(singletonMap("key", "val")));
         interpolator.addValueSource(new FeedbackingValueSource());

@@ -1,24 +1,6 @@
 package org.codehaus.plexus.interpolation;
 
-/*
- * Copyright 2007 The Codehaus Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.codehaus.plexus.interpolation.os.OperatingSystemUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,21 +10,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class EnvarBasedValueSourceTest {
+class EnvarBasedValueSourceTest {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         EnvarBasedValueSource.resetStatics();
     }
 
     @Test
-    void testNoArgConstructorIsCaseSensitive() throws IOException {
-        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
-            public Map<String, String> getEnvMap() {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("aVariable", "variable");
-                return map;
-            }
+    void noArgConstructorIsCaseSensitive() throws Exception {
+        OperatingSystemUtils.setEnvVarSource(() -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("aVariable", "variable");
+            return map;
         });
 
         EnvarBasedValueSource source = new EnvarBasedValueSource();
@@ -54,13 +34,11 @@ public class EnvarBasedValueSourceTest {
     }
 
     @Test
-    void testCaseInsensitive() throws IOException {
-        OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.EnvVarSource() {
-            public Map<String, String> getEnvMap() {
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("aVariable", "variable");
-                return map;
-            }
+    void caseInsensitive() throws Exception {
+        OperatingSystemUtils.setEnvVarSource(() -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("aVariable", "variable");
+            return map;
         });
 
         EnvarBasedValueSource source = new EnvarBasedValueSource(false);
@@ -72,7 +50,7 @@ public class EnvarBasedValueSourceTest {
     }
 
     @Test
-    void testGetRealEnvironmentVariable() throws IOException {
+    void getRealEnvironmentVariable() throws Exception {
         OperatingSystemUtils.setEnvVarSource(new OperatingSystemUtils.DefaultEnvVarSource());
 
         EnvarBasedValueSource source = new EnvarBasedValueSource();

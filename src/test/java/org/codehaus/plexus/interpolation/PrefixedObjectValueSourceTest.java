@@ -23,13 +23,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class PrefixedObjectValueSourceTest {
+class PrefixedObjectValueSourceTest {
 
     @Test
-    public void testEmptyExpressionResultsInNullReturn_NoPrefixUsed() {
+    void emptyExpressionResultsInNullReturnNoPrefixUsed() {
         String target = "Target object";
 
-        List prefixes = new ArrayList();
+        List<String> prefixes = new ArrayList<>();
         prefixes.add("target");
         prefixes.add("object");
 
@@ -40,10 +40,10 @@ public class PrefixedObjectValueSourceTest {
     }
 
     @Test
-    public void testEmptyExpressionResultsInNullReturn_PrefixUsedWithDot() {
+    void emptyExpressionResultsInNullReturnPrefixUsedWithDot() {
         String target = "Target object";
 
-        List prefixes = new ArrayList();
+        List<String> prefixes = new ArrayList<>();
         prefixes.add("target");
         prefixes.add("object");
 
@@ -54,10 +54,10 @@ public class PrefixedObjectValueSourceTest {
     }
 
     @Test
-    public void testEmptyExpressionResultsInNullReturn_PrefixUsedWithoutDot() {
+    void emptyExpressionResultsInNullReturnPrefixUsedWithoutDot() {
         String target = "Target object";
 
-        List prefixes = new ArrayList();
+        List<String> prefixes = new ArrayList<>();
         prefixes.add("target");
         prefixes.add("object");
 
