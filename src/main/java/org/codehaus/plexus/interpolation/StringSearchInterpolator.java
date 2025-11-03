@@ -124,7 +124,7 @@ public class StringSearchInterpolator implements Interpolator {
             do {
                 result.append(input, endIdx + 1, startIdx);
 
-                endIdx = input.indexOf(endExpr, startIdx + 1);
+                endIdx = findMatchingEndExpr(input, startIdx, startExpr, endExpr);
                 if (endIdx < 0) {
                     break;
                 }
@@ -176,6 +176,33 @@ public class StringSearchInterpolator implements Interpolator {
                         // searching.
                         if (value == null && bestAnswer != null) {
                             throw new InterpolationCycleException(recursionInterceptor, realExpr, wholeExpr);
+                        }
+
+                        // If value is null, try to extract a default value (format: key:default)
+                        if (value == null) {
+                            int colonIndex = realExpr.indexOf(':');
+                            if (colonIndex > 0) {
+                                String key = realExpr.substring(0, colonIndex);
+                                String defaultValue = realExpr.substring(colonIndex + 1);
+
+                                // Try to resolve the key part only
+                                for (ValueSource valueSource : valueSources) {
+                                    if (value != null) {
+                                        break;
+                                    }
+                                    value = valueSource.getValue(key, startExpr, endExpr);
+
+                                    if (value != null && value.toString().contains(wholeExpr)) {
+                                        bestAnswer = value;
+                                        value = null;
+                                    }
+                                }
+
+                                // If still null, use the default value
+                                if (value == null) {
+                                    value = defaultValue;
+                                }
+                            }
                         }
 
                         if (value != null) {
@@ -266,6 +293,44 @@ public class StringSearchInterpolator implements Interpolator {
 
     public void setCacheAnswers(boolean cacheAnswers) {
         this.cacheAnswers = cacheAnswers;
+    }
+
+    /**
+     * Find the matching end expression, accounting for nested expressions.
+     * @param input The input string
+     * @param startIdx The index of the start expression
+     * @param startExpr The start expression delimiter
+     * @param endExpr The end expression delimiter
+     * @return The index of the matching end expression, or -1 if not found
+     */
+    private int findMatchingEndExpr(String input, int startIdx, String startExpr, String endExpr) {
+        int depth = 1;
+        int searchFrom = startIdx + startExpr.length();
+
+        while (depth > 0 && searchFrom < input.length()) {
+            int nextStart = input.indexOf(startExpr, searchFrom);
+            int nextEnd = input.indexOf(endExpr, searchFrom);
+
+            if (nextEnd < 0) {
+                // No more end delimiters found
+                return -1;
+            }
+
+            if (nextStart >= 0 && nextStart < nextEnd) {
+                // Found a nested start expression
+                depth++;
+                searchFrom = nextStart + startExpr.length();
+            } else {
+                // Found an end expression
+                depth--;
+                if (depth == 0) {
+                    return nextEnd;
+                }
+                searchFrom = nextEnd + endExpr.length();
+            }
+        }
+
+        return -1;
     }
 
     public void clearAnswers() {

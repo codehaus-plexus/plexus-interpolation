@@ -18,10 +18,12 @@ package org.codehaus.plexus.interpolation.multi;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.MapBasedValueSource;
+import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.ValueSource;
 import org.junit.jupiter.api.Test;
 
@@ -203,5 +205,73 @@ public class MultiDelimiterStringSearchInterpolatorTest {
         // Without caching, expressions are evaluated multiple times due to multi-pass resolution
         // In this case: 4 expressions evaluated in 2 passes = 8 calls
         assertEquals(8, valueSourceCallCount[0]);
+    }
+
+    @Test
+    void testDefaultValueWithExistingKey() throws Exception {
+        Properties p = new Properties();
+        p.setProperty("key", "value");
+
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals("This is a test value.", interpolator.interpolate("This is a test ${key:default}."));
+    }
+
+    @Test
+    void testDefaultValueWithMissingKey() throws Exception {
+        Properties p = new Properties();
+
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals("This is a test default.", interpolator.interpolate("This is a test ${missingkey:default}."));
+    }
+
+    @Test
+    void testDefaultValueWithEmptyDefault() throws Exception {
+        Properties p = new Properties();
+
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals("This is a test .", interpolator.interpolate("This is a test ${missingkey:}."));
+    }
+
+    @Test
+    void testDefaultValueWithColonInDefault() throws Exception {
+        Properties p = new Properties();
+
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals(
+                "This is a test http://example.com.",
+                interpolator.interpolate("This is a test ${missingkey:http://example.com}."));
+    }
+
+    @Test
+    void testDefaultValueWithNestedExpression() throws Exception {
+        Properties p = new Properties();
+        p.setProperty("fallback.key", "fallbackValue");
+
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals(
+                "This is a test fallbackValue.",
+                interpolator.interpolate("This is a test ${missingkey:${fallback.key}}."));
+    }
+
+    @Test
+    void testNoDefaultValueSyntax() throws Exception {
+        Properties p = new Properties();
+        p.setProperty("key:with:colons", "colonValue");
+
+        MultiDelimiterStringSearchInterpolator interpolator = new MultiDelimiterStringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        // When a key actually contains colons, it should still work if the key exists
+        assertEquals("This is a test colonValue.", interpolator.interpolate("This is a test ${key:with:colons}."));
     }
 }

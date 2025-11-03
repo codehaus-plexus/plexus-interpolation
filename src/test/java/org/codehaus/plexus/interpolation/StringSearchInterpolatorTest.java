@@ -538,4 +538,72 @@ public class StringSearchInterpolatorTest {
             return name;
         }
     }
+
+    @Test
+    public void testDefaultValueWithExistingKey() throws InterpolationException {
+        Properties p = new Properties();
+        p.setProperty("key", "value");
+
+        StringSearchInterpolator interpolator = new StringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals("This is a test value.", interpolator.interpolate("This is a test ${key:default}."));
+    }
+
+    @Test
+    public void testDefaultValueWithMissingKey() throws InterpolationException {
+        Properties p = new Properties();
+
+        StringSearchInterpolator interpolator = new StringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals("This is a test default.", interpolator.interpolate("This is a test ${missingkey:default}."));
+    }
+
+    @Test
+    public void testDefaultValueWithEmptyDefault() throws InterpolationException {
+        Properties p = new Properties();
+
+        StringSearchInterpolator interpolator = new StringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals("This is a test .", interpolator.interpolate("This is a test ${missingkey:}."));
+    }
+
+    @Test
+    public void testDefaultValueWithColonInDefault() throws InterpolationException {
+        Properties p = new Properties();
+
+        StringSearchInterpolator interpolator = new StringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals(
+                "This is a test http://example.com.",
+                interpolator.interpolate("This is a test ${missingkey:http://example.com}."));
+    }
+
+    @Test
+    public void testDefaultValueWithNestedExpression() throws InterpolationException {
+        Properties p = new Properties();
+        p.setProperty("fallback.key", "fallbackValue");
+
+        StringSearchInterpolator interpolator = new StringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        assertEquals(
+                "This is a test fallbackValue.",
+                interpolator.interpolate("This is a test ${missingkey:${fallback.key}}."));
+    }
+
+    @Test
+    public void testNoDefaultValueSyntax() throws InterpolationException {
+        Properties p = new Properties();
+        p.setProperty("key:with:colons", "colonValue");
+
+        StringSearchInterpolator interpolator = new StringSearchInterpolator();
+        interpolator.addValueSource(new PropertiesBasedValueSource(p));
+
+        // When a key actually contains colons, it should still work if the key exists
+        assertEquals("This is a test colonValue.", interpolator.interpolate("This is a test ${key:with:colons}."));
+    }
 }
