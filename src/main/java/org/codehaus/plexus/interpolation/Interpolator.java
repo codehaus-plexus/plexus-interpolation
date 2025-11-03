@@ -89,6 +89,62 @@ public interface Interpolator extends BasicInterpolator {
             throws InterpolationException;
 
     /**
+     * Attempt to resolve all expressions in the given input string, using the
+     * provided lists of value sources and post processors. This method allows
+     * for efficient interpolation without the need to repeatedly add and remove
+     * value sources and post processors from the interpolator instance.
+     * <p>
+     * This method triggers the use of a {@link SimpleRecursionInterceptor}
+     * instance for protection against expression cycles.</p>
+     * <p>
+     * <b>return an empty String if input is null</b>
+     *
+     * @param input The input string to interpolate
+     * @param valueSources The list of value sources to use for resolving expressions.
+     *                     If null or empty, no value sources will be used.
+     * @param postProcessors The list of post processors to apply after interpolation.
+     *                       If null or empty, no post processors will be used.
+     * @return interpolated string.
+     * @throws InterpolationException in case of an error.
+     * @since 1.29
+     */
+    default String interpolate(
+            String input, List<ValueSource> valueSources, List<InterpolationPostProcessor> postProcessors)
+            throws InterpolationException {
+        return interpolate(input, valueSources, postProcessors, new SimpleRecursionInterceptor());
+    }
+
+    /**
+     * Attempt to resolve all expressions in the given input string, using the
+     * provided lists of value sources and post processors. This method allows
+     * for efficient interpolation without the need to repeatedly add and remove
+     * value sources and post processors from the interpolator instance.
+     * <p>
+     * The supplied recursion interceptor will provide protection from expression
+     * cycles, ensuring that the input can be resolved or an exception is thrown.
+     * <p>
+     * <b>return an empty String if input is null</b>
+     *
+     * @param input The input string to interpolate
+     * @param valueSources The list of value sources to use for resolving expressions.
+     *                     If null or empty, no value sources will be used.
+     * @param postProcessors The list of post processors to apply after interpolation.
+     *                       If null or empty, no post processors will be used.
+     * @param recursionInterceptor Used to protect the interpolation process
+     *                             from expression cycles, and throw an
+     *                             exception if one is detected.
+     * @return interpolated string.
+     * @throws InterpolationException in case of an error.
+     * @since 1.29
+     */
+    String interpolate(
+            String input,
+            List<ValueSource> valueSources,
+            List<InterpolationPostProcessor> postProcessors,
+            RecursionInterceptor recursionInterceptor)
+            throws InterpolationException;
+
+    /**
      * Return any feedback messages and errors that were generated - but
      * suppressed - during the interpolation process. Since unresolvable
      * expressions will be left in the source string as-is, this feedback is

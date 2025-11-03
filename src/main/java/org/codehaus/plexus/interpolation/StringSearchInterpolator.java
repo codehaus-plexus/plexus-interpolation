@@ -110,12 +110,47 @@ public class StringSearchInterpolator implements Interpolator {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public String interpolate(
+            String input,
+            List<ValueSource> valueSources,
+            List<InterpolationPostProcessor> postProcessors,
+            RecursionInterceptor recursionInterceptor)
+            throws InterpolationException {
+        try {
+            return interpolate(input, recursionInterceptor, new HashSet<String>(), valueSources, postProcessors);
+        } finally {
+            if (!cacheAnswers) {
+                existingAnswers.clear();
+            }
+        }
+    }
+
     private String interpolate(String input, RecursionInterceptor recursionInterceptor, Set<String> unresolvable)
+            throws InterpolationException {
+        return interpolate(input, recursionInterceptor, unresolvable, this.valueSources, this.postProcessors);
+    }
+
+    private String interpolate(
+            String input,
+            RecursionInterceptor recursionInterceptor,
+            Set<String> unresolvable,
+            List<ValueSource> valueSources,
+            List<InterpolationPostProcessor> postProcessors)
             throws InterpolationException {
         if (input == null) {
             // return empty String to prevent NPE too
             return "";
         }
+
+        // Use instance value sources if provided list is null or empty
+        List<ValueSource> effectiveValueSources =
+                (valueSources != null && !valueSources.isEmpty()) ? valueSources : this.valueSources;
+        // Use instance post processors if provided list is null or empty
+        List<InterpolationPostProcessor> effectivePostProcessors =
+                (postProcessors != null && !postProcessors.isEmpty()) ? postProcessors : this.postProcessors;
 
         int startIdx;
         int endIdx = -1;
@@ -159,7 +194,7 @@ public class StringSearchInterpolator implements Interpolator {
                         Object value = getExistingAnswer(realExpr);
                         Object bestAnswer = null;
 
-                        for (ValueSource valueSource : valueSources) {
+                        for (ValueSource valueSource : effectiveValueSources) {
                             if (value != null) {
                                 break;
                             }
@@ -179,10 +214,15 @@ public class StringSearchInterpolator implements Interpolator {
                         }
 
                         if (value != null) {
-                            value = interpolate(String.valueOf(value), recursionInterceptor, unresolvable);
+                            value = interpolate(
+                                    String.valueOf(value),
+                                    recursionInterceptor,
+                                    unresolvable,
+                                    effectiveValueSources,
+                                    effectivePostProcessors);
 
-                            if (postProcessors != null && !postProcessors.isEmpty()) {
-                                for (InterpolationPostProcessor postProcessor : postProcessors) {
+                            if (effectivePostProcessors != null && !effectivePostProcessors.isEmpty()) {
+                                for (InterpolationPostProcessor postProcessor : effectivePostProcessors) {
                                     Object newVal = postProcessor.execute(realExpr, value);
                                     if (newVal != null) {
                                         value = newVal;

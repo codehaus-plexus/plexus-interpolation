@@ -248,10 +248,39 @@ public class RegexBasedInterpolator implements Interpolator {
             String expressionDelimiterEnd,
             int realExprGroup)
             throws InterpolationException {
+        return interpolate(
+                input,
+                recursionInterceptor,
+                expressionPattern,
+                expressionDelimiterStart,
+                expressionDelimiterEnd,
+                realExprGroup,
+                this.valueSources,
+                this.postProcessors);
+    }
+
+    private String interpolate(
+            String input,
+            RecursionInterceptor recursionInterceptor,
+            Pattern expressionPattern,
+            String expressionDelimiterStart,
+            String expressionDelimiterEnd,
+            int realExprGroup,
+            List<ValueSource> valueSources,
+            List<InterpolationPostProcessor> postProcessors)
+            throws InterpolationException {
         if (input == null) {
             // return empty String to prevent NPE too
             return "";
         }
+
+        // Use instance value sources if provided list is null or empty
+        List<ValueSource> effectiveValueSources =
+                (valueSources != null && !valueSources.isEmpty()) ? valueSources : this.valueSources;
+        // Use instance post processors if provided list is null or empty
+        List<InterpolationPostProcessor> effectivePostProcessors =
+                (postProcessors != null && !postProcessors.isEmpty()) ? postProcessors : this.postProcessors;
+
         String result = input;
 
         Matcher matcher = expressionPattern.matcher(result);
@@ -271,7 +300,7 @@ public class RegexBasedInterpolator implements Interpolator {
             recursionInterceptor.expressionResolutionStarted(realExpr);
             try {
                 Object value = existingAnswers.get(realExpr);
-                for (ValueSource vs : valueSources) {
+                for (ValueSource vs : effectiveValueSources) {
                     if (value != null) break;
 
                     value = vs.getValue(realExpr, expressionDelimiterStart, expressionDelimiterEnd);
@@ -284,10 +313,12 @@ public class RegexBasedInterpolator implements Interpolator {
                             expressionPattern,
                             expressionDelimiterStart,
                             expressionDelimiterEnd,
-                            realExprGroup);
+                            realExprGroup,
+                            effectiveValueSources,
+                            effectivePostProcessors);
 
-                    if (postProcessors != null && !postProcessors.isEmpty()) {
-                        for (InterpolationPostProcessor postProcessor : postProcessors) {
+                    if (effectivePostProcessors != null && !effectivePostProcessors.isEmpty()) {
+                        for (InterpolationPostProcessor postProcessor : effectivePostProcessors) {
                             Object newVal = postProcessor.execute(realExpr, value);
                             if (newVal != null) {
                                 value = newVal;
@@ -373,7 +404,7 @@ public class RegexBasedInterpolator implements Interpolator {
      * @param input The input string to interpolate
      */
     public String interpolate(String input) throws InterpolationException {
-        return interpolate(input, null, null);
+        return interpolate(input, (String) null, (RecursionInterceptor) null);
     }
 
     /**
@@ -391,6 +422,65 @@ public class RegexBasedInterpolator implements Interpolator {
      */
     public String interpolate(String input, RecursionInterceptor recursionInterceptor) throws InterpolationException {
         return interpolate(input, null, recursionInterceptor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String interpolate(
+            String input,
+            List<ValueSource> valueSources,
+            List<InterpolationPostProcessor> postProcessors,
+            RecursionInterceptor recursionInterceptor)
+            throws InterpolationException {
+        if (input == null) {
+            // return empty String to prevent NPE too
+            return "";
+        }
+        if (recursionInterceptor == null) {
+            recursionInterceptor = new SimpleRecursionInterceptor();
+        }
+
+        String thisPrefixPattern = null;
+        int realExprGroup = 2;
+        Pattern expressionPattern;
+        final String expressionDelimiterStart;
+        final String expressionDelimiterEnd;
+        if (startRegex != null || endRegex != null) {
+            if (thisPrefixPattern == null) {
+                expressionPattern = getPattern(startRegex + endRegex);
+                realExprGroup = 1;
+            } else {
+                expressionPattern = getPattern(startRegex + thisPrefixPattern + endRegex);
+            }
+            expressionDelimiterStart = startRegex;
+            expressionDelimiterEnd = endRegex;
+
+        } else {
+            expressionDelimiterStart = "${";
+            expressionDelimiterEnd = "}";
+            if (thisPrefixPattern != null) {
+                expressionPattern = getPattern("\\$\\{(" + thisPrefixPattern + ")?(.+?)\\}");
+            } else {
+                expressionPattern = getPattern(DEFAULT_REGEXP);
+                realExprGroup = 1;
+            }
+        }
+        try {
+            return interpolate(
+                    input,
+                    recursionInterceptor,
+                    expressionPattern,
+                    expressionDelimiterStart,
+                    expressionDelimiterEnd,
+                    realExprGroup,
+                    valueSources,
+                    postProcessors);
+        } finally {
+            if (!cacheAnswers) {
+                clearAnswers();
+            }
+        }
     }
 
     public boolean isReusePatterns() {
