@@ -31,10 +31,10 @@
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertNull;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertTrue;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FeedbackingValueSourceTest" href="../../../../org/codehaus/plexus/interpolation/FeedbackingValueSourceTest.html#FeedbackingValueSourceTest">FeedbackingValueSourceTest</a> {
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">class</strong> <a name="FeedbackingValueSourceTest" href="../../../../org/codehaus/plexus/interpolation/FeedbackingValueSourceTest.html#FeedbackingValueSourceTest">FeedbackingValueSourceTest</a> {
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>      @Test
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testStandalone() {
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">void</strong> standalone() {
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>          ValueSource valueSource = <strong class="jxr_keyword">new</strong> FeedbackingValueSource();
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>          assertNull(valueSource.getValue(<span class="jxr_string">"test"</span>));
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>          assertEquals(1, valueSource.getFeedback().size());
@@ -42,7 +42,7 @@
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>      @Test
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testAfterResolvedExpression() <strong class="jxr_keyword">throws</strong> InterpolationException {
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">void</strong> afterResolvedExpression() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>          StringSearchInterpolator interpolator = <strong class="jxr_keyword">new</strong> StringSearchInterpolator();
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>          interpolator.addValueSource(<strong class="jxr_keyword">new</strong> MapBasedValueSource(singletonMap(<span class="jxr_string">"key"</span>, <span class="jxr_string">"val"</span>)));
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>          interpolator.addValueSource(<strong class="jxr_keyword">new</strong> FeedbackingValueSource());
@@ -51,7 +51,7 @@
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      }
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      @Test
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testBeforeResolvedExpression() <strong class="jxr_keyword">throws</strong> InterpolationException {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">void</strong> beforeResolvedExpression() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          StringSearchInterpolator interpolator = <strong class="jxr_keyword">new</strong> StringSearchInterpolator();
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          interpolator.addValueSource(<strong class="jxr_keyword">new</strong> FeedbackingValueSource(<span class="jxr_string">"Resolving ${expression}"</span>));
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>          interpolator.addValueSource(<strong class="jxr_keyword">new</strong> MapBasedValueSource(singletonMap(<span class="jxr_string">"key"</span>, <span class="jxr_string">"val"</span>)));
@@ -61,7 +61,7 @@
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      }
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>      @Test
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testAfterNotResolvedExpression() <strong class="jxr_keyword">throws</strong> InterpolationException {
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">void</strong> afterNotResolvedExpression() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          StringSearchInterpolator interpolator = <strong class="jxr_keyword">new</strong> StringSearchInterpolator();
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          interpolator.addValueSource(<strong class="jxr_keyword">new</strong> MapBasedValueSource(singletonMap(<span class="jxr_string">"key"</span>, <span class="jxr_string">"val"</span>)));
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          interpolator.addValueSource(<strong class="jxr_keyword">new</strong> FeedbackingValueSource());

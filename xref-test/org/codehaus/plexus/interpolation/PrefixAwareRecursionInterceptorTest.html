@@ -33,10 +33,10 @@
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertFalse;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertTrue;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="PrefixAwareRecursionInterceptorTest" href="../../../../org/codehaus/plexus/interpolation/PrefixAwareRecursionInterceptorTest.html#PrefixAwareRecursionInterceptorTest">PrefixAwareRecursionInterceptorTest</a> {
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">class</strong> <a name="PrefixAwareRecursionInterceptorTest" href="../../../../org/codehaus/plexus/interpolation/PrefixAwareRecursionInterceptorTest.html#PrefixAwareRecursionInterceptorTest">PrefixAwareRecursionInterceptorTest</a> {
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>      @Test
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFindExpression() {
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">void</strong> findExpression() {
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>          PrefixAwareRecursionInterceptor receptor =
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>                  <strong class="jxr_keyword">new</strong> PrefixAwareRecursionInterceptor(Collections.singleton(<span class="jxr_string">"prefix."</span>));
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  
@@ -53,9 +53,9 @@
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      }
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      @Test
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFindExpressionWithDifferentPrefix() {
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">void</strong> findExpressionWithDifferentPrefix() {
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>          PrefixAwareRecursionInterceptor receptor =
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  <strong class="jxr_keyword">new</strong> PrefixAwareRecursionInterceptor(Arrays.asList(<strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"prefix."</span>, <span class="jxr_string">"other."</span>}));
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  <strong class="jxr_keyword">new</strong> PrefixAwareRecursionInterceptor(Arrays.asList(<span class="jxr_string">"prefix."</span>, <span class="jxr_string">"other."</span>));
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          String expr = <span class="jxr_string">"prefix.first"</span>;
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  
@@ -69,9 +69,9 @@
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      }
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      @Test
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testFindExpressionWithoutPrefix() {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">void</strong> findExpressionWithoutPrefix() {
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          PrefixAwareRecursionInterceptor receptor =
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>                  <strong class="jxr_keyword">new</strong> PrefixAwareRecursionInterceptor(Arrays.asList(<strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"prefix."</span>, <span class="jxr_string">"other."</span>}));
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>                  <strong class="jxr_keyword">new</strong> PrefixAwareRecursionInterceptor(Arrays.asList(<span class="jxr_string">"prefix."</span>, <span class="jxr_string">"other."</span>));
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          String prefixedExpr = <span class="jxr_string">"prefix.first"</span>;
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          String expr = <span class="jxr_string">"first"</span>;

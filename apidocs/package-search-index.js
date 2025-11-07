@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.codehaus.plexus.interpolation"},{"l":"org.codehaus.plexus.interpolation.fixed"},{"l":"org.codehaus.plexus.interpolation.multi"},{"l":"org.codehaus.plexus.interpolation.object"},{"l":"org.codehaus.plexus.interpolation.os"},{"l":"org.codehaus.plexus.interpolation.reflection"},{"l":"org.codehaus.plexus.interpolation.util"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"org.codehaus.plexus.interpolation"}];updateSearchResults();

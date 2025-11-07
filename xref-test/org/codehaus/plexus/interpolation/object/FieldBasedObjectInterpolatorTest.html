@@ -37,10 +37,10 @@
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertEquals;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FieldBasedObjectInterpolatorTest" href="../../../../../org/codehaus/plexus/interpolation/object/FieldBasedObjectInterpolatorTest.html#FieldBasedObjectInterpolatorTest">FieldBasedObjectInterpolatorTest</a> {
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">class</strong> <a name="FieldBasedObjectInterpolatorTest" href="../../../../../org/codehaus/plexus/interpolation/object/FieldBasedObjectInterpolatorTest.html#FieldBasedObjectInterpolatorTest">FieldBasedObjectInterpolatorTest</a> {
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      @Test
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateStringArray() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">void</strong> interpolateStringArray() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>          Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>          p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>          p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
@@ -57,7 +57,7 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      }
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      @Test
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithStringArrayField() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">void</strong> interpolateObjectWithStringArrayField() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
@@ -76,12 +76,12 @@
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      @Test
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithStringListField() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">void</strong> interpolateObjectWithStringListField() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>  
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          List&lt;String&gt; values = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          List&lt;String&gt; values = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          values.add(<span class="jxr_string">"${key}"</span>);
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          values.add(<span class="jxr_string">"${key2}"</span>);
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  
@@ -97,12 +97,12 @@
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>      @Test
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithStringListFieldAndOneLiteralValue() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">void</strong> interpolateObjectWithStringListFieldAndOneLiteralValue() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>          List&lt;String&gt; values = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          List&lt;String&gt; values = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          values.add(<span class="jxr_string">"key"</span>);
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>          values.add(<span class="jxr_string">"${key2}"</span>);
 <a class="jxr_linenumber" name="L100" href="#L100">100</a> 
@@ -118,12 +118,12 @@
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>     }
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> 
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>     @Test
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithUnmodifiableStringListField() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>     <strong class="jxr_keyword">void</strong> interpolateObjectWithUnmodifiableStringListField() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>         Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>         p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>         p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
 <a class="jxr_linenumber" name="L117" href="#L117">117</a> 
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>         List values = Collections.unmodifiableList(Collections.singletonList(<span class="jxr_string">"${key}"</span>));
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         List&lt;String&gt; values = Collections.singletonList(<span class="jxr_string">"${key}"</span>);
 <a class="jxr_linenumber" name="L119" href="#L119">119</a> 
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>         ObjectWithListField obj = <strong class="jxr_keyword">new</strong> ObjectWithListField(values);
 <a class="jxr_linenumber" name="L121" href="#L121">121</a> 
@@ -136,14 +136,14 @@
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>     }
 <a class="jxr_linenumber" name="L129" href="#L129">129</a> 
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>     @Test
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithStringArrayListField() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">void</strong> interpolateObjectWithStringArrayListField() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>         Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>         p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>         p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>         p.setProperty(<span class="jxr_string">"key3"</span>, <span class="jxr_string">"value3"</span>);
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>         p.setProperty(<span class="jxr_string">"key4"</span>, <span class="jxr_string">"value4"</span>);
 <a class="jxr_linenumber" name="L137" href="#L137">137</a> 
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>         List&lt;String[]&gt; values = <strong class="jxr_keyword">new</strong> ArrayList&lt;String[]&gt;();
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>         List&lt;String[]&gt; values = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>         values.add(<strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"${key}"</span>, <span class="jxr_string">"${key2}"</span>});
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         values.add(<strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"${key3}"</span>, <span class="jxr_string">"${key4}"</span>});
 <a class="jxr_linenumber" name="L141" href="#L141">141</a> 
@@ -161,12 +161,12 @@
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>     }
 <a class="jxr_linenumber" name="L154" href="#L154">154</a> 
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>     @Test
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithStringToStringMapField() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>     <strong class="jxr_keyword">void</strong> interpolateObjectWithStringToStringMapField() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>         Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L158" href="#L158">158</a>         p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L159" href="#L159">159</a>         p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
 <a class="jxr_linenumber" name="L160" href="#L160">160</a> 
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>         Map&lt;String, String&gt; values = <strong class="jxr_keyword">new</strong> HashMap&lt;String, String&gt;();
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>         Map&lt;String, String&gt; values = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
 <a class="jxr_linenumber" name="L162" href="#L162">162</a>         values.put(<span class="jxr_string">"key"</span>, <span class="jxr_string">"${key}"</span>);
 <a class="jxr_linenumber" name="L163" href="#L163">163</a>         values.put(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"${key2}"</span>);
 <a class="jxr_linenumber" name="L164" href="#L164">164</a> 
@@ -182,12 +182,12 @@
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>     }
 <a class="jxr_linenumber" name="L175" href="#L175">175</a> 
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>     @Test
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithStringToStringMapFieldAndOneLiteralValue() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>     <strong class="jxr_keyword">void</strong> interpolateObjectWithStringToStringMapFieldAndOneLiteralValue() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>         Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>         p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>         p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
 <a class="jxr_linenumber" name="L181" href="#L181">181</a> 
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>         Map&lt;String, String&gt; values = <strong class="jxr_keyword">new</strong> HashMap&lt;String, String&gt;();
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         Map&lt;String, String&gt; values = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>         values.put(<span class="jxr_string">"key"</span>, <span class="jxr_string">"val"</span>);
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>         values.put(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"${key2}"</span>);
 <a class="jxr_linenumber" name="L185" href="#L185">185</a> 
@@ -203,12 +203,12 @@
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>     }
 <a class="jxr_linenumber" name="L196" href="#L196">196</a> 
 <a class="jxr_linenumber" name="L197" href="#L197">197</a>     @Test
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithUnmodifiableStringToStringMapField() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>     <strong class="jxr_keyword">void</strong> interpolateObjectWithUnmodifiableStringToStringMapField() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L199" href="#L199">199</a>         Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L200" href="#L200">200</a>         p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>         p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
 <a class="jxr_linenumber" name="L202" href="#L202">202</a> 
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>         Map values = Collections.unmodifiableMap(Collections.singletonMap(<span class="jxr_string">"key"</span>, <span class="jxr_string">"${key}"</span>));
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>         Map&lt;String, String&gt; values = Collections.singletonMap(<span class="jxr_string">"key"</span>, <span class="jxr_string">"${key}"</span>);
 <a class="jxr_linenumber" name="L204" href="#L204">204</a> 
 <a class="jxr_linenumber" name="L205" href="#L205">205</a>         ObjectWithMapField obj = <strong class="jxr_keyword">new</strong> ObjectWithMapField(values);
 <a class="jxr_linenumber" name="L206" href="#L206">206</a> 
@@ -221,14 +221,14 @@
 <a class="jxr_linenumber" name="L213" href="#L213">213</a>     }
 <a class="jxr_linenumber" name="L214" href="#L214">214</a> 
 <a class="jxr_linenumber" name="L215" href="#L215">215</a>     @Test
-<a class="jxr_linenumber" name="L216" href="#L216">216</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInterpolateObjectWithStringToStringArrayMapField() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>     <strong class="jxr_keyword">void</strong> interpolateObjectWithStringToStringArrayMapField() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L217" href="#L217">217</a>         Properties p = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L218" href="#L218">218</a>         p.setProperty(<span class="jxr_string">"key"</span>, <span class="jxr_string">"value"</span>);
 <a class="jxr_linenumber" name="L219" href="#L219">219</a>         p.setProperty(<span class="jxr_string">"key2"</span>, <span class="jxr_string">"value2"</span>);
 <a class="jxr_linenumber" name="L220" href="#L220">220</a>         p.setProperty(<span class="jxr_string">"key3"</span>, <span class="jxr_string">"value3"</span>);
 <a class="jxr_linenumber" name="L221" href="#L221">221</a>         p.setProperty(<span class="jxr_string">"key4"</span>, <span class="jxr_string">"value4"</span>);
 <a class="jxr_linenumber" name="L222" href="#L222">222</a> 
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>         Map&lt;String, String[]&gt; values = <strong class="jxr_keyword">new</strong> HashMap&lt;String, String[]&gt;();
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>         Map&lt;String, String[]&gt; values = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
 <a class="jxr_linenumber" name="L224" href="#L224">224</a>         values.put(<span class="jxr_string">"key"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"${key}"</span>, <span class="jxr_string">"${key2}"</span>});
 <a class="jxr_linenumber" name="L225" href="#L225">225</a>         values.put(<span class="jxr_string">"key2"</span>, <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"${key3}"</span>, <span class="jxr_string">"${key4}"</span>});
 <a class="jxr_linenumber" name="L226" href="#L226">226</a> 
