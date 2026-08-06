@@ -1,75 +1,48 @@
-  -----
-  Plexus Interpolator
-  -----
-  John Casey
-  Hervé Boutemy
-  -----
-  2012-10-31
-  -----
-  
-Introduction
+# Introduction
 
-  Plexus interpolator is the outgrowth of multiple iterations of development focused on providing a more modular,
-  flexible interpolation framework for the expression language style commonly seen in Maven, Plexus, and other related projects.
-  
-  It has its foundation in the <<<org.codehaus.plexus.utils.interpolation>>> package within
-  {{{/plexus-utils/}<<<plexus-utils>>>}}, but has been separated in order to allow these two libraries to vary independently
-  of one another.
-  
-Features
+Plexus interpolator is the outgrowth of multiple iterations of development focused on providing a more modular, flexible interpolation framework for the expression language style commonly seen in Maven, Plexus, and other related projects.
 
- * Stackable Expression-Resolution Strategies
+It has its foundation in the `org.codehaus.plexus.utils.interpolation` package within [`plexus-utils`](/plexus-utils/), but has been separated in order to allow these two libraries to vary independently of one another.
 
-  Expression-resolution strategies can be 'stacked' to provide an order of operations, containing multiple approaches that could
-  potentially resolve a given expression.
+# Features
 
-  These strategies are called {{{./apidocs/org/codehaus/plexus/interpolation/ValueSource.html}<<<ValueSource>>>s}},
-  and each implements a very simple piece of resolution logic.
+- Stackable Expression-Resolution Strategies
+
+  Expression-resolution strategies can be 'stacked' to provide an order of operations, containing multiple approaches that could potentially resolve a given expression.
+
+  These strategies are called [`ValueSource`s](./apidocs/org/codehaus/plexus/interpolation/ValueSource.html), and each implements a very simple piece of resolution logic.
 
   It's also possible to define your own, domain-specific value source.
-  
- * Flexible Expression-Cycle Detection
 
-  Expression cycles are detected using various strategies, ranging from simplistic consultation of a stack of explicit in-process
-  expressions, to tracking of in-process expressions that takes multiple synonym expression variants into account.
+- Flexible Expression-Cycle Detection
 
-  It's even possible to define your own
-  {{{./apidocs/org/codehaus/plexus/interpolation/RecursionInterceptor.html}<<<RecursionInterceptor>>>}} to implement
-  an alternative strategy.
+  Expression cycles are detected using various strategies, ranging from simplistic consultation of a stack of explicit in-process expressions, to tracking of in-process expressions that takes multiple synonym expression variants into account.
 
- * Configurable Regular Expression-Based Default Interpolator
+  It's even possible to define your own [`RecursionInterceptor`](./apidocs/org/codehaus/plexus/interpolation/RecursionInterceptor.html) to implement an alternative strategy.
 
-  The default interpolator implementation uses regular expressions to search for interpolation candidate expressions within
-  an input string.
+- Configurable Regular Expression-Based Default Interpolator
 
-  This interpolator can use a custom prefix/suffix pair that will effectively redefine the regular expression used to extract
-  candidate expressions.
-  
- * Built-In Synonym Support for Expressions
+  The default interpolator implementation uses regular expressions to search for interpolation candidate expressions within an input string.
 
-  Any <<<ValueSource>>> implementation can be wrapped to allow multiple synonym expressions using different expression prefixes.
-  
- * Resolution Feedback
+  This interpolator can use a custom prefix/suffix pair that will effectively redefine the regular expression used to extract candidate expressions.
 
-  <<<ValueSource>>> implementations have the option of implementing <<<FeedbackEnabledValueSource>>>, which provides the ability to
-  give feedback to the calling code about what failed during expression resolution. For instance, the <<<ObjectBasedValueSource>>>
-  traverses the object graph below a given root object; if an object in that graph doesn't contain a property corresponding to
-  the expression-part currently being navigated, the value source can store a feedback message to that effect.
-  Once interpolation of the larger input string has completed, the calling code can use the <<<Interpolator.getFeedback()>>> method
-  to retrieve this feedback message (among others).
-  
-Getting Started
+- Built-In Synonym Support for Expressions
 
-  The simplest way to explain how to use the plexus-interpolation API is with a few examples.
+  Any `ValueSource` implementation can be wrapped to allow multiple synonym expressions using different expression prefixes.
 
-  First, let's look at a simplified version of the interpolation configuration used in Maven.
-  Remember that Maven uses several source for interpolation of its POM files: the POM itself, system properties,
-  user-defined properties, and environment variables from the shell that spawned the current Java process.
-  Also, Maven allows POM references to be defined as $\{pom.groupId}, $\{project.groupId}, or even the discouraged $\{groupId}.
+- Resolution Feedback
 
-  The following is a simplified version of the plexus-interpolation configuration Maven might use to resolve POM expressions:
-  
-+---+
+  `ValueSource` implementations have the option of implementing `FeedbackEnabledValueSource`, which provides the ability to give feedback to the calling code about what failed during expression resolution. For instance, the `ObjectBasedValueSource` traverses the object graph below a given root object; if an object in that graph doesn't contain a property corresponding to the expression-part currently being navigated, the value source can store a feedback message to that effect. Once interpolation of the larger input string has completed, the calling code can use the `Interpolator.getFeedback()` method to retrieve this feedback message (among others).
+
+# Getting Started
+
+The simplest way to explain how to use the plexus-interpolation API is with a few examples.
+
+First, let's look at a simplified version of the interpolation configuration used in Maven. Remember that Maven uses several source for interpolation of its POM files: the POM itself, system properties, user-defined properties, and environment variables from the shell that spawned the current Java process. Also, Maven allows POM references to be defined as ${pom.groupId}, ${project.groupId}, or even the discouraged ${groupId}.
+
+The following is a simplified version of the plexus-interpolation configuration Maven might use to resolve POM expressions:
+
+```unknown
 // serialize current POM object graph into a string called serializedPOM.
 
 RegexBasedInterpolator interpolator = new RegexBasedInterpolator();
@@ -97,4 +70,5 @@ RecursionInterceptor recursionInterceptor = new PrefixAwareRecursionInterceptor(
 serializedPOM = interpolator.interpolate( serializedPOM, recursionInterceptor );
 
 // parse POM back into an object graph, and pass it back.
-+---+
+```
+
