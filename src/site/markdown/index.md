@@ -1,3 +1,11 @@
+---
+title: Plexus Interpolator
+author:
+  - John Casey
+  - Hervé Boutemy
+date: 2012-10-31
+---
+
 # Introduction
 
 Plexus interpolator is the outgrowth of multiple iterations of development focused on providing a more modular, flexible interpolation framework for the expression language style commonly seen in Maven, Plexus, and other related projects.
