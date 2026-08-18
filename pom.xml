@@ -13,6 +13,8 @@
   <packaging>bundle</packaging>
 
   <name>Plexus Interpolation API</name>
+  <description>A component that resolves expressions in strings against stackable value sources, as used for
+    POM interpolation.</description>
 
   <scm>
     <connection>scm:git:https://github.com/codehaus-plexus/plexus-interpolation.git</connection>
