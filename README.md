@@ -24,7 +24,6 @@ mostly bug fixes.
 <dependency>
   <groupId>org.codehaus.plexus</groupId>
   <artifactId>plexus-interpolation</artifactId>
-  <version>1.29</version>
 </dependency>
 ```
 
