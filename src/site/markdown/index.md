@@ -50,7 +50,7 @@ First, let's look at a simplified version of the interpolation configuration use
 
 The following is a simplified version of the plexus-interpolation configuration Maven might use to resolve POM expressions:
 
-```unknown
+```java
 // serialize current POM object graph into a string called serializedPOM.
 
 RegexBasedInterpolator interpolator = new RegexBasedInterpolator();
