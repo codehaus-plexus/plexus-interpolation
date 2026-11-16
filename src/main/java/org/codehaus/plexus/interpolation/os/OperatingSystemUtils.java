@@ -85,6 +85,7 @@ public final class OperatingSystemUtils {
      */
     public static class DefaultEnvVarSource implements EnvVarSource {
 
+        @Override
         public Map<String, String> getEnvMap() {
             return System.getenv();
         }

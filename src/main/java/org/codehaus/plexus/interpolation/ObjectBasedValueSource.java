@@ -49,6 +49,7 @@ public class ObjectBasedValueSource extends AbstractValueSource {
      * <p><b>NOTE:</b> The object-graph nagivation actually takes place via the
      * {@link ReflectionValueExtractor} class.</p>
      */
+    @Override
     public Object getValue(String expression) {
         if (expression == null || expression.trim().length() < 1) {
             return null;

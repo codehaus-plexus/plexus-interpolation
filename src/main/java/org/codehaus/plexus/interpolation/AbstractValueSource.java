@@ -31,12 +31,14 @@ public abstract class AbstractValueSource implements ValueSource {
         }
     }
 
+    @Override
     public void clearFeedback() {
         if (feedback != null) {
             feedback.clear();
         }
     }
 
+    @Override
     public List getFeedback() {
         return feedback;
     }

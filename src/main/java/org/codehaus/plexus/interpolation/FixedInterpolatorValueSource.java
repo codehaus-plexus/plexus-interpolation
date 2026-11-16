@@ -20,14 +20,17 @@ public class FixedInterpolatorValueSource implements ValueSource {
         this.fixedStringSearchInterpolator = fixedStringSearchInterpolator;
     }
 
+    @Override
     public Object getValue(String expression) {
         return fixedStringSearchInterpolator.getValue(expression, errorCollector);
     }
 
+    @Override
     public List getFeedback() {
         return errorCollector.asList();
     }
 
+    @Override
     public void clearFeedback() {
         errorCollector.clear();
     }

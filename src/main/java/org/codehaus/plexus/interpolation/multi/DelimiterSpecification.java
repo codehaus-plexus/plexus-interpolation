@@ -68,6 +68,7 @@ public final class DelimiterSpecification {
         return end;
     }
 
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -75,6 +76,7 @@ public final class DelimiterSpecification {
         return prime * result + (end == null ? 0 : end.hashCode());
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -103,6 +105,7 @@ public final class DelimiterSpecification {
         return true;
     }
 
+    @Override
     public String toString() {
         return "Interpolation delimiter [begin: '" + begin + "', end: '" + end + "']";
     }

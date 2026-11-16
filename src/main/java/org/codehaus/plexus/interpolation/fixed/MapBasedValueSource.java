@@ -38,6 +38,7 @@ public class MapBasedValueSource implements FixedValueSource {
      * Lookup the supplied expression as a key in the wrapped Map, and return
      * its value.
      */
+    @Override
     public Object getValue(String expression, InterpolationState interpolationState) {
         return values == null ? null : values.get(expression);
     }

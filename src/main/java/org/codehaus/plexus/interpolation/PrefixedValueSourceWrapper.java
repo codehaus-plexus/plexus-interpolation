@@ -110,6 +110,7 @@ public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, Q
      * expressions are not allowed here), then return null; otherwise, return the
      * nested {@link ValueSource#getValue(String)} result.
      */
+    @Override
     public Object getValue(String expression) {
         lastExpression = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, allowUnprefixedExpressions);
 
@@ -124,6 +125,7 @@ public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, Q
      * If the nested {@link ValueSource} implements {@link FeedbackEnabledValueSource},
      * then return that source's feedback list. Otherwise, return {@link Collections#EMPTY_LIST}.
      */
+    @Override
     public List getFeedback() {
         return valueSource instanceof FeedbackEnabledValueSource ? valueSource.getFeedback() : Collections.emptyList();
     }
@@ -133,6 +135,7 @@ public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, Q
      * then return that source's last expression. Otherwise, return the last expression
      * that was processed by the wrapper itself.
      */
+    @Override
     public String getLastExpression() {
         return valueSource instanceof QueryEnabledValueSource
                 ? ((QueryEnabledValueSource) valueSource).getLastExpression()
@@ -143,6 +146,7 @@ public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, Q
      * If the nested {@link ValueSource} implements {@link FeedbackEnabledValueSource},
      * then clear that source's feedback list.
      */
+    @Override
     public void clearFeedback() {
         valueSource.clearFeedback();
     }

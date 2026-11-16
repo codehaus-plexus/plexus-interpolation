@@ -179,6 +179,7 @@ public class MultiDelimiterInterpolatorFilterReader extends FilterReader {
      * @exception IllegalArgumentException If <code>n</code> is negative.
      * @exception IOException If an I/O error occurs
      */
+    @Override
     public long skip(long n) throws IOException {
         if (n < 0L) {
             throw new IllegalArgumentException("skip value is negative");
@@ -202,6 +203,7 @@ public class MultiDelimiterInterpolatorFilterReader extends FilterReader {
      * @return the number of characters read, or -1 if the end of the stream has been reached
      * @exception IOException If an I/O error occurs
      */
+    @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
         for (int i = 0; i < len; i++) {
             int ch = read();
@@ -223,6 +225,7 @@ public class MultiDelimiterInterpolatorFilterReader extends FilterReader {
      * @return the next character in the resulting stream, or -1 if the end of the resulting stream has been reached
      * @exception IOException if the underlying stream throws an IOException during reading
      */
+    @Override
     public int read() throws IOException {
         if (replaceIndex != -1 && replaceIndex < replaceData.length()) {
             int ch = replaceData.charAt(replaceIndex++);

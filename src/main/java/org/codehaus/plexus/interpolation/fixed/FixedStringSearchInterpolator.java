@@ -124,6 +124,7 @@ public final class FixedStringSearchInterpolator implements FixedValueSource {
 
     // Find out how to return null when we cannot interpolate this expression
     // At this point we should always be a ${expr}
+    @Override
     public Object getValue(String realExpr, InterpolationState interpolationState) {
 
         interpolationState.recursionInterceptor.expressionResolutionStarted(realExpr);
@@ -155,10 +156,12 @@ public final class FixedStringSearchInterpolator implements FixedValueSource {
         final InterpolationState is = new InterpolationState();
         return new BasicInterpolator() {
 
+            @Override
             public String interpolate(String input) throws InterpolationException {
                 return FixedStringSearchInterpolator.this.interpolate(input, is);
             }
 
+            @Override
             public String interpolate(String input, RecursionInterceptor recursionInterceptor)
                     throws InterpolationException {
                 is.setRecursionInterceptor(recursionInterceptor);

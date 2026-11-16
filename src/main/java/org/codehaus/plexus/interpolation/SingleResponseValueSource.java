@@ -33,12 +33,15 @@ public class SingleResponseValueSource implements ValueSource {
         this.response = response;
     }
 
+    @Override
     public void clearFeedback() {}
 
+    @Override
     public List getFeedback() {
         return Collections.emptyList();
     }
 
+    @Override
     public Object getValue(String expression) {
         if (this.expression.equals(expression)) {
             return response;

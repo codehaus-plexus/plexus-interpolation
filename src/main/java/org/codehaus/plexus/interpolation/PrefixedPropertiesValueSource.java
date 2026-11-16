@@ -63,6 +63,7 @@ public class PrefixedPropertiesValueSource extends AbstractDelegatingValueSource
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getLastExpression() {
         return ((QueryEnabledValueSource) getDelegate()).getLastExpression();
     }
