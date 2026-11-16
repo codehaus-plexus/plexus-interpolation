@@ -120,6 +120,7 @@ public class RegexBasedInterpolator implements Interpolator {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void addValueSource(ValueSource valueSource) {
         valueSources.add(valueSource);
     }
@@ -127,6 +128,7 @@ public class RegexBasedInterpolator implements Interpolator {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void removeValuesSource(ValueSource valueSource) {
         valueSources.remove(valueSource);
     }
@@ -134,6 +136,7 @@ public class RegexBasedInterpolator implements Interpolator {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void addPostProcessor(InterpolationPostProcessor postProcessor) {
         postProcessors.add(postProcessor);
     }
@@ -141,6 +144,7 @@ public class RegexBasedInterpolator implements Interpolator {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void removePostProcessor(InterpolationPostProcessor postProcessor) {
         postProcessors.remove(postProcessor);
     }
@@ -161,6 +165,7 @@ public class RegexBasedInterpolator implements Interpolator {
      *                             from expression cycles, and throw an
      *                             exception if one is detected.
      */
+    @Override
     public String interpolate(String input, String thisPrefixPattern, RecursionInterceptor recursionInterceptor)
             throws InterpolationException {
         if (input == null) {
@@ -326,6 +331,7 @@ public class RegexBasedInterpolator implements Interpolator {
      * @return a {@link List} that may be interspersed with {@link String} and
      * {@link Throwable} instances.
      */
+    @Override
     public List getFeedback() {
         List messages = new ArrayList();
         for (Object valueSource : valueSources) {
@@ -342,6 +348,7 @@ public class RegexBasedInterpolator implements Interpolator {
     /**
      * Clear the feedback messages from previous interpolate(..) calls.
      */
+    @Override
     public void clearFeedback() {
         for (Object valueSource : valueSources) {
             ValueSource vs = (ValueSource) valueSource;
@@ -360,6 +367,7 @@ public class RegexBasedInterpolator implements Interpolator {
      * @param thisPrefixPattern An optional pattern that should be trimmed from
      *                          the start of any expressions found in the input.
      */
+    @Override
     public String interpolate(String input, String thisPrefixPattern) throws InterpolationException {
         return interpolate(input, thisPrefixPattern, null);
     }
@@ -374,6 +382,7 @@ public class RegexBasedInterpolator implements Interpolator {
      *
      * @param input The input string to interpolate
      */
+    @Override
     public String interpolate(String input) throws InterpolationException {
         return interpolate(input, null, null);
     }
@@ -391,6 +400,7 @@ public class RegexBasedInterpolator implements Interpolator {
      *                             from expression cycles, and throw an
      *                             exception if one is detected.
      */
+    @Override
     public String interpolate(String input, RecursionInterceptor recursionInterceptor) throws InterpolationException {
         return interpolate(input, null, recursionInterceptor);
     }
@@ -403,14 +413,17 @@ public class RegexBasedInterpolator implements Interpolator {
         this.reusePatterns = reusePatterns;
     }
 
+    @Override
     public boolean isCacheAnswers() {
         return cacheAnswers;
     }
 
+    @Override
     public void setCacheAnswers(boolean cacheAnswers) {
         this.cacheAnswers = cacheAnswers;
     }
 
+    @Override
     public void clearAnswers() {
         existingAnswers.clear();
     }

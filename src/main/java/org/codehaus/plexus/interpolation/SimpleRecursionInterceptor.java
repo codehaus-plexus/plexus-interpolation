@@ -36,6 +36,7 @@ public class SimpleRecursionInterceptor implements RecursionInterceptor {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void expressionResolutionFinished(String expression) {
         expressions.pop();
     }
@@ -43,6 +44,7 @@ public class SimpleRecursionInterceptor implements RecursionInterceptor {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void expressionResolutionStarted(String expression) {
         expressions.push(expression);
     }
@@ -51,6 +53,7 @@ public class SimpleRecursionInterceptor implements RecursionInterceptor {
      * Check whether the current expression is already present in the in-process
      * stack.
      */
+    @Override
     public boolean hasRecursiveExpression(String expression) {
         return expressions.contains(expression);
     }
@@ -61,6 +64,7 @@ public class SimpleRecursionInterceptor implements RecursionInterceptor {
      * Otherwise, if the expression isn't present in the in-process stack, return
      * {@link Collections#EMPTY_LIST}.
      */
+    @Override
     public List getExpressionCycle(String expression) {
         int idx = expressions.indexOf(expression);
         if (idx < 0) {
@@ -70,6 +74,7 @@ public class SimpleRecursionInterceptor implements RecursionInterceptor {
         }
     }
 
+    @Override
     public void clear() {
         expressions.clear();
     }

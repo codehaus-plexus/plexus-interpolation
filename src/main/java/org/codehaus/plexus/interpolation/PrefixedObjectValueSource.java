@@ -54,6 +54,7 @@ public class PrefixedObjectValueSource extends AbstractDelegatingValueSource imp
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getLastExpression() {
         return ((QueryEnabledValueSource) getDelegate()).getLastExpression();
     }

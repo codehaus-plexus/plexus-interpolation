@@ -45,6 +45,7 @@ public class PropertiesBasedValueSource implements FixedValueSource {
      * entire expression as the key to lookup. If the wrapped properties instance
      * is null, simply return null.
      */
+    @Override
     public Object getValue(String expression, InterpolationState interpolationState) {
         return properties == null ? null : properties.getProperty(expression);
     }

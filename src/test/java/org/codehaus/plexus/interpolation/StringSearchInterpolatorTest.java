@@ -371,6 +371,7 @@ public class StringSearchInterpolatorTest {
         RecursionInterceptor recursionInterceptor = new SimpleRecursionInterceptor();
         final boolean[] error = new boolean[] {false};
         interpolator.addValueSource(new ValueSource() {
+            @Override
             public Object getValue(String expression) {
                 if ("key".equals(expression)) {
                     if (error[0]) {
@@ -382,10 +383,12 @@ public class StringSearchInterpolatorTest {
                 }
             }
 
+            @Override
             public List getFeedback() {
                 return Collections.emptyList();
             }
 
+            @Override
             public void clearFeedback() {}
         });
         assertEquals("-val-", interpolator.interpolate("-${key}-", recursionInterceptor), "control case");

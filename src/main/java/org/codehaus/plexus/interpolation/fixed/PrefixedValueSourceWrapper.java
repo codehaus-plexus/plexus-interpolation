@@ -103,6 +103,7 @@ public class PrefixedValueSourceWrapper implements FixedValueSource {
         this.allowUnprefixedExpressions = allowUnprefixedExpressions;
     }
 
+    @Override
     public Object getValue(String expression, InterpolationState interpolationState) {
         expression = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, allowUnprefixedExpressions);
 

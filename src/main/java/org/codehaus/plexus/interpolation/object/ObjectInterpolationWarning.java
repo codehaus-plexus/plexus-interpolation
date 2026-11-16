@@ -57,6 +57,7 @@ public class ObjectInterpolationWarning {
         return cause;
     }
 
+    @Override
     public String toString() {
         if (cause == null) {
             return path + ": " + message;

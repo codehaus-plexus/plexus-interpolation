@@ -32,6 +32,7 @@ public abstract class AbstractDelegatingValueSource implements FixedValueSource 
         return delegate;
     }
 
+    @Override
     public Object getValue(String expression, InterpolationState interpolationState) {
         return getDelegate().getValue(expression, interpolationState);
     }

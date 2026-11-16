@@ -105,6 +105,7 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
     /**
      * Returns true if the last interpolation execution generated warnings.
      */
+    @Override
     public boolean hasWarnings() {
         return warnings != null && !warnings.isEmpty();
     }
@@ -113,6 +114,7 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
      * Retrieve the {@link List} of warnings ({@link ObjectInterpolationWarning}
      * instances) generated during the last interpolation execution.
      */
+    @Override
     public List<ObjectInterpolationWarning> getWarnings() {
         return new ArrayList<>(warnings);
     }
@@ -126,6 +128,7 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
      * @param interpolator The {@link Interpolator} used to resolve any Strings encountered during traversal.
      *                     NOTE: Uses {@link SimpleRecursionInterceptor}.
      */
+    @Override
     public void interpolate(Object target, BasicInterpolator interpolator) throws InterpolationException {
         interpolate(target, interpolator, new SimpleRecursionInterceptor());
     }
@@ -139,6 +142,7 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
      * @param interpolator         The {@link Interpolator} used to resolve any Strings encountered during traversal.
      * @param recursionInterceptor The {@link RecursionInterceptor} used to detect cyclical expressions in the graph
      */
+    @Override
     public void interpolate(Object target, BasicInterpolator interpolator, RecursionInterceptor recursionInterceptor)
             throws InterpolationException {
         warnings.clear();
@@ -199,6 +203,7 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
          * As long as the traversal queue is non-empty, traverse the next object in the queue. If an interpolation error
          * occurs, return it immediately.
          */
+        @Override
         public Object run() {
             while (!interpolationTargets.isEmpty()) {
                 InterpolationTarget target = interpolationTargets.removeFirst();

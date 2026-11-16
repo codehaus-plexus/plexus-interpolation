@@ -53,6 +53,7 @@ public abstract class AbstractFunctionValueSourceWrapper implements ValueSource 
      *       for the current expression.</li>
      * </ol>
      */
+    @Override
     public Object getValue(String expression) {
         Object value = valueSource.getValue(expression);
 

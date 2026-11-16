@@ -64,15 +64,18 @@ public class PrefixAwareRecursionInterceptor implements RecursionInterceptor {
         this.possiblePrefixes = possiblePrefixes.toArray(new String[0]);
     }
 
+    @Override
     public boolean hasRecursiveExpression(String expression) {
         String realExpr = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, watchUnprefixedExpressions);
         return realExpr != null && nakedExpressions.contains(realExpr);
     }
 
+    @Override
     public void expressionResolutionFinished(String expression) {
         nakedExpressions.pop();
     }
 
+    @Override
     public void expressionResolutionStarted(String expression) {
         String realExpr = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, watchUnprefixedExpressions);
         nakedExpressions.push(realExpr);
@@ -86,6 +89,7 @@ public class PrefixAwareRecursionInterceptor implements RecursionInterceptor {
      * prefix from this interceptor's list, and unprefixed expressions aren't allowed
      * then return {@link Collections#EMPTY_LIST}.
      */
+    @Override
     public List getExpressionCycle(String expression) {
         String expr = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, watchUnprefixedExpressions);
 
@@ -101,6 +105,7 @@ public class PrefixAwareRecursionInterceptor implements RecursionInterceptor {
         }
     }
 
+    @Override
     public void clear() {
         nakedExpressions.clear();
     }
