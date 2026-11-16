@@ -50,7 +50,7 @@ public class PrefixAwareRecursionInterceptor implements RecursionInterceptor {
      * @param watchUnprefixedExpressions Whether to consider unprefixed expressions as synonyms
      */
     public PrefixAwareRecursionInterceptor(Collection<String> possiblePrefixes, boolean watchUnprefixedExpressions) {
-        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[0]);
         this.watchUnprefixedExpressions = watchUnprefixedExpressions;
     }
 
@@ -61,7 +61,7 @@ public class PrefixAwareRecursionInterceptor implements RecursionInterceptor {
      * @param possiblePrefixes The collection of expression prefixes supported
      */
     public PrefixAwareRecursionInterceptor(Collection<String> possiblePrefixes) {
-        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[0]);
     }
 
     public boolean hasRecursiveExpression(String expression) {

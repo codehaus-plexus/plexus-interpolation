@@ -263,7 +263,7 @@ public class MultiDelimiterStringSearchInterpolator implements Interpolator {
             } else if (endIdx < input.length()) {
                 result.append(input, endIdx + 1, input.length());
             }
-        } while (!lastResult.equals(result.toString()) && tries < MAX_TRIES);
+        } while (!lastResult.contentEquals(result) && tries < MAX_TRIES);
 
         return result.toString();
     }
