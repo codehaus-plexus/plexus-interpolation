@@ -38,13 +38,13 @@ public class MultiDelimiterStringSearchInterpolator implements Interpolator {
 
     private Map existingAnswers = new HashMap();
 
-    private List<ValueSource> valueSources = new ArrayList<ValueSource>();
+    private List<ValueSource> valueSources = new ArrayList<>();
 
     private List postProcessors = new ArrayList();
 
-    private boolean cacheAnswers = false;
+    private boolean cacheAnswers;
 
-    private LinkedHashSet<DelimiterSpecification> delimiters = new LinkedHashSet<DelimiterSpecification>();
+    private LinkedHashSet<DelimiterSpecification> delimiters = new LinkedHashSet<>();
 
     private String escapeString;
 
@@ -170,10 +170,10 @@ public class MultiDelimiterStringSearchInterpolator implements Interpolator {
                 String realExpr = wholeExpr.substring(startExpr.length(), wholeExpr.length() - endExpr.length());
 
                 if (startIdx >= 0 && escapeString != null && escapeString.length() > 0) {
-                    int startEscapeIdx = (startIdx == 0) ? 0 : startIdx - escapeString.length();
+                    int startEscapeIdx = startIdx == 0 ? 0 : startIdx - escapeString.length();
                     if (startEscapeIdx >= 0) {
                         String escape = input.substring(startEscapeIdx, startIdx);
-                        if (escape != null && escapeString.equals(escape)) {
+                        if (escapeString.equals(escape)) {
                             result.append(wholeExpr);
                             if (startEscapeIdx > 0) {
                                 --startEscapeIdx;
@@ -199,7 +199,9 @@ public class MultiDelimiterStringSearchInterpolator implements Interpolator {
                     Object value = existingAnswers.get(realExpr);
                     Object bestAnswer = null;
                     for (ValueSource vs : valueSources) {
-                        if (value != null) break;
+                        if (value != null) {
+                            break;
+                        }
 
                         value = vs.getValue(realExpr, startExpr, endExpr);
 

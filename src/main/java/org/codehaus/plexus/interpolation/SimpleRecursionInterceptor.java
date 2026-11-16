@@ -64,7 +64,7 @@ public class SimpleRecursionInterceptor implements RecursionInterceptor {
     public List getExpressionCycle(String expression) {
         int idx = expressions.indexOf(expression);
         if (idx < 0) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         } else {
             return expressions.subList(idx, expressions.size());
         }

@@ -36,7 +36,7 @@ public class PrefixAwareRecursionInterceptor implements RecursionInterceptor {
 
     public static final String DEFAULT_END_TOKEN = "\\}";
 
-    private Stack<String> nakedExpressions = new Stack<String>();
+    private Stack<String> nakedExpressions = new Stack<>();
 
     private final String[] possiblePrefixes;
 
@@ -90,12 +90,12 @@ public class PrefixAwareRecursionInterceptor implements RecursionInterceptor {
         String expr = ValueSourceUtils.trimPrefix(expression, possiblePrefixes, watchUnprefixedExpressions);
 
         if (expr == null) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
 
         int idx = nakedExpressions.indexOf(expr);
         if (idx < 0) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         } else {
             return nakedExpressions.subList(idx, nakedExpressions.size());
         }

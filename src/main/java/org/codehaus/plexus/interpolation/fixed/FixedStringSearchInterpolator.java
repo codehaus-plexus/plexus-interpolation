@@ -40,7 +40,7 @@ import org.codehaus.plexus.interpolation.RecursionInterceptor;
  * underlying objects.</p>
  * <p>The fixed interpolator can be a valuesource</p>
  */
-public class FixedStringSearchInterpolator implements FixedValueSource {
+public final class FixedStringSearchInterpolator implements FixedValueSource {
 
     private final FixedValueSource[] valueSources;
 
@@ -88,9 +88,11 @@ public class FixedStringSearchInterpolator implements FixedValueSource {
     }
 
     public static FixedStringSearchInterpolator createWithPermittedNulls(FixedValueSource... valueSources) {
-        List<FixedValueSource> nonnulls = new ArrayList<FixedValueSource>();
+        List<FixedValueSource> nonnulls = new ArrayList<>();
         for (FixedValueSource item : valueSources) {
-            if (item != null) nonnulls.add(item);
+            if (item != null) {
+                nonnulls.add(item);
+            }
         }
         return new FixedStringSearchInterpolator(
                 DEFAULT_START_EXPR,

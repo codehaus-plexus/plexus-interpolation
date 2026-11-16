@@ -372,7 +372,7 @@ public class StringSearchInterpolatorTest {
         final boolean[] error = new boolean[] {false};
         interpolator.addValueSource(new ValueSource() {
             public Object getValue(String expression) {
-                if (expression.equals("key")) {
+                if ("key".equals(expression)) {
                     if (error[0]) {
                         throw new IllegalStateException("broken");
                     }
@@ -383,7 +383,7 @@ public class StringSearchInterpolatorTest {
             }
 
             public List getFeedback() {
-                return Collections.EMPTY_LIST;
+                return Collections.emptyList();
             }
 
             public void clearFeedback() {}

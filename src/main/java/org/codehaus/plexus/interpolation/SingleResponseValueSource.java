@@ -36,7 +36,7 @@ public class SingleResponseValueSource implements ValueSource {
     public void clearFeedback() {}
 
     public List getFeedback() {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     public Object getValue(String expression) {

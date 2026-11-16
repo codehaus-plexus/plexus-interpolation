@@ -349,7 +349,7 @@ public class FixedStringSearchInterpolatorTest {
     void interruptedInterpolate() throws Exception {
         final boolean[] error = new boolean[] {false};
         FixedValueSource valueSource = (expression, errorCollector) -> {
-            if (expression.equals("key")) {
+            if ("key".equals(expression)) {
                 if (error[0]) {
                     throw new IllegalStateException("broken");
                 }
