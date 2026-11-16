@@ -94,7 +94,8 @@ public class StringUtils {
         }
 
         StringBuilder buf = new StringBuilder(text.length());
-        int start = 0, end;
+        int start = 0;
+        int end;
         while ((end = text.indexOf(repl, start)) != -1) {
             buf.append(text, start, end).append(with);
             start = end + repl.length();

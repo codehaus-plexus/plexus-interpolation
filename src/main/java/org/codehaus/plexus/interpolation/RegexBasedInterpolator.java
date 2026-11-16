@@ -41,13 +41,13 @@ public class RegexBasedInterpolator implements Interpolator {
 
     private Map existingAnswers = new HashMap();
 
-    private List<ValueSource> valueSources = new ArrayList<ValueSource>();
+    private List<ValueSource> valueSources = new ArrayList<>();
 
-    private List<InterpolationPostProcessor> postProcessors = new ArrayList<InterpolationPostProcessor>();
+    private List<InterpolationPostProcessor> postProcessors = new ArrayList<>();
 
-    private boolean reusePatterns = false;
+    private boolean reusePatterns;
 
-    private boolean cacheAnswers = false;
+    private boolean cacheAnswers;
 
     public static final String DEFAULT_REGEXP = "\\$\\{(.+?)\\}";
 
@@ -55,7 +55,7 @@ public class RegexBasedInterpolator implements Interpolator {
      * the key is the regex the value is the Pattern
      * At the class construction time the Map will contains the default Pattern
      */
-    private Map<String, Pattern> compiledPatterns = new WeakHashMap<String, Pattern>();
+    private Map<String, Pattern> compiledPatterns = new WeakHashMap<>();
 
     /**
      * Setup a basic interpolator.
@@ -272,7 +272,9 @@ public class RegexBasedInterpolator implements Interpolator {
             try {
                 Object value = existingAnswers.get(realExpr);
                 for (ValueSource vs : valueSources) {
-                    if (value != null) break;
+                    if (value != null) {
+                        break;
+                    }
 
                     value = vs.getValue(realExpr, expressionDelimiterStart, expressionDelimiterEnd);
                 }

@@ -51,17 +51,17 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
 
     public static final Set<String> DEFAULT_BLACKLISTED_PACKAGE_PREFIXES;
 
-    private static final Map<Class, Field[]> fieldsByClass = new WeakHashMap<Class, Field[]>();
+    private static final Map<Class, Field[]> fieldsByClass = new WeakHashMap<>();
 
-    private static final Map<Class, Boolean> fieldIsPrimitiveByClass = new WeakHashMap<Class, Boolean>();
+    private static final Map<Class, Boolean> fieldIsPrimitiveByClass = new WeakHashMap<>();
 
     static {
-        Set<String> blacklistedFields = new HashSet<String>();
+        Set<String> blacklistedFields = new HashSet<>();
         blacklistedFields.add("parent");
 
         DEFAULT_BLACKLISTED_FIELD_NAMES = Collections.unmodifiableSet(blacklistedFields);
 
-        Set<String> blacklistedPackages = new HashSet<String>();
+        Set<String> blacklistedPackages = new HashSet<>();
         blacklistedPackages.add("java");
 
         DEFAULT_BLACKLISTED_PACKAGE_PREFIXES = Collections.unmodifiableSet(blacklistedPackages);
@@ -80,7 +80,7 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
 
     private Set<String> blacklistedPackagePrefixes;
 
-    private List<ObjectInterpolationWarning> warnings = new ArrayList<ObjectInterpolationWarning>();
+    private List<ObjectInterpolationWarning> warnings = new ArrayList<>();
 
     /**
      * Use the default settings for blacklisted fields and packages, where fields named 'parent' and classes in packages
@@ -114,7 +114,7 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
      * instances) generated during the last interpolation execution.
      */
     public List<ObjectInterpolationWarning> getWarnings() {
-        return new ArrayList<ObjectInterpolationWarning>(warnings);
+        return new ArrayList<>(warnings);
     }
 
     /**
@@ -189,7 +189,7 @@ public class FieldBasedObjectInterpolator implements ObjectInterpolator {
             this.blacklistedPackagePrefixes =
                     (String[]) blacklistedPackagePrefixes.toArray(new String[blacklistedPackagePrefixes.size()]);
 
-            this.interpolationTargets = new LinkedList<InterpolationTarget>();
+            this.interpolationTargets = new LinkedList<>();
             interpolationTargets.add(new InterpolationTarget(target, ""));
 
             this.interpolator = interpolator;

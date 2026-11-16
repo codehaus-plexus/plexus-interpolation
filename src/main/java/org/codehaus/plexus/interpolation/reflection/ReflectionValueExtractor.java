@@ -32,7 +32,7 @@ import org.codehaus.plexus.interpolation.util.StringUtils;
  *
  * @author <a href="mailto:jason@maven.org">Jason van Zyl </a>
  */
-public class ReflectionValueExtractor {
+public final class ReflectionValueExtractor {
     private static final Class<?>[] CLASS_ARGS = new Class[0];
 
     private static final Object[] OBJECT_ARGS = new Object[0];
@@ -41,8 +41,7 @@ public class ReflectionValueExtractor {
      * Use a WeakHashMap here, so the keys (Class objects) can be garbage collected. This approach prevents permgen
      * space overflows due to retention of discarded classloaders.
      */
-    private static final Map<Class<?>, WeakReference<ClassMap>> classMaps =
-            new WeakHashMap<Class<?>, WeakReference<ClassMap>>();
+    private static final Map<Class<?>, WeakReference<ClassMap>> classMaps = new WeakHashMap<>();
 
     static final int EOF = -1;
 
@@ -291,12 +290,7 @@ public class ReflectionValueExtractor {
         if (method == null) {
             return null;
         }
-
-        try {
-            return method.invoke(value, OBJECT_ARGS);
-        } catch (InvocationTargetException e) {
-            throw e;
-        }
+        return method.invoke(value, OBJECT_ARGS);
     }
 
     private static ClassMap getClassMap(Class<?> clazz) {

@@ -29,8 +29,8 @@ import org.codehaus.plexus.interpolation.SimpleRecursionInterceptor;
  * It is stateful.
  */
 public class InterpolationState {
-    private final List<String> messages = new ArrayList<String>();
-    private final List<Throwable> causes = new ArrayList<Throwable>();
+    private final List<String> messages = new ArrayList<>();
+    private final List<Throwable> causes = new ArrayList<>();
 
     public void addFeedback(String message, Throwable cause) {
         messages.add(message);
@@ -38,14 +38,18 @@ public class InterpolationState {
     }
 
     public List asList() {
-        ArrayList<Object> items = new ArrayList<Object>();
+        ArrayList<Object> items = new ArrayList<>();
         for (int i = 0; i < messages.size(); i++) {
             String msg = messages.get(i);
-            if (msg != null) items.add(msg);
+            if (msg != null) {
+                items.add(msg);
+            }
             Throwable cause = causes.get(i);
-            if (cause != null) items.add(cause);
+            if (cause != null) {
+                items.add(cause);
+            }
         }
-        return items.size() > 0 ? items : null;
+        return items.isEmpty() ? null : items;
     }
 
     public void clear() {
@@ -56,12 +60,12 @@ public class InterpolationState {
         root = null;
     }
 
-    final Set<String> unresolvable = new HashSet<String>();
+    final Set<String> unresolvable = new HashSet<>();
     RecursionInterceptor recursionInterceptor = new SimpleRecursionInterceptor();
 
     public void setRecursionInterceptor(RecursionInterceptor recursionInterceptor) {
         this.recursionInterceptor = recursionInterceptor;
     }
 
-    FixedStringSearchInterpolator root = null;
+    FixedStringSearchInterpolator root;
 }

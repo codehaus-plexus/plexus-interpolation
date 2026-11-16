@@ -25,13 +25,13 @@ import java.util.Set;
 
 public class StringSearchInterpolator implements Interpolator {
 
-    private Map<String, Object> existingAnswers = new HashMap<String, Object>();
+    private Map<String, Object> existingAnswers = new HashMap<>();
 
-    private List<ValueSource> valueSources = new ArrayList<ValueSource>();
+    private List<ValueSource> valueSources = new ArrayList<>();
 
-    private List<InterpolationPostProcessor> postProcessors = new ArrayList<InterpolationPostProcessor>();
+    private List<InterpolationPostProcessor> postProcessors = new ArrayList<>();
 
-    private boolean cacheAnswers = false;
+    private boolean cacheAnswers;
 
     public static final String DEFAULT_START_EXPR = "${";
 
@@ -102,7 +102,7 @@ public class StringSearchInterpolator implements Interpolator {
      */
     public String interpolate(String input, RecursionInterceptor recursionInterceptor) throws InterpolationException {
         try {
-            return interpolate(input, recursionInterceptor, new HashSet<String>());
+            return interpolate(input, recursionInterceptor, new HashSet<>());
         } finally {
             if (!cacheAnswers) {
                 existingAnswers.clear();

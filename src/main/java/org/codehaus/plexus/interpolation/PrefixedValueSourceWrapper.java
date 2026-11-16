@@ -125,7 +125,7 @@ public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, Q
      * then return that source's feedback list. Otherwise, return {@link Collections#EMPTY_LIST}.
      */
     public List getFeedback() {
-        return (valueSource instanceof FeedbackEnabledValueSource) ? valueSource.getFeedback() : Collections.EMPTY_LIST;
+        return valueSource instanceof FeedbackEnabledValueSource ? valueSource.getFeedback() : Collections.emptyList();
     }
 
     /**
@@ -134,7 +134,7 @@ public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, Q
      * that was processed by the wrapper itself.
      */
     public String getLastExpression() {
-        return (valueSource instanceof QueryEnabledValueSource)
+        return valueSource instanceof QueryEnabledValueSource
                 ? ((QueryEnabledValueSource) valueSource).getLastExpression()
                 : lastExpression;
     }

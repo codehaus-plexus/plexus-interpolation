@@ -81,7 +81,7 @@ public class MultiDelimiterInterpolatorFilterReader extends FilterReader {
     private RecursionInterceptor recursionInterceptor;
 
     /** replacement text from a token */
-    private String replaceData = null;
+    private String replaceData;
 
     /** Index into replacement data */
     private int replaceIndex = -1;
@@ -100,12 +100,12 @@ public class MultiDelimiterInterpolatorFilterReader extends FilterReader {
 
     private String escapeString;
 
-    private boolean useEscape = false;
+    private boolean useEscape;
 
     /** if true escapeString will be preserved \{foo} -> \{foo} */
-    private boolean preserveEscapeString = false;
+    private boolean preserveEscapeString;
 
-    private LinkedHashSet<DelimiterSpecification> delimiters = new LinkedHashSet<DelimiterSpecification>();
+    private LinkedHashSet<DelimiterSpecification> delimiters = new LinkedHashSet<>();
 
     private DelimiterSpecification currentSpec;
 
@@ -202,7 +202,7 @@ public class MultiDelimiterInterpolatorFilterReader extends FilterReader {
      * @return the number of characters read, or -1 if the end of the stream has been reached
      * @exception IOException If an I/O error occurs
      */
-    public int read(char cbuf[], int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len) throws IOException {
         for (int i = 0; i < len; i++) {
             int ch = read();
             if (ch == -1) {
@@ -241,7 +241,7 @@ public class MultiDelimiterInterpolatorFilterReader extends FilterReader {
 
         boolean inEscape = false;
 
-        if ((inEscape = (useEscape && ch == escapeString.charAt(0))) || reselectDelimiterSpec(ch)) {
+        if ((inEscape = useEscape && ch == escapeString.charAt(0)) || reselectDelimiterSpec(ch)) {
             StringBuilder key = new StringBuilder();
 
             key.append((char) ch);
