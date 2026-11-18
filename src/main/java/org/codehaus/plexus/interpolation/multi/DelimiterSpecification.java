@@ -16,6 +16,8 @@ package org.codehaus.plexus.interpolation.multi;
  * limitations under the License.
  */
 
+import java.util.Objects;
+
 public final class DelimiterSpecification {
     public static final DelimiterSpecification DEFAULT_SPEC = DelimiterSpecification.parse("${*}");
 
@@ -88,21 +90,7 @@ public final class DelimiterSpecification {
             return false;
         }
         DelimiterSpecification other = (DelimiterSpecification) obj;
-        if (begin == null) {
-            if (other.begin != null) {
-                return false;
-            }
-        } else if (!begin.equals(other.begin)) {
-            return false;
-        }
-        if (end == null) {
-            if (other.end != null) {
-                return false;
-            }
-        } else if (!end.equals(other.end)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(begin, other.begin) && Objects.equals(end, other.end);
     }
 
     @Override
