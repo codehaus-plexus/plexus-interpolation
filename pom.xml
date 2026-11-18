@@ -20,11 +20,11 @@
     <connection>scm:git:https://github.com/codehaus-plexus/plexus-interpolation.git</connection>
     <developerConnection>scm:git:https://github.com/codehaus-plexus/plexus-interpolation.git</developerConnection>
     <tag>master</tag>
-    <url>http://github.com/codehaus-plexus/plexus-interpolation/tree/${project.scm.tag}/</url>
+    <url>https://github.com/codehaus-plexus/plexus-interpolation/tree/${project.scm.tag}/</url>
   </scm>
 
   <issueManagement>
-    <system>Github</system>
+    <system>github</system>
     <url>https://github.com/codehaus-plexus/plexus-interpolation/issues</url>
   </issueManagement>
   <distributionManagement>
