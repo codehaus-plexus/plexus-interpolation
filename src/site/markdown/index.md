@@ -62,17 +62,17 @@ List<String> synonymPrefixes = new ArrayList<String>();
 synonymPrefixes.add( "project." );
 synonymPrefixes.add( "pom." );
 
-PrefixedValueSourceWrapper modelWrapper = new PrefixedValueSourceWrapper( synonymPrefixes, 
-                                                                          new ObjectBasedValueSource( pomModel ), 
+PrefixedValueSourceWrapper modelWrapper = new PrefixedValueSourceWrapper( new ObjectBasedValueSource( pomModel ), 
+                                                                          synonymPrefixes, 
                                                                           true );
 interpolator.addValueSource( modelWrapper );
 
-PrefixedValueSourceWrapper pomPropertyWrapper = new PrefixedValueSourceWrapper( synonymPrefixes, 
-                                                                                new PropertiesBasedValueSource( pomModel.getProperties() ), 
+PrefixedValueSourceWrapper pomPropertyWrapper = new PrefixedValueSourceWrapper( new PropertiesBasedValueSource( pomModel.getProperties() ), 
+                                                                                synonymPrefixes, 
                                                                                 true );
 interpolator.addValueSource( pomPropertyWrapper );
 
-interpolator.addValueSource( new PropertyBasedValueSource( userDefinedProperties ) );
+interpolator.addValueSource( new PropertiesBasedValueSource( userDefinedProperties ) );
 
 RecursionInterceptor recursionInterceptor = new PrefixAwareRecursionInterceptor( synonymPrefixes, true );
 serializedPOM = interpolator.interpolate( serializedPOM, recursionInterceptor );
