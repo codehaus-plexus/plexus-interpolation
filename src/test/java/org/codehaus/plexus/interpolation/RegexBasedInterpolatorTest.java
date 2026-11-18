@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class RegexBasedInterpolatorTest {
@@ -31,13 +32,10 @@ public class RegexBasedInterpolatorTest {
         RegexBasedInterpolator rbi = new RegexBasedInterpolator();
         rbi.addValueSource(new PropertiesBasedValueSource(props));
 
-        try {
-            rbi.interpolate("${key1}", new SimpleRecursionInterceptor());
-
-            fail("Should detect expression cycle and fail.");
-        } catch (InterpolationException e) {
-            // expected
-        }
+        assertThrows(
+                InterpolationException.class,
+                () -> rbi.interpolate("${key1}", new SimpleRecursionInterceptor()),
+                "Should detect expression cycle and fail.");
     }
 
     @Test

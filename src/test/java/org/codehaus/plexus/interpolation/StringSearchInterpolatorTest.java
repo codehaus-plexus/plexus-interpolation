@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class StringSearchInterpolatorTest {
@@ -144,13 +145,10 @@ public class StringSearchInterpolatorTest {
         StringSearchInterpolator rbi = new StringSearchInterpolator();
         rbi.addValueSource(new PropertiesBasedValueSource(props));
 
-        try {
-            rbi.interpolate("${key1}", new SimpleRecursionInterceptor());
-
-            fail("Should detect expression cycle and fail.");
-        } catch (InterpolationException e) {
-            // expected
-        }
+        assertThrows(
+                InterpolationException.class,
+                () -> rbi.interpolate("${key1}", new SimpleRecursionInterceptor()),
+                "Should detect expression cycle and fail.");
     }
 
     @Test
@@ -393,12 +391,10 @@ public class StringSearchInterpolatorTest {
         });
         assertEquals("-val-", interpolator.interpolate("-${key}-", recursionInterceptor), "control case");
         error[0] = true;
-        try {
-            interpolator.interpolate("-${key}-", recursionInterceptor);
-            fail("should have thrown exception");
-        } catch (IllegalStateException x) {
-            // right
-        }
+        assertThrows(
+                IllegalStateException.class,
+                () -> interpolator.interpolate("-${key}-", recursionInterceptor),
+                "should have thrown exception");
         error[0] = false;
         assertEquals(
                 "-val-",
