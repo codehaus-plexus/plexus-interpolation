@@ -80,7 +80,7 @@ public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, Q
      */
     public PrefixedValueSourceWrapper(ValueSource valueSource, List<String> possiblePrefixes) {
         this.valueSource = valueSource;
-        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[0]);
     }
 
     /**
@@ -99,7 +99,7 @@ public class PrefixedValueSourceWrapper implements FeedbackEnabledValueSource, Q
     public PrefixedValueSourceWrapper(
             ValueSource valueSource, List<String> possiblePrefixes, boolean allowUnprefixedExpressions) {
         this.valueSource = valueSource;
-        this.possiblePrefixes = possiblePrefixes.toArray(new String[possiblePrefixes.size()]);
+        this.possiblePrefixes = possiblePrefixes.toArray(new String[0]);
         this.allowUnprefixedExpressions = allowUnprefixedExpressions;
     }
 

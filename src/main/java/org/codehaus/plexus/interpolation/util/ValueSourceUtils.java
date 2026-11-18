@@ -16,6 +16,7 @@ package org.codehaus.plexus.interpolation.util;
  * limitations under the License.
  */
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.codehaus.plexus.interpolation.ValueSource;
@@ -69,25 +70,6 @@ public final class ValueSourceUtils {
     }
 
     public static String trimPrefix(String expression, String[] possiblePrefixes, boolean allowUnprefixedExpressions) {
-        if (expression == null) {
-            return null;
-        }
-
-        String realExpr = null;
-        for (String prefix : possiblePrefixes) {
-            if (expression.startsWith(prefix)) {
-                realExpr = expression.substring(prefix.length());
-                if (realExpr.startsWith(".")) {
-                    realExpr = realExpr.substring(1);
-                }
-                break;
-            }
-        }
-
-        if (realExpr == null && allowUnprefixedExpressions) {
-            realExpr = expression;
-        }
-
-        return realExpr;
+        return trimPrefix(expression, Arrays.asList(possiblePrefixes), allowUnprefixedExpressions);
     }
 }
